@@ -46,6 +46,8 @@ OracleDB: pool default is created
 
 ### BUS_TYPE
 
+| Method | Url | Description |
+| ------ | --- | ----------- |
 |GET|		/api/v1/busType/||
 |POST|		/api/v1/busType/||
 |GET|		/api/v1/busType/:id||
@@ -56,6 +58,8 @@ OracleDB: pool default is created
 
 ## BUS
 
+| Method | Url | Description |
+| ------ | --- | ----------- |
 |GET|		/api/v1/bus/||
 |POST|		/api/v1/bus/||
 |GET|		/api/v1/bus/:id||
