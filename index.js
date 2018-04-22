@@ -21,4 +21,5 @@ process.on('SIGINT', () => {
 /**
  * Your server here, with babel configure
  */
-require('./server');
+// require('./server');
+require('./test');

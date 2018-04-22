@@ -19,7 +19,19 @@ function ClosePool() {
   return oracledb.getPool().close();
 }
 
+const execute = async (sql) => {
+  const pool = oracledb.getPool();
+  try {
+    const conn = await pool.getConnection();
+    return await conn.execute(sql);
+
+  } catch (err) {
+    return err;
+  }
+};
+
 export default {
   CreatePool,
-  ClosePool
+  ClosePool,
+  execute
 };
