@@ -2,13 +2,13 @@ import express from 'express';
 
 const router = express.Router();
 
-import BusTypeCtrl from '../controllers/busType';
+import BusCtrl from '../controllers/bus';
 
 router.get('/', (req, res, next) => {
   let { offset, limit } = req.query;
   offset = offset || 0;
   limit = limit || 100;
-  BusTypeCtrl.findAll(offset, limit, (err, rows) => {
+  BusCtrl.findAll(offset, limit, (err, rows) => {
     if (err) {
       console.log(err);
       return res.status(500).send(err);
@@ -21,7 +21,7 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   const data = req.body;
-  BusTypeCtrl.insert(data, (err, ret) => {
+  BusCtrl.insert(data, (err, ret) => {
     if (err) {
       console.log(err);
       return res.status(500).send(err);
@@ -40,7 +40,7 @@ router.post('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   const { id } = req.params;
-  BusTypeCtrl.findOneById(id, (err, data) => {
+  BusCtrl.findOneById(id, (err, data) => {
     if (err) {
       console.log(err);
       return res.status(500).send(err);
@@ -59,7 +59,7 @@ router.get('/:id', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
   const { id } = req.params;
   const data = req.body;
-  BusTypeCtrl.updateOneById(id, data, (err, success) => {
+  BusCtrl.updateOneById(id, data, (err, success) => {
     if (err) {
       console.log(err);
       return res.status(500).send(err);
@@ -77,7 +77,7 @@ router.put('/:id', (req, res, next) => {
 
 router.delete('/:id', (req, res, next) => {
   const { id } = req.params;
-  BusTypeCtrl.deleteOneById(id, (err, success) => {
+  BusCtrl.deleteOneById(id, (err, success) => {
     if (err) {
       console.log(err);
       return res.status(500).send(err);
@@ -89,23 +89,6 @@ router.delete('/:id', (req, res, next) => {
     }
     return res.status(404).send({
       message: 'Data requested to delete is not found'
-    });
-  });
-});
-
-
-router.get('/:id/buses/', (req, res, next) => {
-  const { id } = req.params;
-  let { offset, limit } = req.query;
-  offset = offset || 0;
-  limit = limit || 100;
-  BusTypeCtrl.findBusesByOne(id, offset, limit, (err, rows) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).send(err);
-    }
-    return res.status(200).send({
-      data: rows
     });
   });
 });

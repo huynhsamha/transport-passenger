@@ -40,3 +40,24 @@ $ node index
 Running on localhost:4200
 OracleDB: pool default is created
 ```
+
+
+## APIs
+
+### BUS_TYPE
+
+|GET|		/api/v1/busType/||
+|POST|		/api/v1/busType/||
+|GET|		/api/v1/busType/:id||
+|PUT|		/api/v1/busType/:id||
+|DELETE|	/api/v1/busType/:id||
+|GET|		/api/v1/busType/:id/buses| Get list of buses which type is bus type `:id`|
+
+
+## BUS
+
+|GET|		/api/v1/bus/||
+|POST|		/api/v1/bus/||
+|GET|		/api/v1/bus/:id||
+|PUT|		/api/v1/bus/:id||
+|DELETE|	/api/v1/bus/:id||

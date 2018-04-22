@@ -32,7 +32,7 @@ const updateOneById = (id, data, cb) => {
   if (data.mass_all) attributes.push(`mass_all = ${data.mass_all}`);
   if (data.mass_no_load) attributes.push(`mass_no_load = ${data.mass_no_load}`);
 
-  const sql = `update account
+  const sql = `update bus_type
     set ${attributes.join(',')}
     where id = ${id}`;
 
@@ -78,11 +78,25 @@ const deleteOneById = (id, cb) => {
     .catch(err => cb(err));
 };
 
+const findBusesByOne = (busTypeId, offset, limit, cb) => {
+  const sql =
+    `select * from (
+      select * from bus
+      where bus_type_id = ${busTypeId}
+    )
+    where
+      rownum between ${offset} and ${offset + limit - 1}`;
+
+  db.execute(sql)
+    .then(res => cb(null, res.rows))
+    .catch(err => cb(err));
+};
 
 export default {
   findAll,
   findOneById,
   insert,
   updateOneById,
-  deleteOneById
+  deleteOneById,
+  findBusesByOne
 };
