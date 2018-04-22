@@ -2,13 +2,13 @@ import express from 'express';
 
 const router = express.Router();
 
-import AccountCtrl from '../controllers/account';
+import BusTypeCtrl from '../controllers/busType';
 
 router.get('/', (req, res, next) => {
   let { offset, limit } = req.query;
   offset = offset || 0;
   limit = limit || 100;
-  AccountCtrl.findAll(offset, limit, (err, rows) => {
+  BusTypeCtrl.findAll(offset, limit, (err, rows) => {
     if (err) {
       console.log(err);
       return res.status(500).send(err);
@@ -21,16 +21,17 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   const data = req.body;
-  AccountCtrl.insert(data, (err, success) => {
+  BusTypeCtrl.insert(data, (err, ret) => {
     if (err) {
       console.log(err);
       return res.status(500).send(err);
     }
-    if (success) {
+    if (ret.rowsAffected) {
       return res.status(201).send({
         message: 'Data is inserted successfully'
       });
     }
+    console.log(ret);
     return res.status(400).send({
       message: 'Data requested to insert is not valid or conflict'
     });
@@ -39,7 +40,8 @@ router.post('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   const id = req.params.id;
-  AccountCtrl.findOneById(id, (err, data) => {
+  console.log(id);
+  BusTypeCtrl.findOneById(id, (err, data) => {
     if (err) {
       console.log(err);
       return res.status(500).send(err);
@@ -58,7 +60,7 @@ router.get('/:id', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
   const id = req.params.id;
   const data = req.body;
-  AccountCtrl.updateOneById(id, data, (err, success) => {
+  BusTypeCtrl.updateOneById(id, data, (err, success) => {
     if (err) {
       console.log(err);
       return res.status(500).send(err);
@@ -76,7 +78,7 @@ router.put('/:id', (req, res, next) => {
 
 router.delete('/:id', (req, res, next) => {
   const id = req.params.id;
-  AccountCtrl.deleteOneById(id, (err, success) => {
+  BusTypeCtrl.deleteOneById(id, (err, success) => {
     if (err) {
       console.log(err);
       return res.status(500).send(err);
