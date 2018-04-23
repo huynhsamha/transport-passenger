@@ -65,3 +65,26 @@ OracleDB: pool default is created
 |GET|		/api/v1/bus/:id||
 |PUT|		/api/v1/bus/:id||
 |DELETE|	/api/v1/bus/:id||
+
+
+### TRIP_DAILY
+
+| Method | Url | Description |
+| ------ | --- | ----------- |
+|GET|		/api/v1/tripDaily/||
+|POST|		/api/v1/tripDaily/||
+|GET|		/api/v1/tripDaily/:id||
+|PUT|		/api/v1/tripDaily/:id||
+|DELETE|	/api/v1/tripDaily/:id||
+|GET|		/api/v1/tripDaily/:id/trips| Get list of trips which trip daily `:id`|
+
+
+## TRIP
+
+| Method | Url | Description |
+| ------ | --- | ----------- |
+|GET|		/api/v1/trip/||
+|POST|		/api/v1/trip/||
+|GET|		/api/v1/trip/:id||
+|PUT|		/api/v1/trip/:id||
+|DELETE|	/api/v1/trip/:id||
