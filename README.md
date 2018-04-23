@@ -4,6 +4,30 @@ Assignment Database System - Transport Passenger System
 
 ## Quickstart
 
+### Quick review source code (Optional)
+#### Install extension on Chrome
++ Go [chrome://apps/](chrome://apps/)
++ Choose `Web Store`
++ Search `Octotree` and install the extension on Chrome
++ After installation, a sidebar contains project tree will appear on the web
+
+#### Code structure
++ `index.js`: start running node with `babel` (transform ES6, ES7 to ES5) and `dotenv` (environment variables)
++ `server.js`: start server express
++ `test.js`: only for testing somethings
++ `config/db.js`: export environment variables for database
++ `server/config/oracle`: config package `oracledb`
++ `server/models`: Models database extend from `server/config/oracle/baseModel.js`
++ `server/controllers`: Controllers connect to database
++ `server/routes`: Routes express
+
+
+### Clone source code
+```
+git clone https://github.com/huynhsamha/transport-passenger.git
+```
+
+
 ### Configure database
 
 Create `.env` in root project (the file is ignored in `.gitignore`, because of security for production)
@@ -17,6 +41,7 @@ DB_PASSWORD=12345
 ```
 
 See file `config/db.js` that use the file to export configure the database.
+
 
 
 ### Installation
