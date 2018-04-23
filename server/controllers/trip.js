@@ -1,9 +1,9 @@
 import db from '../config/oracle';
-import { Bus } from '../models';
+import { Trip } from '../models';
 
 
 const findAll = (offset, limit, cb) => {
-  const sql = Bus.getStmtSelectAll(offset, limit);
+  const sql = Trip.getStmtSelectAll(offset, limit);
   console.log(sql);
 
   db.execute(sql)
@@ -12,9 +12,9 @@ const findAll = (offset, limit, cb) => {
 };
 
 const findOneById = (id, cb) => {
-  const sql = `select bs.*, tp.*
-    from bus bs, bus_type tp
-    where (bs.id = :id) and (bs.bus_type_id = tp.id)`;
+  const sql = `select t.*, td.*
+    from Trip t, Trip_daily td
+    where (t.id = :id) and (t.trip_daily_id = td.id)`;
 
   db.execute(sql, { id })
     .then(res => cb(null, res.rows[0]))
@@ -22,29 +22,29 @@ const findOneById = (id, cb) => {
 };
 
 const updateOneById = (id, data, cb) => {
-  const bus = new Bus({ ...data, id });
-  const sql = bus.getStmtUpdate();
-  console.log(bus);
+  const trip = new Trip({ ...data, id });
+  const sql = trip.getStmtUpdate();
+  console.log(trip);
   console.log(sql);
 
-  db.execute(sql, bus)
+  db.execute(sql, trip)
     .then(res => cb(null, res))
     .catch(err => cb(err));
 };
 
 const insert = (data, cb) => {
-  const bus = new Bus(data);
-  const sql = bus.getStmtInsert();
-  console.log(bus);
+  const trip = new Trip(data);
+  const sql = trip.getStmtInsert();
+  console.log(trip);
   console.log(sql);
 
-  db.execute(sql, bus)
+  db.execute(sql, trip)
     .then(res => cb(null, res))
     .catch(err => cb(err));
 };
 
 const deleteOneById = (id, cb) => {
-  const sql = Bus.getStmtDeleteOneById();
+  const sql = Trip.getStmtDeleteOneById();
 
   db.execute(sql, { id })
     .then(res => cb(null, res))

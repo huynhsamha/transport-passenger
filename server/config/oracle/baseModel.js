@@ -4,11 +4,12 @@ import DataTypes from './dataTypes';
 // define base model
 class Model {
 
-  getAttributes() { return this.constructor.attributes; }
-  getTableName() { return this.constructor.tableName; }
-  getPrimaryKey() { return this.constructor.primaryKey; }
+  getAttributes = () => this.constructor.attributes;
+  getTableName = () => this.constructor.tableName;
+  getPrimaryKey = () => this.constructor.primaryKey;
 
   constructor(data) {
+    if (!data) return;
     const attributes = this.getAttributes();
     _.forOwn(attributes, (val, key) => {
       switch (val.type) {
@@ -71,8 +72,26 @@ class Model {
 Model.attributes = {
   id: { type: DataTypes.STRING }
 };
-Model.tableName = 'Model';
+Model.tableName = 'MODEL';
 Model.primaryKey = 'id';
+
+// default static statements
+Model.getStmtSelectAll = model => (offset, limit) =>
+  `select * from
+      (select _table.*, rownum as _rownum
+        from ${model.tableName} _table)
+      where
+        _rownum between ${offset} and ${offset + limit - 1}`;
+
+
+Model.getStmtSelectOneById = model => () =>
+  `select * from ${model.tableName}
+    where ${model.primaryKey} = :${model.primaryKey}`;
+
+
+Model.getStmtDeleteOneById = model => () =>
+  `delete * from ${model.tableName}
+    where ${model.primaryKey} = :${model.primaryKey}`;
 
 
 export default Model;

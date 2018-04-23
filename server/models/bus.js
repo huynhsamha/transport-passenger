@@ -9,8 +9,8 @@ class Bus extends Model {
 Bus.tableName = 'BUS';
 
 Bus.attributes = {
-  id: { type: DataTypes.STRING },
-  bus_type_id: { type: DataTypes.STRING },
+  id: { type: DataTypes.NUMBER },
+  bus_type_id: { type: DataTypes.NUMBER },
   registration: { type: DataTypes.STRING },
   price: { type: DataTypes.NUMBER },
   status: { type: DataTypes.STRING },
@@ -19,6 +19,9 @@ Bus.attributes = {
   warranty_miles: { type: DataTypes.NUMBER },
   description: { type: DataTypes.STRING }
 };
+
+Bus.getStmtSelectAll = Model.getStmtSelectAll(Bus);
+Bus.getStmtDeleteOneById = Model.getStmtDeleteOneById(Bus);
 
 
 export default Bus;

@@ -1,9 +1,9 @@
 import db from '../config/oracle';
-import { BusType } from '../models';
+import { TripDaily } from '../models';
 
 
 const findAll = (offset, limit, cb) => {
-  const sql = BusType.getStmtSelectAll(offset, limit);
+  const sql = TripDaily.getStmtSelectAll(offset, limit);
   console.log(sql);
 
   db.execute(sql)
@@ -12,7 +12,7 @@ const findAll = (offset, limit, cb) => {
 };
 
 const findOneById = (id, cb) => {
-  const sql = BusType.getStmtSelectOneById();
+  const sql = TripDaily.getStmtSelectOneById();
   console.log(sql);
 
   db.execute(sql, { id })
@@ -21,29 +21,29 @@ const findOneById = (id, cb) => {
 };
 
 const updateOneById = (id, data, cb) => {
-  const busType = new BusType({ ...data, id });
-  const sql = busType.getStmtUpdate();
-  console.log(busType);
+  const tripDaily = new TripDaily({ ...data, id });
+  const sql = tripDaily.getStmtUpdate();
+  console.log(tripDaily);
   console.log(sql);
 
-  db.execute(sql, busType)
+  db.execute(sql, tripDaily)
     .then(res => cb(null, res))
     .catch(err => cb(err));
 };
 
 const insert = (data, cb) => {
-  const busType = new BusType(data);
-  const sql = busType.getStmtInsert();
-  console.log(busType);
+  const tripDaily = new TripDaily(data);
+  const sql = tripDaily.getStmtInsert();
+  console.log(tripDaily);
   console.log(sql);
 
-  db.execute(sql, busType)
+  db.execute(sql, tripDaily)
     .then(res => cb(null, res))
     .catch(err => cb(err));
 };
 
 const deleteOneById = (id, cb) => {
-  const sql = BusType.getStmtDeleteOneById();
+  const sql = TripDaily.getStmtDeleteOneById();
   console.log(sql);
 
   db.execute(sql, { id })
@@ -51,11 +51,11 @@ const deleteOneById = (id, cb) => {
     .catch(err => cb(err));
 };
 
-const findBusesByOne = (busTypeId, offset, limit, cb) => {
+const findTripsByOne = (tripDailyId, offset, limit, cb) => {
   const sql =
     `select * from (
-      select * from bus
-      where bus_type_id = ${busTypeId}
+      select * from trip
+      where trip_daily_id = ${tripDailyId}
     )
     where
       rownum between ${offset} and ${offset + limit - 1}`;
@@ -71,5 +71,5 @@ export default {
   insert,
   updateOneById,
   deleteOneById,
-  findBusesByOne
+  findTripsByOne
 };
