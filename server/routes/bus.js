@@ -6,8 +6,8 @@ import BusCtrl from '../controllers/bus';
 
 router.get('/', (req, res, next) => {
   let { offset, limit } = req.query;
-  offset = offset || 0;
-  limit = limit || 100;
+  offset = parseInt(offset, 10) || 0;
+  limit = parseInt(limit, 10) || 100;
   BusCtrl.findAll(offset, limit, (err, rows) => {
     if (err) {
       console.log(err);
@@ -59,16 +59,17 @@ router.get('/:id', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
   const { id } = req.params;
   const data = req.body;
-  BusCtrl.updateOneById(id, data, (err, success) => {
+  BusCtrl.updateOneById(id, data, (err, ret) => {
     if (err) {
       console.log(err);
       return res.status(500).send(err);
     }
-    if (success) {
+    if (ret.rowsAffected) {
       return res.status(200).send({
         message: 'Data is updated'
       });
     }
+    console.log(ret);
     return res.status(400).send({
       message: 'Data requested to update is not valid or conflict'
     });
@@ -77,16 +78,17 @@ router.put('/:id', (req, res, next) => {
 
 router.delete('/:id', (req, res, next) => {
   const { id } = req.params;
-  BusCtrl.deleteOneById(id, (err, success) => {
+  BusCtrl.deleteOneById(id, (err, ret) => {
     if (err) {
       console.log(err);
       return res.status(500).send(err);
     }
-    if (success) {
+    if (ret.rowsAffected) {
       return res.status(200).send({
         message: 'Data is deleted'
       });
     }
+    console.log(ret);
     return res.status(404).send({
       message: 'Data requested to delete is not found'
     });

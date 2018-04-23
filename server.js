@@ -7,10 +7,10 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 
 import routes from './server/routes';
-import db from './server/config/oracle-db';
+import db from './server/config/oracle';
 
 /** Connect and config Database Oracle */
-db.CreatePool()
+db.createPool()
   .then((pool) => {
     console.log(`OracleDB: pool ${pool.poolAlias} is created`);
   })
