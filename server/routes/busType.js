@@ -2,7 +2,7 @@ import express from 'express';
 
 const router = express.Router();
 
-import BusTypeCtrl from '../controllers/busType';
+import { BusTypeCtrl } from '../controllers';
 
 router.get('/', (req, res, next) => {
   let { offset, limit } = req.query;
