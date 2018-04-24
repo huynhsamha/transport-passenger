@@ -20,7 +20,7 @@ Assignment Database System - Transport Passenger System
 + `server/models`: Models database extend from `server/config/oracle/baseModel.js`
 + `server/controllers`: Controllers connect to database
 + `server/routes`: Routes express
-
++ `server/documents`: Database diagrams ERD
 
 ### Clone source code
 ```
