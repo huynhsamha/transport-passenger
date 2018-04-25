@@ -54,10 +54,25 @@ const deleteOneById = (id, cb) => {
 };
 
 
+const findOneByUsername = (username) => {
+  const sql = 'select * from employee where username = :username';
+
+  return db.execute(sql, { username }).then(res => res.rows[0]);
+};
+
+const changePassword = (username, password) => {
+  const sql = 'update employee set password = :password where username = :username';
+
+  return db.execute(sql, { username, password });
+};
+
+
 export default {
   findAll,
   findOneById,
   insert,
   updateOneById,
-  deleteOneById
+  deleteOneById,
+  findOneByUsername,
+  changePassword
 };

@@ -1,4 +1,7 @@
 import express from 'express';
+
+import auth from './auth';
+
 import busType from './busType';
 import bus from './bus';
 import tripDaily from './tripDaily';
@@ -6,6 +9,9 @@ import trip from './trip';
 import employee from './employee';
 
 const router = express.Router();
+
+
+router.use('/', auth);
 
 router.use('/api/v1/busType', busType);
 router.use('/api/v1/bus', bus);

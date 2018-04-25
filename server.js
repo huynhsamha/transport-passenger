@@ -5,6 +5,8 @@ import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import helmet from 'helmet';
+import compression from 'compression';
 
 import routes from './server/routes';
 import db from './server/config/oracle';
@@ -25,8 +27,17 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(helmet());
+app.use(compression());
 
-app.use(express.static(path.join(__dirname, './build')));
+app.use(express.static(path.join(__dirname, './build'), {
+  setHeaders(res, path) {
+    if (path.indexOf('assets') !== -1) {
+      const ONE_MONTH = 30 * 24 * 60 * 60;
+      res.setHeader('Cache-Control', `public, max-age=${ONE_MONTH}`);
+    }
+  }
+}));
 
 app.use('/', routes);
 

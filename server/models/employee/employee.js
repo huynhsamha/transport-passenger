@@ -29,4 +29,13 @@ Employee.attributes = {
 Employee.getStmtSelectAll = Model.getStmtSelectAll(Employee);
 Employee.getStmtDeleteOneById = Model.getStmtDeleteOneById(Employee);
 
+Employee.hashPassword = (username, password) =>
+  crypto.AES.encrypt(password, username).toString();
+
+Employee.authenticate = (username, encryptPassword, tryPassword) => {
+  var bytes = crypto.AES.decrypt(encryptPassword, username);
+  var decryptPassword = bytes.toString(crypto.enc.Utf8);
+  return tryPassword == decryptPassword;
+};
+
 export default Employee;
