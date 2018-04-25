@@ -113,3 +113,34 @@ OracleDB: pool default is created
 |GET|		/api/v1/trip/:id||
 |PUT|		/api/v1/trip/:id||
 |DELETE|	/api/v1/trip/:id||
+
+
+## EMPLOYEE
+
+| Method | Url | Description |
+| ------ | --- | ----------- |
+|GET|		/api/v1/employee/||
+|POST|		/api/v1/employee/||
+|GET|		/api/v1/employee/:id||
+|PUT|		/api/v1/employee/:id||
+|DELETE|	/api/v1/employee/:id||
+
+### + MANAGER
+
+| Method | Url | Description |
+| ------ | --- | ----------- |
+|GET|		/api/v1/employee/role/manager/||
+|POST|		/api/v1/employee/role/manager/||
+|GET|		/api/v1/employee/role/manager/:id||
+|PUT|		/api/v1/employee/role/manager/:id||
+|DELETE|	/api/v1/employee/role/manager/:id||
+
+### + DRIVER
+
+| Method | Url | Description |
+| ------ | --- | ----------- |
+|GET|		/api/v1/employee/role/driver/||
+|POST|		/api/v1/employee/role/driver/||
+|GET|		/api/v1/employee/role/driver/:id||
+|PUT|		/api/v1/employee/role/driver/:id||
+|DELETE|	/api/v1/employee/role/driver/:id||
