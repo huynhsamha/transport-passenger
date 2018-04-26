@@ -31,15 +31,15 @@ async function signIn(username, password, cb) {
   }
 }
 
-function forgotPassword(email, callback) {
+function forgotPassword(email, cb) {
 
 }
 
-function resetPassword(resetPasswordToken, newPassword, callback) {
+function resetPassword(resetPasswordToken, newPassword, cb) {
 
 }
 
-function verifyAccount(encryptEmail, newPassword, callback) {
+function verifyAccount(encryptEmail, newPassword, cb) {
 
 }
 
