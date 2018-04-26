@@ -13,6 +13,7 @@ import { Employee } from '../models/employee';
 async function signIn(username, password, cb) {
   try {
     const user = await EmployeeCtrl.findOneByUsername(username);
+    // console.log(user);
     if (!user) {
       return cb(null, { userNotFound: 1 });
     }

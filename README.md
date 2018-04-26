@@ -144,3 +144,10 @@ OracleDB: pool default is created
 |GET|		/api/v1/employee/role/driver/:id||
 |PUT|		/api/v1/employee/role/driver/:id||
 |DELETE|	/api/v1/employee/role/driver/:id||
+
+
+## Authentication
+
+| Method | Url | Description |
+| ------ | --- | ----------- |
+|POST|		/api/auth/signIn/| body: { username, password } |

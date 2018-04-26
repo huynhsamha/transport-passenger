@@ -11,6 +11,13 @@ router.use('/', (req, res, next) => {
   if (req.path.includes('auth')) {
     return next();
   }
+
+  // only for admin have authentication secret in .env on post method
+  const authSecret = req.body.authSecret;
+  if (authSecret == config.authenticationSecret) {
+    return next();
+  }
+
   const token = req.body.token || req.query.token || req.headers['x-access-token'] || req.session.token;
   if (!token) {
     return res.status(401).send({ errorMessage: 'No authentication for request' });
@@ -27,6 +34,7 @@ router.use('/', (req, res, next) => {
 router.post('/auth/signIn', (req, res, next) => {
   const username = req.body.username || '';
   const password = req.body.password || '';
+  // console.log(username, password);
   AuthCtrl.signIn(username, password, (err, data) => {
     if (err) {
       console.log(err);

@@ -1,15 +1,17 @@
 import _ from 'lodash';
 import DataTypes from './dataTypes';
+import lowerKeys from 'lowercase-keys-object';
 
 // define base model
 class Model {
 
-  getAttributes = () => this.constructor.attributes;
-  getTableName = () => this.constructor.tableName;
-  getPrimaryKey = () => this.constructor.primaryKey;
+  getAttributes() { return this.constructor.attributes; }
+  getTableName() { return this.constructor.tableName; }
+  getPrimaryKey() { return this.constructor.primaryKey; }
 
   constructor(data) {
     if (!data) return;
+    data = lowerKeys(data);
     const attributes = this.getAttributes();
     _.forOwn(attributes, (val, key) => {
       switch (val.type) {

@@ -39,7 +39,8 @@
     "lowercase-keys-object": "^1.1.2",
     "morgan": "~1.9.0",
     "nodemailer": "^4.6.4",
-    "oracledb": "^2.1.1"
+    "oracledb": "^2.1.1",
+    "uppercase-keys-object": "^1.1.3"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
@@ -59,7 +60,9 @@
     "url": "https://github.com/huynhsamha/transport-passenger/issues"
   },
   "contributors": [
-    "huynhsamha"
+    "huynhsamha",
+    "nggbaobkit",
+    "lamvanein"
   ],
   "engines": {
     "node": ">=6.10.0",

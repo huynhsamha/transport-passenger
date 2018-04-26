@@ -1,9 +1,17 @@
 import db from '../../config/oracle';
 import crypto from 'crypto-js';
+import lowerKeys from 'lowercase-keys-object';
 
 const { Model, DataTypes } = db;
 
 class Employee extends Model {
+  constructor(data) {
+    super(data);
+    data = lowerKeys(data);
+    if (data.username && data.password) {
+      this.password = Employee.hashPassword(data.username, data.password);
+    }
+  }
 }
 
 /** Override properties */
@@ -13,7 +21,7 @@ Employee.attributes = {
   id: { type: DataTypes.NUMBER },
   ssn: { type: DataTypes.NUMBER },
   first_name: { type: DataTypes.STRING },
-  second_name: { type: DataTypes.STRING },
+  last_name: { type: DataTypes.STRING },
   username: { type: DataTypes.STRING },
   password: { type: DataTypes.STRING },
   email: { type: DataTypes.STRING },
