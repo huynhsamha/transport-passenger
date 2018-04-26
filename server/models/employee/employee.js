@@ -25,13 +25,13 @@ Employee.attributes = {
   username: { type: DataTypes.STRING },
   password: { type: DataTypes.STRING },
   email: { type: DataTypes.STRING },
-  tel: { type: DataTypes.NUMBER },
+  tel: { type: DataTypes.STRING },
   bank_account: { type: DataTypes.NUMBER },
   photo_url: { type: DataTypes.STRING },
   salary: { type: DataTypes.NUMBER },
   address: { type: DataTypes.STRING },
   join_date: { type: DataTypes.DATE },
-  supervisor: { type: DataTypes.NUMBER },
+  supervisor_id: { type: DataTypes.NUMBER },
   department_id: { type: DataTypes.NUMBER },
   role: { type: DataTypes.STRING }
 };

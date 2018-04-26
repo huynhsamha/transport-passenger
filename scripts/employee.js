@@ -1,10 +1,11 @@
 import request from 'request';
+import config from '../config/config';
 
 const fake = require('fakerator')();
 
 const roles = ['manager', 'driver', 'assistant', 'worker', 'seller'];
 
-for (let id = 1; id < 50; id++) {
+for (let id = 1; id < 6; id++) {
   const first_name = fake.names.firstName();
   const last_name = fake.names.lastName();
   const username = fake.internet.userName(first_name, last_name);
@@ -17,6 +18,7 @@ for (let id = 1; id < 50; id++) {
   const role = roles[fake.random.number(4)];
 
   const employee = {
+    authSecret: config.authenticationSecret,
     id,
     ssn: 10000000000 + id,
     first_name,
@@ -31,14 +33,19 @@ for (let id = 1; id < 50; id++) {
     address,
     join_date,
     supervisor_id,
-    role,
-    LICENSE_NUMBER: fake.misc.uuid(), // driver
-    START_DATE: fake.date.past(), // manager
-    EXP_TRANSACTION: fake.random.number(10000000) // seller
+    role
+    // LICENSE_NUMBER: fake.misc.uuid(), // driver
+    // START_DATE: fake.date.past(), // manager
+    // EXP_TRANSACTION: fake.random.number(10000000) // seller
   };
-  console.log(employee);
-  // request.post('http://localhost:4200/api/v1/employee/', {
-  //   form: employee
-  // });
+  // console.log(employee);
+  request.post('http://localhost:4200/api/v1/employee/', {
+    form: employee
+  }, (err, res, body) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log(`${id} is OK`);
+  });
 }
 

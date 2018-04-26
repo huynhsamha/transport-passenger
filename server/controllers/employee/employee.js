@@ -1,5 +1,6 @@
 import db from '../../config/oracle';
 import { Employee } from '../../models';
+import ManagerCtrl from './manager';
 
 
 const findAll = (offset, limit, cb) => {
@@ -33,11 +34,27 @@ const updateOneById = (id, data, cb) => {
     .catch(err => cb(err));
 };
 
-const insert = (data, cb) => {
+const insert = async (data, cb) => {
   const employee = new Employee(data);
   const sql = employee.getStmtInsert();
-  console.log(employee);
-  console.log(sql);
+  // console.log(employee);
+  // console.log(sql);
+
+  try {
+    const res = await db.execute(sql, employee);
+    if (!employee.role) return cb(null, res);
+    // switch (employee.role) {
+    //   case 'manager':
+    //     ManagerCtrl.insert(data, (err, res) => {
+    //       if (err) throw err;
+    //       return cb(null, res);
+    //     });
+    //     break;
+    // }
+
+  } catch (err) {
+    cb(err);
+  }
 
   db.execute(sql, employee)
     .then(res => cb(null, res))
