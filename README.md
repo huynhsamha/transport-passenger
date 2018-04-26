@@ -21,6 +21,7 @@ Assignment Database System - Transport Passenger System
 + `server/controllers`: Controllers connect to database
 + `server/routes`: Routes express
 + `server/documents`: Database diagrams ERD
++ `server/scripts`: Import SQL, database scripts
 
 ### Clone source code
 ```
