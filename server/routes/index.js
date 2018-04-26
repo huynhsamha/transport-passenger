@@ -11,7 +11,7 @@ import employee from './employee';
 const router = express.Router();
 
 
-router.use('/', auth);
+router.use('/api', auth);
 
 router.use('/api/v1/busType', busType);
 router.use('/api/v1/bus', bus);

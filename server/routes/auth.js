@@ -4,8 +4,25 @@ const router = express.Router();
 
 import jwt from 'jsonwebtoken';
 import AuthCtrl from '../controllers/auth';
-import config from '../../config/db';
+import config from '../../config/config';
 
+
+router.use('/', (req, res, next) => {
+  if (req.path.includes('auth')) {
+    return next();
+  }
+  const token = req.body.token || req.query.token || req.headers['x-access-token'] || req.session.token;
+  if (!token) {
+    return res.status(401).send({ errorMessage: 'No authentication for request' });
+  }
+  jwt.verify(token, config.session.secret, (err, decoded) => {
+    if (err) {
+      console.log(err);
+      return res.status(403).send({ errorMessage: 'Token is not valid' });
+    }
+    return next();
+  });
+});
 
 router.post('/auth/signIn', (req, res, next) => {
   const username = req.body.username || '';
@@ -21,6 +38,8 @@ router.post('/auth/signIn', (req, res, next) => {
     if (data.wrongPassword) {
       return res.status(401).send({ message: 'Wrong password' });
     }
+    req.session.user = data.user;
+    req.session.token = data.token;
     res.status(200).send({ user: data.user, token: data.token });
   });
 });

@@ -1,4 +1,5 @@
 import db from '../../config/oracle';
+import crypto from 'crypto-js';
 
 const { Model, DataTypes } = db;
 
@@ -23,7 +24,8 @@ Employee.attributes = {
   address: { type: DataTypes.STRING },
   join_date: { type: DataTypes.DATE },
   supervisor: { type: DataTypes.NUMBER },
-  department_id: { type: DataTypes.NUMBER }
+  department_id: { type: DataTypes.NUMBER },
+  role: { type: DataTypes.STRING }
 };
 
 Employee.getStmtSelectAll = Model.getStmtSelectAll(Employee);

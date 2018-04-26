@@ -5,6 +5,7 @@ import async from 'async';
 import crypto from 'crypto-js';
 import nodemailer from 'nodemailer';
 import generatePassword from 'generate-password';
+import config from '../../config/config';
 
 import { EmployeeCtrl } from './employee';
 import { Employee } from '../models/employee';
@@ -18,7 +19,13 @@ async function signIn(username, password, cb) {
     if (Employee.authenticate(username, user.PASSWORD, password) == false) {
       return cb(null, { wrongPassword: 1 });
     }
-    return cb(null, { success: 1 });
+    const token = jwt.sign(
+      { data: user },
+      config.session.secret,
+      { expiresIn: config.tokenExpire }
+    );
+    user.PASSWORD = null;
+    return cb(null, { success: 1, user, token });
   } catch (err) {
     return cb(err);
   }

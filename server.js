@@ -7,9 +7,11 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
+import session from 'express-session';
 
 import routes from './server/routes';
 import db from './server/config/oracle';
+import config from './config/config';
 
 /** Connect and config Database Oracle */
 db.createPool()
@@ -30,12 +32,24 @@ app.use(cookieParser());
 app.use(helmet());
 app.use(compression());
 
+app.use(session({
+  secret: config.session.secret,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: config.session.maxAge
+  }
+}));
+
 app.use(express.static(path.join(__dirname, './build'), {
   setHeaders(res, path) {
-    if (path.indexOf('assets') !== -1) {
-      const ONE_MONTH = 30 * 24 * 60 * 60;
-      res.setHeader('Cache-Control', `public, max-age=${ONE_MONTH}`);
-    }
+    const paths = ['build', 'dist', 'assets', 'lib', 'libs', 'static'];
+    paths.forEach((p) => {
+      if (path.indexOf(p) > -1) {
+        const ONE_MONTH = 30 * 24 * 60 * 60;
+        res.setHeader('Cache-Control', `public, max-age=${ONE_MONTH}`);
+      }
+    });
   }
 }));
 
