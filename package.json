@@ -64,7 +64,8 @@
   "contributors": [
     "huynhsamha",
     "nggbaobkit",
-    "lamvanein"
+    "lamvanein",
+    "trungnhanuchiha"
   ],
   "engines": {
     "node": ">=6.10.0",
