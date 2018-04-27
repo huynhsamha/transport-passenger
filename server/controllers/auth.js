@@ -33,7 +33,7 @@ async function signIn(username, password, cb) {
 }
 
 function forgotPassword(email, cb) {
-
+    console.log('ahihi');
 }
 
 function resetPassword(resetPasswordToken, newPassword, cb) {
