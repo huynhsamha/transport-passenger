@@ -69,6 +69,28 @@ OracleDB: pool default is created
 
 
 ## APIs
+All APIs need token after login to system to use.
+
+### Authentication Secret - avoid login
+To avoid login to use api for development, you can create auth secret in file `.env`, which is added to the request as `body` or `query` to pass the authentication layer.
+
+Example, in file `.env`, add:
+```
+AUTHENTICATION_SECRET=F3yqfrVHR3cLDYdqpQLVZus549aXLrWTsDGsddVARSSPCBw5GAa6VGafxAdh4Mac9cP93PbNheL7BxzRPMMH36h5VuB7ks5xbZMDUHczZQc82ra6UMkbEE9zQtDRYvqNHSUn8UVySaSEDQLtz2RYHhQQnA7rjAahZKY4sGh6B5exnL7SD8fbGe8cPhSHYXFbDMZtaSseMQsYUT76BMEGANCxZxy2hCYRB4JVXVrqpjTT48BWRcuX6uqZ8kuKNCZhEF7L6emrTgQLCfWh436WPA3rQKLw39exaAZbwstCuGqd7SmeXgnZkXmnhBu3GhhJdsVdf5bce4yHTrUQhjKCeUb3vFxMMtCEHQGzx6C5bz7ewjtFZnB8ngXcPCGkJcGmaUpAVJUFdfwKwME8Dyz9HQmDeAHNpWUn3XQpa97TKfJZ8Zue2VNqV93SnS8qMmV9cfvye2YVSzJJ65rUPDnHVbvPDp69BEJe4UNeYJ9WRnDy4EFqz4ZFdjF8z6wtQRQc
+```
+
+In request, for `post` or `put`, you add to `body` with `authSecret`, for `get` or `delete`, you add to `query` with `authSecret` (`authSecret` is the `AUTHENTICATION_SECRET` you added)
+
+
+## Authentication - login to use APIs
+
+| Method | Url | Description |
+| ------ | --- | ----------- |
+|POST|		/api/auth/signIn/| body: { username, password } |
+
+Login with `username` and `password` of table `EMPLOYEE`.
+
+After login, server will create a session for you to use following  APIs
 
 ### BUS_TYPE
 
@@ -116,6 +138,16 @@ OracleDB: pool default is created
 |DELETE|	/api/v1/trip/:id||
 
 
+## OFFICE
+
+| Method | Url | Description |
+| ------ | --- | ----------- |
+|GET|		/api/v1/office/||
+|POST|		/api/v1/office/||
+|PUT|		/api/v1/office/:id||
+|DELETE|	/api/v1/office/:id||
+
+
 ## EMPLOYEE
 
 | Method | Url | Description |
@@ -145,10 +177,3 @@ OracleDB: pool default is created
 |GET|		/api/v1/employee/role/driver/:id||
 |PUT|		/api/v1/employee/role/driver/:id||
 |DELETE|	/api/v1/employee/role/driver/:id||
-
-
-## Authentication
-
-| Method | Url | Description |
-| ------ | --- | ----------- |
-|POST|		/api/auth/signIn/| body: { username, password } |

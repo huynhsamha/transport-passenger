@@ -13,7 +13,7 @@ router.use('/', (req, res, next) => {
   }
 
   // only for admin have authentication secret in .env on post method
-  const authSecret = req.body.authSecret;
+  const authSecret = req.body.authSecret || req.query.authSecret;
   if (authSecret == config.authenticationSecret) {
     return next();
   }
