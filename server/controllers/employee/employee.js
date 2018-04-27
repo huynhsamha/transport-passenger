@@ -56,10 +56,6 @@ const insert = async (data, cb) => {
   } catch (err) {
     cb(err);
   }
-
-  db.execute(sql, employee)
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
 };
 
 const deleteOneById = (id, cb) => {

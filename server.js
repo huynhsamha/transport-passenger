@@ -84,7 +84,9 @@ app.set('port', port);
 const server = http.createServer(app);
 server.listen(port, () => console.log(`Running on localhost:${port}`));
 
+
 setTimeout(() => {
   // require('./scripts/employee');
-  require('./scripts/manager');
+  // require('./scripts/manager');
+  require('./scripts/office');
 }, 1000);
