@@ -4,8 +4,10 @@ import config from '../config/config';
 const fake = require('fakerator')();
 
 const roles = ['manager', 'driver', 'assistant', 'worker', 'seller'];
+const NUM_MANAGERS = 10;
 
-for (let id = 1; id < 6; id++) {
+const generate = (id) => {
+  const ssn = fake.random.number(1000000000, 9999999999);
   const first_name = fake.names.firstName();
   const last_name = fake.names.lastName();
   const username = fake.internet.userName(first_name, last_name);
@@ -14,13 +16,16 @@ for (let id = 1; id < 6; id++) {
   const photo_url = fake.internet.avatar();
   const address = fake.address.street();
   const join_date = fake.date.past();
-  const supervisor_id = id > 5 ? fake.random.number(5) : null;
-  const role = roles[fake.random.number(4)];
+  const supervisor_id = id > NUM_MANAGERS ? fake.random.number(5) : null;
+
+  let role;
+  if (id <= NUM_MANAGERS) role = roles[0]; // manager
+  else role = roles[fake.random.number(1, 4)]; // others
 
   const employee = {
     authSecret: config.authenticationSecret,
     id,
-    ssn: 10000000000 + id,
+    ssn,
     first_name,
     last_name,
     username,
@@ -34,9 +39,6 @@ for (let id = 1; id < 6; id++) {
     join_date,
     supervisor_id,
     role
-    // LICENSE_NUMBER: fake.misc.uuid(), // driver
-    // START_DATE: fake.date.past(), // manager
-    // EXP_TRANSACTION: fake.random.number(10000000) // seller
   };
   // console.log(employee);
   request.post('http://localhost:4200/api/v1/employee/', {
@@ -47,5 +49,16 @@ for (let id = 1; id < 6; id++) {
     }
     console.log(`${id} is OK`);
   });
-}
+};
 
+const generateManagers = () => {
+  for (let id = 1; id <= NUM_MANAGERS; id++) generate(id);
+};
+
+const generateOthers = () => {
+  for (let id = NUM_MANAGERS + 1; id <= 50; id++) generate(id);
+};
+
+
+// generateManagers();
+generateOthers();

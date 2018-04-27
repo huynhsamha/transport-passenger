@@ -42,7 +42,7 @@ const insert = async (data, cb) => {
 
   try {
     const res = await db.execute(sql, employee);
-    if (!employee.role) return cb(null, res);
+    // if (!employee.role) return cb(null, res);
     // switch (employee.role) {
     //   case 'manager':
     //     ManagerCtrl.insert(data, (err, res) => {
@@ -51,6 +51,7 @@ const insert = async (data, cb) => {
     //     });
     //     break;
     // }
+    return cb(null, res);
 
   } catch (err) {
     cb(err);
