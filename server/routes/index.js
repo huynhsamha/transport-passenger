@@ -8,6 +8,9 @@ import tripDaily from './tripDaily';
 import trip from './trip';
 import office from './office';
 import employee from './employee';
+import ticket from './ticket';
+import customer from './customer';
+import transaction from './transaction';
 
 const router = express.Router();
 
@@ -20,5 +23,8 @@ router.use('/api/v1/tripDaily', tripDaily);
 router.use('/api/v1/trip', trip);
 router.use('/api/v1/office', office);
 router.use('/api/v1/employee', employee);
+router.use('/api/v1/ticket', ticket);
+router.use('/api/v1/customer', customer);
+router.use('/api/v1/transaction', transaction);
 
 export default router;

@@ -22,6 +22,6 @@ Bus.attributes = {
 
 Bus.getStmtSelectAll = Model.getStmtSelectAll(Bus);
 Bus.getStmtDeleteOneById = Model.getStmtDeleteOneById(Bus);
-
+Bus.getStmtSelectOneById = Model.getStmtSelectOneById(Bus);
 
 export default Bus;

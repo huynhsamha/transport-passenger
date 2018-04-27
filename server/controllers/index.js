@@ -3,6 +3,9 @@ import BusCtrl from './bus';
 import TripDailyCtrl from './tripDaily';
 import TripCtrl from './trip';
 import OfficeCtrl from './office';
+import TicketCtrl from './ticket';
+import CustomerCtrl from './customer';
+import TransactionCtrl from './transaction';
 import { EmployeeCtrl, ManagerCtrl, DriverCtrl } from './employee';
 
 export {
@@ -13,5 +16,8 @@ export {
   OfficeCtrl,
   EmployeeCtrl,
   ManagerCtrl,
-  DriverCtrl
+  DriverCtrl,
+  TicketCtrl,
+  CustomerCtrl,
+  TransactionCtrl
 };
