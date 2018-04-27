@@ -1,3 +1,4 @@
+const ONE_MINUTE = 60 * 60; // in seconds
 const ONE_DAY = 60 * 60 * 24; // in seconds
 
 module.exports = {
@@ -10,5 +11,6 @@ module.exports = {
     password: process.env.EMAIL_PASSWORD || 'YOUR PASSWORD EMAIL IN FILE .ENV'
   },
   tokenExpire: 30 * ONE_DAY,
+  tokenResetPassword: 15 * ONE_MINUTE,
   authenticationSecret: process.env.AUTHENTICATION_SECRET || 'YOUR AUTHENTICATION SECRET'
 };

@@ -59,25 +59,37 @@ router.post('/auth/forgotPassword', (req, res, next) => {
       console.log(err);
       return res.status(500).send({ errorMessage: err.errorMessage });
     }
+    if (data.userNotFound) {
+      return res.status(404).send({ message: 'User not found' });
+    }
     res.status(200).send({
-      message: 'Check your email for a link to reset your password.'
+      message: `Please check your email to reset your password.
+      If no have any email in 15 minutes, please check in spam or try agin.`
     });
   });
 });
 
-router.post('/auth/resetPassword', (req, res, next) => {
-  const resetPasswordToken = req.body.resetPasswordToken || '';
-  const newPassword = req.body.newPassword || '';
-  AuthCtrl.resetPassword(resetPasswordToken, newPassword, (err, data) => {
+router.get('/auth/verifyResetPassword', (req, res, next) => {
+  const tokenResetPassword = req.query.token || '';
+  console.log(tokenResetPassword);
+  jwt.verify(tokenResetPassword, config.session.secret, (err, decoded) => {
     if (err) {
       console.log(err);
-      return res.status(500).send(err);
+      return res.status(403).send({ errorMessage: 'Token is not valid' });
     }
-    res.status(200).send(data);
+    console.log(decoded);
+    console.log('OK');
+    return res.redirect('/');
   });
 });
 
+
+router.post('/auth/resetPassword', (req, res, next) => {
+});
+
+
 router.get('/signout', (req, res, next) => {
+  req.session.destroy();
   res.redirect('/');
 });
 
