@@ -144,6 +144,7 @@ After login, server will create a session for you to use following  APIs
 | ------ | --- | ----------- |
 |GET|		/api/v1/office/||
 |POST|		/api/v1/office/||
+|GET|		/api/v1/office/:id||
 |PUT|		/api/v1/office/:id||
 |DELETE|	/api/v1/office/:id||
 
