@@ -74,6 +74,12 @@ const findOneByUsername = (username) => {
   return db.execute(sql, { username }).then(res => res.rows[0]);
 };
 
+const findOneByEmail = (email) => {
+  const sql = 'select * from employee where email = :email';
+
+  return db.execute(sql, { email }).then(res => res.rows[0]);
+};
+
 const changePassword = (username, password) => {
   const sql = 'update employee set password = :password where username = :username';
 
@@ -88,5 +94,6 @@ export default {
   updateOneById,
   deleteOneById,
   findOneByUsername,
+  findOneByEmail,
   changePassword
 };
