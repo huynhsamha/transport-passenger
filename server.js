@@ -6,8 +6,10 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import helmet from 'helmet';
+import csrf from 'csurf';
 import compression from 'compression';
 import session from 'express-session';
+import RateLimit from 'express-rate-limit';
 
 import routes from './server/routes';
 import db from './server/config/oracle';
@@ -24,12 +26,23 @@ db.createPool()
 /** Configure App Express */
 const app = express();
 
+// setup route middlewares
+const csrfProtection = csrf({ cookie: true });
+
+const ONE_MINUTE = 60 * 1000;
+const limiter = new RateLimit({
+  windowMs: 5 * ONE_MINUTE, // milliseconds, how long to keep records
+  max: 100, // limit each IP to 100 requests per windowMs
+  delayMs: 0 // disable delaying - full speed until the max limit is reached
+});
+
+// usage for middlewares
 app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(helmet());
+app.use(helmet({ frameguard: { action: 'deny' } }));
 app.use(compression());
 
 app.use(session({
@@ -37,7 +50,9 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: {
-    maxAge: config.session.maxAge
+    maxAge: config.session.maxAge,
+    secure: true,
+    httpOnly: true
   }
 }));
 
@@ -52,6 +67,8 @@ app.use(express.static(path.join(__dirname, './build'), {
     });
   }
 }));
+
+app.use('/api/', limiter);
 
 app.use('/', routes);
 

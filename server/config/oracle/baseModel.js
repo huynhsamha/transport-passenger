@@ -80,10 +80,10 @@ Model.primaryKey = 'id';
 // default static statements
 Model.getStmtSelectAll = model => (offset, limit) =>
   `select * from
-      (select _table.*, rownum as _rownum
-        from ${model.tableName} _table)
+      (select temp.*, rownum as rnum
+        from ${model.tableName} temp)
       where
-        _rownum between ${offset} and ${offset + limit - 1}`;
+        rnum between ${offset} and ${offset + limit - 1}`;
 
 
 Model.getStmtSelectOneById = model => () =>

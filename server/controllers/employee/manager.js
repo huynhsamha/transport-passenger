@@ -5,11 +5,11 @@ import { Manager } from '../../models/employee';
 const findAll = (offset, limit, cb) => {
   const sql =
   `select * from (
-    select _table.*, rownum as _rownum from (
+    select temp.*, rownum as rnum, from (
       select m.*, e.* from manager m, employee e where (e.id = m.id)
-    ) _table
+    ) temp
   ) where
-    _rownum between ${offset} and ${offset + limit - 1}`;
+      rnum between ${offset} and ${offset + limit - 1}`;
 
   console.log(sql);
 
