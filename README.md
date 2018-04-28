@@ -96,7 +96,7 @@ After login, server will create a session for you to use following  APIs
 
 | Method | Url | Description |
 | ------ | --- | ----------- |
-|GET|		/api/v1/busType/||
+|GET|		/api/v1/busType/| query: { offset: default 0, limit: default 100 }|
 |POST|		/api/v1/busType/||
 |GET|		/api/v1/busType/:id||
 |PUT|		/api/v1/busType/:id||
@@ -108,7 +108,7 @@ After login, server will create a session for you to use following  APIs
 
 | Method | Url | Description |
 | ------ | --- | ----------- |
-|GET|		/api/v1/bus/||
+|GET|		/api/v1/bus/|query: { offset: default 0, limit: default 100 }|
 |POST|		/api/v1/bus/||
 |GET|		/api/v1/bus/:id||
 |PUT|		/api/v1/bus/:id||
@@ -119,7 +119,7 @@ After login, server will create a session for you to use following  APIs
 
 | Method | Url | Description |
 | ------ | --- | ----------- |
-|GET|		/api/v1/tripDaily/||
+|GET|		/api/v1/tripDaily/|query: { offset: default 0, limit: default 100 }|
 |POST|		/api/v1/tripDaily/||
 |GET|		/api/v1/tripDaily/:id||
 |PUT|		/api/v1/tripDaily/:id||
@@ -131,7 +131,7 @@ After login, server will create a session for you to use following  APIs
 
 | Method | Url | Description |
 | ------ | --- | ----------- |
-|GET|		/api/v1/trip/||
+|GET|		/api/v1/trip/|query: { offset: default 0, limit: default 100 }|
 |POST|		/api/v1/trip/||
 |GET|		/api/v1/trip/:id||
 |PUT|		/api/v1/trip/:id||
@@ -142,7 +142,7 @@ After login, server will create a session for you to use following  APIs
 
 | Method | Url | Description |
 | ------ | --- | ----------- |
-|GET|		/api/v1/office/||
+|GET|		/api/v1/office/|query: { offset: default 0, limit: default 100 }|
 |POST|		/api/v1/office/||
 |GET|		/api/v1/office/:id||
 |PUT|		/api/v1/office/:id||
@@ -153,7 +153,7 @@ After login, server will create a session for you to use following  APIs
 
 | Method | Url | Description |
 | ------ | --- | ----------- |
-|GET|		/api/v1/employee/||
+|GET|		/api/v1/employee/|query: { offset: default 0, limit: default 100 }|
 |POST|		/api/v1/employee/||
 |GET|		/api/v1/employee/:id||
 |PUT|		/api/v1/employee/:id||
@@ -163,7 +163,7 @@ After login, server will create a session for you to use following  APIs
 
 | Method | Url | Description |
 | ------ | --- | ----------- |
-|GET|		/api/v1/employee/role/manager/||
+|GET|		/api/v1/employee/role/manager/|query: { offset: default 0, limit: default 100 }|
 |POST|		/api/v1/employee/role/manager/||
 |GET|		/api/v1/employee/role/manager/:id||
 |PUT|		/api/v1/employee/role/manager/:id||
@@ -173,7 +173,7 @@ After login, server will create a session for you to use following  APIs
 
 | Method | Url | Description |
 | ------ | --- | ----------- |
-|GET|		/api/v1/employee/role/driver/||
+|GET|		/api/v1/employee/role/driver/|query: { offset: default 0, limit: default 100 }|
 |POST|		/api/v1/employee/role/driver/||
 |GET|		/api/v1/employee/role/driver/:id||
 |PUT|		/api/v1/employee/role/driver/:id||
