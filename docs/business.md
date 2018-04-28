@@ -1,4 +1,4 @@
-## Mô tả nghiệp vụ
+## Business - Mô tả nghiệp vụ
 
 
 Doanh nghiệp cần quản lý hệ thống nhà xe, cung cấp các chuyến xe và bán vé đi lại giữa các thành phố trên cả nước. Hệ thống cần quản lý các trạm xe trên toàn quốc. Ngoài ra còn quản lý thêm các trạm thu phí, trạm bảo hành, các quán ăn trên các tuyến đường đi. Mỗi địa điểm như vậy cần lưu lại thông tin tên địa điểm, địa chỉ, quận huyện, thành phố, vị trí kinh độ, vĩ độ trên bản đồ, số điện thoại liên hệ, giờ làm việc. Riêng với từng loại địa điểm nói trên, trạm xe cần lưu trữ ngày thành lập và chủ đầu tư xây dựng bến xe. Trạm thu phí cũng cần lưu trữ ngày thành lập và chủ đầu tư, ngoài ra còn lưu thời hạn thu phí, giá phí thu cho một đợt xe. Trạm sửa xe và trạm bảo hành cần lưu trữ chất lượng phục vụ và chi phí cho các dịch vụ cụ thể. Còn các quán ăn cần lưu trữ số lượng phục vụ tối đa và chất lượng món ăn và các loại món ăn. Ngoài ra mỗi địa điểm nói trên cần có một mã định danh riêng để thuận tiện cho việc quản lý.
