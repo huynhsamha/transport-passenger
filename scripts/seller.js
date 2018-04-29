@@ -24,7 +24,7 @@ const generate = (id) => {
 };
 
 const generateSellers = () => {
-  for (let id = 1; id <= NUM_SELLERS; id++) generate(id);
+  for (let id = 41; id <= 50; id++) generate(id);
 };
 
 generateSellers();

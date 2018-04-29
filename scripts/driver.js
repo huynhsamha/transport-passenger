@@ -3,7 +3,7 @@ import config from '../config/config';
 
 const fake = require('fakerator')();
 
-const NUM_DRIVERS = 100;
+const NUM_DRIVERS = 10;
 
 const generate = (id) => {
   const license_number = fake.misc.uuid();
@@ -24,7 +24,7 @@ const generate = (id) => {
 };
 
 const generateDrivers = () => {
-  for (let id = 1; id <= NUM_DRIVERS; id++) generate(id);
+  for (let id = 11; id <= 20; id++) generate(id);
 };
 
 generateDrivers();

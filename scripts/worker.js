@@ -26,7 +26,7 @@ const generate = (id) => {
 };
 
 const generateWorkers = () => {
-  for (let id = 1; id <= NUM_WORKERS; id++) generate(id);
+  for (let id = 31; id <= 40; id++) generate(id);
 };
 
 

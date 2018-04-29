@@ -26,7 +26,7 @@ const generate = (id) {
 };
 
 const generateAssistants = () => {
-  for (let id = 1; id <= NUM_ASSISTANTS; id++) generate(id);
+  for (let id = 21; id <= 30; id++) generate(id);
 };
 
 generateAssistants();
