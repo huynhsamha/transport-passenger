@@ -15,7 +15,7 @@ Department.attributes = {
   type: { type: DataTypes.STRING },
   name: { type: DataTypes.STRING },
   manager_id: { type: DataTypes.NUMBER },
-  office_id: { type: DataTypes.NUMBER },
+  office_id: { type: DataTypes.NUMBER }
 };
 
 Department.getStmtSelectAll = Model.getStmtSelectAll(Department);

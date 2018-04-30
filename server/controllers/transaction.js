@@ -54,5 +54,5 @@ export default {
   findOneById,
   insert,
   updateOneById,
-  deleteOneById,
+  deleteOneById
 };

@@ -12,13 +12,7 @@
     "start": "node index",
     "eslint": "eslint index.js server.js server/**/*.js",
     "eslint:fix": "eslint index.js server.js server/**/*.js --fix",
-    "precommit": "npm run eslint:fix && git add"
-  },
-  "lint-staged": {
-    "*.js": [
-      "npm run eslint:fix",
-      "git add"
-    ]
+    "precommit": "npm run eslint:fix && git add -A"
   },
   "dependencies": {
     "async": "^2.6.0",
@@ -60,8 +54,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.6.1",
-    "husky": "^0.14.3",
-    "lint-staged": "^7.0.5"
+    "husky": "^0.14.3"
   },
   "author": {
     "name": "huynhsamha",
