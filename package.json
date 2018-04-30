@@ -12,7 +12,8 @@
     "start": "node index",
     "eslint": "eslint index.js server.js server/**/*.js",
     "eslint:fix": "eslint index.js server.js server/**/*.js --fix",
-    "precommit": "npm run eslint:fix && git add -A"
+    "precommit": "npm run eslint:fix && git add -A",
+    "test": "mocha --compilers js:babel-register --require babel-polyfill test/*.spec.js server/**/**.spec.js"
   },
   "dependencies": {
     "async": "^2.6.0",
