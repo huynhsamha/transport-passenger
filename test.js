@@ -45,7 +45,7 @@ const a = new BusType({
   id: '123',
   speed: 100,
   created_at: new Date(),
-  timestamp: new Date().getTime(
+  timestamp: new Date().getTime()
 });
 
 console.log(a);
