@@ -6,7 +6,7 @@ class TripDaily extends Model {
 }
 
 /** Override properties */
-TripDaily.tableName = 'TRIP';
+TripDaily.tableName = 'TRIP_DAILY';
 
 TripDaily.attributes = {
   id: { type: DataTypes.NUMBER },

@@ -6,6 +6,7 @@ import Office from './office';
 import Ticket from './ticket';
 import Customer from './customer';
 import Transaction from './transaction';
+import Department from './department';
 import { Employee, Manager, Driver } from './employee';
 
 export {
@@ -19,5 +20,6 @@ export {
   Driver,
   Ticket,
   Customer,
-  Transaction
+  Transaction,
+  Department
 };

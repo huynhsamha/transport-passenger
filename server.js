@@ -106,4 +106,5 @@ setTimeout(() => {
   // require('./scripts/employee');
   // require('./scripts/manager');
   // require('./scripts/office');
+  require('./scripts/department');
 }, 1000);

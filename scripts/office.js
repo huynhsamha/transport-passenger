@@ -3,7 +3,7 @@ import config from '../config/config';
 
 const fake = require('fakerator')();
 
-const NUM_OFFICES = 20;
+const NUM_OFFICES = 5;
 
 const generate = (id) => {
   const address = fake.address.street();

@@ -4,8 +4,8 @@ import config from '../config/config';
 const fake = require('fakerator')();
 
 const roles = ['manager', 'driver', 'assistant', 'worker', 'seller'];
-const NUM_MANAGERS = 10;
-
+const NUM_MANAGERS = 25;
+const NUM_OTHERS = 375;
 const generate = (id) => {
   const ssn = fake.random.number(1000000000, 9999999999);
   const first_name = fake.names.firstName();
@@ -17,7 +17,7 @@ const generate = (id) => {
   const address = fake.address.street();
   const join_date = fake.date.past();
   const supervisor_id = id > NUM_MANAGERS ? fake.random.number(5) : null;
-
+  
   let role;
   if (id <= NUM_MANAGERS) role = roles[0]; // manager
   else role = roles[fake.random.number(1, 4)]; // others
@@ -56,7 +56,7 @@ const generateManagers = () => {
 };
 
 const generateOthers = () => {
-  for (let id = NUM_MANAGERS + 1; id <= 50; id++) generate(id);
+  for (let id = NUM_MANAGERS + 1; id <= NUM_MANAGERS + NUM_OTHERS; id++) generate(id);
 };
 
 
