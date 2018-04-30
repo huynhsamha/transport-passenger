@@ -12,11 +12,11 @@
     "start": "node index",
     "eslint": "eslint index.js server.js server/**/*.js",
     "eslint:fix": "eslint index.js server.js server/**/*.js --fix",
-    "precommit": "lint-staged"
+    "precommit": "npm run eslint:fix && git add"
   },
   "lint-staged": {
     "*.js": [
-      "eslint --fix",
+      "npm run eslint:fix",
       "git add"
     ]
   },
