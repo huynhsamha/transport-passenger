@@ -4,7 +4,9 @@ Assignment Database System - Transport Passenger System
 
 ## Quickstart
 
+
 ### Quick review source code (Optional)
+
 #### Install extension on Chrome
 + Go [chrome://apps/](chrome://apps/)
 + Choose `Web Store`
@@ -23,10 +25,13 @@ Assignment Database System - Transport Passenger System
 + `server/documents`: Database diagrams ERD
 + `server/scripts`: Import SQL, database scripts
 
+
+
 ### Clone source code
 ```
 git clone https://github.com/huynhsamha/transport-passenger.git
 ```
+
 
 
 ### Configure database
@@ -66,6 +71,22 @@ $ node index
 Running on localhost:4200
 OracleDB: pool default is created
 ```
+
+
+### Testing
+
+Add your test files anywhere in `server` or `test` directory with `*.spec.js`
+
+Run testing:
+
+`npm run test` or `yarn test`
+
+
+### Commit code
+
+The project uses `husky` for pre-commit code, that lints your code (`eslint`) and detect your bug syntax js before commit or push.
+
+
 
 
 ## APIs
