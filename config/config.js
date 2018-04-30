@@ -2,6 +2,8 @@ const ONE_MINUTE = 60 * 60; // in seconds
 const ONE_DAY = 60 * 60 * 24; // in seconds
 
 module.exports = {
+  env: process.env.NODE_ENV || 'development',
+  domain: process.env.DOMAIN || 'http://localhost:4200',
   session: {
     secret: process.env.SESSION_SECRET || 'YOUR SESSION SECRET IN FILE .ENV',
     maxAge: 7 * ONE_DAY * 1000 // in miliseconds

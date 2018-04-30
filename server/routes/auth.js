@@ -12,10 +12,12 @@ router.use('/', (req, res, next) => {
     return next();
   }
 
-  // only for admin have authentication secret in .env on post method
-  const authSecret = req.body.authSecret || req.query.authSecret;
-  if (authSecret == config.authenticationSecret) {
-    return next();
+  // only for development with authentication secret
+  if (config.env == 'development') {
+    const authSecret = req.body.authSecret || req.query.authSecret;
+    if (authSecret == config.authenticationSecret) {
+      return next();
+    }
   }
 
   const token = req.body.token || req.query.token || req.headers['x-access-token'] || req.session.token;
@@ -62,33 +64,31 @@ router.post('/auth/forgotPassword', (req, res, next) => {
     if (data.userNotFound) {
       return res.status(404).send({ message: 'User not found' });
     }
-    res.status(200).send({
+    return res.status(200).send({
       message: `Please check your email to reset your password.
       If no have any email in 15 minutes, please check in spam or try agin.`
     });
   });
 });
 
-router.get('/auth/verifyResetPassword', (req, res, next) => {
-  const tokenResetPassword = req.query.token || '';
-  console.log(tokenResetPassword);
-  jwt.verify(tokenResetPassword, config.session.secret, (err, decoded) => {
+router.post('/auth/resetPassword', (req, res, next) => {
+  const { token, password } = req.body;
+  AuthCtrl.resetPassword(token, password, (err, data) => {
     if (err) {
       console.log(err);
-      return res.status(403).send({ errorMessage: 'Token is not valid' });
+      return res.status(500).send({ errorMessage: err.errorMessage });
     }
-    console.log(decoded);
-    console.log('OK');
-    return res.redirect('/');
+    if (data.tokenNotValid) {
+      return res.status(403).send({ message: 'Token is not valid' });
+    }
+    return res.status(200).send({
+      message: 'Reset password successfully'
+    });
   });
 });
 
 
-router.post('/auth/resetPassword', (req, res, next) => {
-});
-
-
-router.get('/signout', (req, res, next) => {
+router.get('/signOut', (req, res, next) => {
   req.session.destroy();
   res.redirect('/');
 });
