@@ -11,7 +11,14 @@
   "scripts": {
     "start": "node index",
     "eslint": "eslint index.js server.js server/**/*.js",
-    "eslint:fix": "eslint index.js server.js server/**/*.js --fix"
+    "eslint:fix": "eslint index.js server.js server/**/*.js --fix",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "dependencies": {
     "async": "^2.6.0",
@@ -52,7 +59,9 @@
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.6.1"
+    "eslint-plugin-react": "^7.6.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.0.5"
   },
   "author": {
     "name": "huynhsamha",
