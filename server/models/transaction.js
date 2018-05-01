@@ -2,7 +2,7 @@ import db from '../config/oracle';
 
 const { Model, DataTypes } = db;
 
-class Transaction extends Model{
+class Transaction extends Model {
 }
 /** Override properties */
 Transaction.tableName = 'TRANSACTION';

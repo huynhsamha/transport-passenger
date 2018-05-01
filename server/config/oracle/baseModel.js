@@ -74,7 +74,7 @@ class Model {
 Model.attributes = {
   id: { type: DataTypes.STRING }
 };
-Model.tableName = 'MODEL';
+Model.tableName = '[DEFAULT_TABLE_NAME_MODEL]';
 Model.primaryKey = 'id';
 
 // default static statements

@@ -11,7 +11,9 @@
   "scripts": {
     "start": "node index",
     "eslint": "eslint index.js server.js server/**/*.js",
-    "eslint:fix": "eslint index.js server.js server/**/*.js --fix"
+    "eslint:fix": "eslint index.js server.js server/**/*.js --fix",
+    "precommit": "npm run eslint:fix && git add -A",
+    "test": "mocha --compilers js:babel-register --require babel-polyfill test/*.spec.js server/**/**.spec.js"
   },
   "dependencies": {
     "async": "^2.6.0",
@@ -48,11 +50,14 @@
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
+    "chai": "^4.1.2",
     "eslint": "^4.18.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.6.1"
+    "eslint-plugin-react": "^7.6.1",
+    "husky": "^0.14.3",
+    "mocha": "^5.1.1"
   },
   "author": {
     "name": "huynhsamha",
