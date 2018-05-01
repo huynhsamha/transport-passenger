@@ -68,6 +68,26 @@ OracleDB: pool default is created
 ```
 
 
+### Environments (development, test, production)
+
+In file `.env`, add
+```
+# environment is test or production
+NODE_ENV=test
+NODE_ENV=production
+
+# example for domain
+DOMAIN=https://domain.com
+
+# example for session secret
+SESSION_SECRET=emCNrg59au2fvhgr5RA9TBxvWyBhPRw2RdjZAXR79v5JfDAKMX
+
+# email for project
+EMAIL_ADDRESS=noreply.transport.passenger@gmail.com
+EMAIL_PASSWORD=[password email here]
+```
+
+
 ## APIs
 All APIs need token after login to system to use.
 
@@ -86,7 +106,10 @@ In request, for `post` or `put`, you add to `body` with `authSecret`, for `get` 
 
 | Method | Url | Description |
 | ------ | --- | ----------- |
-|POST|		/api/auth/signIn/| body: { username, password } |
+|POST|		/api/auth/signIn/| req.body: { username, password } <br> res.status: <br> + 500 => { errorMessage } <br> + 404 => { message: 'User not found' } <br> + 401 => { message: 'Wrong password' } <br> + 200 => { user, token } |
+|POST|		/api/auth/forgotPassword/| req.body: { email } <br> res.status: <br> + 500 => { errorMessage } <br> + 404 => { message: 'User not found' } <br> + 200 => { message: 'check email' } |
+|POST|		/api/auth/resetPassword/| req.body: { token, password } <br> res.status: <br> + 500 => { errorMessage } <br> + 403 => { message: 'Token is not valid' } <br> + 200 => {  message: 'successfully' } |
+|GET|		/api/signOut/| redirect to '/' |
 
 Login with `username` and `password` of table `EMPLOYEE`.
 

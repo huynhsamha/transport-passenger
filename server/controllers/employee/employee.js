@@ -80,12 +80,17 @@ const findOneByEmail = (email) => {
   return db.execute(sql, { email }).then(res => res.rows[0]);
 };
 
-const changePassword = (username, password) => {
+const changePasswordByUsername = (username, password) => {
   const sql = 'update employee set password = :password where username = :username';
 
   return db.execute(sql, { username, password });
 };
 
+const changePasswordByEmail = (email, password) => {
+  const sql = 'update employee set password = :password where email = :email';
+
+  return db.execute(sql, { email, password });
+};
 
 export default {
   findAll,
@@ -95,5 +100,6 @@ export default {
   deleteOneById,
   findOneByUsername,
   findOneByEmail,
-  changePassword
+  changePasswordByEmail,
+  changePasswordByUsername
 };

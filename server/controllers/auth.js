@@ -53,8 +53,8 @@ async function forgotPassword(email, cb) {
       config.session.secret,
       { expiresIn: config.tokenResetPassword }
     );
-    const domain = 'http://localhost:4200';
-    const url = `${domain}/auth/verifyResetPassword?token=${token}`;
+    const domain = config.domain;
+    const url = `${domain}/auth/resetPassword?token=${token}`;
     const mailOptions = {
       from: config.email.address,
       to: email,
@@ -80,17 +80,23 @@ async function forgotPassword(email, cb) {
   }
 }
 
-function resetPassword(resetPasswordToken, newPassword, cb) {
-
+function resetPassword(tokenResetPassword, newPassword, cb) {
+  jwt.verify(tokenResetPassword, config.session.secret, (err, decoded) => {
+    if (err) {
+      return cb(null, { tokenNotValid: 1 });
+    }
+    console.log(decoded);
+    // chưa test ở chỗ này, chờ front-end.
+    const { email } = decoded;
+    EmployeeCtrl.changePasswordByEmail(email, newPassword)
+      .then(res => cb(null, { success: 1 }))
+      .catch(err => cb(err));
+  });
 }
 
-function verifyAccount(encryptEmail, newPassword, cb) {
-
-}
 
 export default {
   signIn,
   forgotPassword,
-  resetPassword,
-  verifyAccount
+  resetPassword
 };
