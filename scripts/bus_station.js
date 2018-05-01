@@ -11,7 +11,7 @@ const generate = (id) => {
 
   const bus_station = {
     authSecret: config.authenticationSecret,
-    id,establish_date,owner_name
+    id, establish_date, owner_name
   };
 
   request.post('http://localhost:4200/api/v1/location/bus_station', {

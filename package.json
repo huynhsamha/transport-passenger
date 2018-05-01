@@ -10,9 +10,9 @@
   },
   "scripts": {
     "start": "node index",
-    "eslint": "eslint index.js server.js server/**/*.js",
-    "eslint:fix": "eslint index.js server.js server/**/*.js --fix",
-    "precommit": "npm run eslint:fix && git add -A",
+    "eslint": "eslint index.js server.js server scripts test",
+    "eslint:fix": "eslint index.js server.js server scripts test --fix",
+    "precommit": "npm run eslint:fix && git add index.js server.js server scripts test",
     "test": "mocha --compilers js:babel-register --require babel-polyfill test/*.spec.js server/**/**.spec.js"
   },
   "dependencies": {

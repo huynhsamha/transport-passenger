@@ -12,7 +12,7 @@ const generate = (id) => {
   latitude = Number(latitude.toFixed(5));
   longitude = Number(longitude.toFixed(5));
   const is_headquater = id == 1 ? 1 : null;
-  let district_id = id;
+  const district_id = id;
 
   const form = {
     authSecret: config.authenticationSecret,

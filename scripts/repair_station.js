@@ -4,16 +4,16 @@ import config from '../config/config';
 const fake = require('fakerator')();
 
 const NUM_REPAIR_STATIONS = 10;
-const DESCRIPTION = ['Excellent','Good','Normal','Medium'];
+const DESCRIPTION = ['Excellent', 'Good', 'Normal', 'Medium'];
 
 const generate = (id) => {
-  const quatily = fake.number.random(1,5);
-  let random_number = fake.number.random(0,DESCRIPTION.length-1);
+  const quatily = fake.number.random(1, 5);
+  const random_number = fake.number.random(0, DESCRIPTION.length - 1);
   const description = DESCRIPTION[random_number];
 
   const repair_station = {
     authSecret: config.authenticationSecret,
-    id,quatily,description
+    id, quatily, description
   };
 
   request.post('http://localhost:4200/api/v1/location/repair_station', {

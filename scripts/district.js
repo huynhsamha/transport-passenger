@@ -10,12 +10,12 @@ const generate = (id) => {
   let { latitude, longitude } = fake.address.geoLocation();
   latitude = Number(latitude.toFixed(5));
   longitude = Number(longitude.toFixed(5));
-  const website = name.split(' ').join('') + '.com';
+  const website = `${name.split(' ').join('')}.com`;
   const tel = fake.phone.number();
-  let city_id = id;
+  const city_id = id;
   const district = {
     authSecret: config.authenticationSecret,
-    id,name,latitude,longitude,website,tel,city_id
+    id, name, latitude, longitude, website, tel, city_id
   };
 
   request.post('http://localhost:4200/api/v1/district', {

@@ -16,7 +16,7 @@ const generate = (id) => {
   const photo_url = fake.internet.avatar();
   const address = fake.address.street();
   const join_date = fake.date.past();
-  const supervisor_id = (id > NUM_MANAGERS) ? fake.random.number(1,NUM_MANAGERS) : null;
+  const supervisor_id = (id > NUM_MANAGERS) ? fake.random.number(1, NUM_MANAGERS) : null;
 
   let role;
   if (id <= NUM_MANAGERS) role = roles[0]; // manager
@@ -56,8 +56,8 @@ const generateManagers = () => {
 };
 
 const generateOthers = () => {
-  //for (let id = NUM_MANAGERS + 1; id <= NUM_MANAGERS + NUM_OTHERS; id++) generate(id);
-  //for (let id = NUM_MANAGERS + 1; id <= 75; id++) generate(id);
+  // for (let id = NUM_MANAGERS + 1; id <= NUM_MANAGERS + NUM_OTHERS; id++) generate(id);
+  // for (let id = NUM_MANAGERS + 1; id <= 75; id++) generate(id);
   // for (let id = 76; id <= 125; id++) generate(id);
   // for (let id = 126; id <= 175; id++) generate(id);
   // for (let id = 176; id <= 225; id++) generate(id);
@@ -69,4 +69,4 @@ const generateOthers = () => {
 
 
 generateManagers();
-//generateOthers();
+// generateOthers();

@@ -9,13 +9,13 @@ const generate = (id) => {
   const establish_date = fake.date.past();
   const owner_name = fake.names.name();
   const date_apply = establish_date;
-  let date_end = new Date(establish_date);
-  date_end.setFullYear(date_end.getFullYear()+5);
-  const fee_per_bus = fake.random.number(100000,200000);
+  const date_end = new Date(establish_date);
+  date_end.setFullYear(date_end.getFullYear() + 5);
+  const fee_per_bus = fake.random.number(100000, 200000);
 
   const charge_station = {
     authSecret: config.authenticationSecret,
-    id,establish_date,owner_name,date_apply,date_end,fee_per_bus
+    id, establish_date, owner_name, date_apply, date_end, fee_per_bus
   };
 
   request.post('http://localhost:4200/api/v1/location/charge_station', {

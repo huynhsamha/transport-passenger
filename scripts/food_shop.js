@@ -4,17 +4,17 @@ import config from '../config/config';
 const fake = require('fakerator')();
 
 const NUM_FOOD_SHOPS = 10;
-const DESCRIPTION = ['Excellent','Good','Normal','Medium'];
+const DESCRIPTION = ['Excellent', 'Good', 'Normal', 'Medium'];
 
 const generate = (id) => {
-  const capacity = fake.random.number(100,150);
-  const quality = fake.random.number(1,5);
-  let random_number = fake.number.random(0,DESCRIPTION.length-1);
+  const capacity = fake.random.number(100, 150);
+  const quality = fake.random.number(1, 5);
+  const random_number = fake.number.random(0, DESCRIPTION.length - 1);
   const description = DESCRIPTION[random_number];
 
   const food_shop = {
     authSecret: config.authenticationSecret,
-    id, capacity,quality,description
+    id, capacity, quality, description
   };
   // console.log(employee);
   request.post('http://localhost:4200/api/v1/location/food_shop', {
