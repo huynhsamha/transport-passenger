@@ -2,7 +2,7 @@ import db from '../config/oracle';
 
 const { Model, DataTypes } = db;
 
-class Ticket extends Model{
+class Ticket extends Model {
 }
 /** Override properties */
 Ticket.tableName = 'TICKET';

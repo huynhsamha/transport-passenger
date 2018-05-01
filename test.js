@@ -38,6 +38,7 @@
 //     console.log(err);
 //   });
 
+
 import BusType from './server/models/busType';
 
 const a = new BusType({

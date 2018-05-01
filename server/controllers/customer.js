@@ -21,7 +21,7 @@ const findOneById = (id, cb) => {
 
 const updateOneById = (id, data, cb) => {
   const customer = new Customer({ ...data, id });
-  const sql = Customer.getStmtUpdate();
+  const sql = customer.getStmtUpdate();
   console.log(customer);
   console.log(sql);
 
@@ -32,7 +32,7 @@ const updateOneById = (id, data, cb) => {
 
 const insert = (data, cb) => {
   const customer = new Customer(data);
-  const sql = Customer.getStmtInsert();
+  const sql = customer.getStmtInsert();
   console.log(customer);
   console.log(sql);
 
@@ -54,5 +54,5 @@ export default {
   findOneById,
   insert,
   updateOneById,
-  deleteOneById,
+  deleteOneById
 };

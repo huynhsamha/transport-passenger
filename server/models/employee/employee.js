@@ -7,6 +7,7 @@ const { Model, DataTypes } = db;
 class Employee extends Model {
   constructor(data) {
     super(data);
+    if (!data) return;
     data = lowerKeys(data);
     if (data.username && data.password) {
       this.password = Employee.hashPassword(data.username, data.password);

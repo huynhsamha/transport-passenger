@@ -6,7 +6,7 @@ const fake = require('fakerator')();
 const NUM_SELLERS = 100;
 
 const generate = (id) => {
-  const exp_transaction = fake.random.number(0,10);
+  const exp_transaction = fake.random.number(0, 10);
 
   const seller = {
     authSecret: config.authenticationSecret,

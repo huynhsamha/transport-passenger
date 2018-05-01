@@ -7,6 +7,8 @@ import TicketCtrl from './ticket';
 import CustomerCtrl from './customer';
 import TransactionCtrl from './transaction';
 import DepartmentCtrl from './department';
+import CityCtrl from './city';
+import DistrictCtrl from './district';
 import { EmployeeCtrl, ManagerCtrl, DriverCtrl } from './employee';
 
 export {
@@ -21,5 +23,7 @@ export {
   TicketCtrl,
   CustomerCtrl,
   TransactionCtrl,
-  DepartmentCtrl
+  DepartmentCtrl,
+  CityCtrl,
+  DistrictCtrl
 };

@@ -23,7 +23,7 @@ const findOneById = (id, cb) => {
 
 const updateOneById = (id, data, cb) => {
   const department = new Department({ ...data, id });
-  const sql = Department.getStmtUpdate();
+  const sql = department.getStmtUpdate();
   console.log(department);
   console.log(sql);
 
@@ -34,7 +34,7 @@ const updateOneById = (id, data, cb) => {
 
 const insert = (data, cb) => {
   const department = new Department(data);
-  const sql = Department.getStmtInsert();
+  const sql = department.getStmtInsert();
   console.log(department);
   console.log(sql);
 

@@ -5,10 +5,10 @@ const fake = require('fakerator')();
 
 const NUM_WORKERS = 100;
 
-const Type_Job = ['Typer','Secretary','Sanitation','IT'];
+const Type_Job = ['Typer', 'Secretary', 'Sanitation', 'IT'];
 
 const generate = (id) => {
-  let random_number = fake.random.number(0,Type_Job.length-1);
+  const random_number = fake.random.number(0, Type_Job.length - 1);
   const job_type = Type_Job[random_number];
 
   const worker = {

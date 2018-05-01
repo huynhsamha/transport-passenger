@@ -1,8 +1,9 @@
 import db from '../config/oracle';
-import { Ticket } from '../models';
+import { District } from '../models';
+
 
 const findAll = (offset, limit, cb) => {
-  const sql = Ticket.getStmtSelectAll(offset, limit);
+  const sql = District.getStmtSelectAll(offset, limit);
   console.log(sql);
 
   db.execute(sql)
@@ -11,7 +12,7 @@ const findAll = (offset, limit, cb) => {
 };
 
 const findOneById = (id, cb) => {
-  const sql = Ticket.getStmtSelectOneById();
+  const sql = District.getStmtDeleteOneById();
   console.log(sql);
 
   db.execute(sql, { id })
@@ -20,35 +21,36 @@ const findOneById = (id, cb) => {
 };
 
 const updateOneById = (id, data, cb) => {
-  const ticket = new Ticket({ ...data, id });
-  const sql = ticket.getStmtUpdate();
-  console.log(ticket);
+  const district = new District({ ...data, id });
+  const sql = district.getStmtUpdate();
+  console.log(district);
   console.log(sql);
 
-  db.execute(sql, ticket)
+  db.execute(sql, district)
     .then(res => cb(null, res))
     .catch(err => cb(err));
 };
 
-const insert = (data, cb) => {
-  const ticket = new Ticket(data);
-  const sql = ticket.getStmtInsert();
-  console.log(ticket);
+const insert = async (data, cb) => {
+  const district = new District(data);
+  const sql = district.getStmtInsert();
+  console.log(district);
   console.log(sql);
 
-  db.execute(sql, ticket)
+  db.execute(sql, district)
     .then(res => cb(null, res))
     .catch(err => cb(err));
 };
 
 const deleteOneById = (id, cb) => {
-  const sql = Ticket.getStmtDeleteOneById();
+  const sql = District.getStmtDeleteOneById();
   console.log(sql);
 
   db.execute(sql, { id })
     .then(res => cb(null, res))
     .catch(err => cb(err));
 };
+
 export default {
   findAll,
   findOneById,
