@@ -12,6 +12,8 @@ import ticket from './ticket';
 import customer from './customer';
 import transaction from './transaction';
 import department from './department';
+import city from './city';
+import district from './district';
 
 const router = express.Router();
 
@@ -28,5 +30,7 @@ router.use('/api/v1/ticket', ticket);
 router.use('/api/v1/customer', customer);
 router.use('/api/v1/transaction', transaction);
 router.use('/api/v1/department', department);
+router.use('/api/v1/city', city);
+router.use('/api/v1/district', district);
 
 export default router;

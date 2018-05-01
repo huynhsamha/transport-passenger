@@ -7,6 +7,8 @@ import Ticket from './ticket';
 import Customer from './customer';
 import Transaction from './transaction';
 import Department from './department';
+import City from './city';
+import District from './district';
 import { Employee, Manager, Driver } from './employee';
 
 export {
@@ -21,5 +23,7 @@ export {
   Ticket,
   Customer,
   Transaction,
-  Department
+  Department,
+  City,
+  District
 };

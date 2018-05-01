@@ -1,8 +1,9 @@
 import db from '../config/oracle';
-import { Customer } from '../models';
+import { City } from '../models';
+
 
 const findAll = (offset, limit, cb) => {
-  const sql = Customer.getStmtSelectAll(offset, limit);
+  const sql = City.getStmtSelectAll(offset, limit);
   console.log(sql);
 
   db.execute(sql)
@@ -11,7 +12,7 @@ const findAll = (offset, limit, cb) => {
 };
 
 const findOneById = (id, cb) => {
-  const sql = Customer.getStmtSelectOneById();
+  const sql = City.getStmtDeleteOneById();
   console.log(sql);
 
   db.execute(sql, { id })
@@ -20,39 +21,40 @@ const findOneById = (id, cb) => {
 };
 
 const updateOneById = (id, data, cb) => {
-  const customer = new Customer({ ...data, id });
-  const sql = customer.getStmtUpdate();
-  console.log(customer);
+  const city = new City({ ...data, id });
+  const sql = city.getStmtUpdate();
+  console.log(city);
   console.log(sql);
 
-  db.execute(sql, customer)
+  db.execute(sql, City)
     .then(res => cb(null, res))
     .catch(err => cb(err));
 };
 
-const insert = (data, cb) => {
-  const customer = new Customer(data);
-  const sql = customer.getStmtInsert();
-  console.log(customer);
+const insert = async (data, cb) => {
+  const city = new City(data);
+  const sql = city.getStmtInsert();
+  console.log(city);
   console.log(sql);
 
-  db.execute(sql, customer)
+  db.execute(sql, city)
     .then(res => cb(null, res))
     .catch(err => cb(err));
 };
 
 const deleteOneById = (id, cb) => {
-  const sql = Customer.getStmtDeleteOneById();
+  const sql = City.getStmtDeleteOneById();
   console.log(sql);
 
   db.execute(sql, { id })
     .then(res => cb(null, res))
     .catch(err => cb(err));
 };
+
 export default {
   findAll,
   findOneById,
   insert,
   updateOneById,
-  deleteOneById,
+  deleteOneById
 };

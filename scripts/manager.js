@@ -3,7 +3,7 @@ import config from '../config/config';
 
 const fake = require('fakerator')();
 
-const NUM_MANAGERS = 10;
+const NUM_MANAGERS = 25;
 
 const generate = (id) => {
   const start_date = fake.date.past();

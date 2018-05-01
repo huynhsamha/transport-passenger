@@ -21,7 +21,7 @@ const findOneById = (id, cb) => {
 
 const updateOneById = (id, data, cb) => {
   const transaction = new Transaction({ ...data, id });
-  const sql = Transaction.getStmtUpdate();
+  const sql = transaction.getStmtUpdate();
   console.log(transaction);
   console.log(sql);
 
@@ -32,7 +32,7 @@ const updateOneById = (id, data, cb) => {
 
 const insert = (data, cb) => {
   const transaction = new Transaction(data);
-  const sql = Transaction.getStmtInsert();
+  const sql = transaction.getStmtInsert();
   console.log(transaction);
   console.log(sql);
 
