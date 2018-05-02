@@ -1,26 +1,24 @@
-import db from '../config/oracle';
-import crypto from 'crypto-js';
-import lowerKeys from 'lowercase-keys-object';
+import Sequelize from 'sequelize';
+import sequelize from '../config/sequelize';
 
-const { Model, DataTypes } = db;
-
-class Department extends Model {
-}
-
-/** Override properties */
-Department.tableName = 'DEPARTMENT';
-
-Department.attributes = {
-  id: { type: DataTypes.STRING },
-  type: { type: DataTypes.STRING },
-  name: { type: DataTypes.STRING },
-  manager_id: { type: DataTypes.NUMBER },
-  office_id: { type: DataTypes.NUMBER }
-};
-
-Department.getStmtSelectAll = Model.getStmtSelectAll(Department);
-Department.getStmtSelectOneById = Model.getStmtSelectOneById(Department);
-Department.getStmtDeleteOneById = Model.getStmtDeleteOneById(Department);
+const Department = sequelize.define('Department', {
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  type: { type: Sequelize.STRING },
+  name: { type: Sequelize.STRING },
+  manager_id: { type: Sequelize.INTEGER },
+  office_id: { type: Sequelize.INTEGER }
+}, {
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  timestamps: true,
+  underscored: true,
+  underscoredAll: true
+});
 
 
 export default Department;

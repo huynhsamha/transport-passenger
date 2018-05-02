@@ -1,14 +1,14 @@
 import Sequelize from 'sequelize';
 import sequelize from '../../config/sequelize';
 
-const Manager = sequelize.define('Manager', {
+const Seller = sequelize.define('Seller', {
   id: {
     type: Sequelize.INTEGER,
     allowNull: false,
     autoIncrement: true,
     primaryKey: true
   },
-  start_date: { type: Sequelize.DATE }
+  tax_number: { type: Sequelize.FLOAT }
 }, {
   createdAt: 'created_at',
   updatedAt: 'updated_at',
@@ -17,4 +17,4 @@ const Manager = sequelize.define('Manager', {
   underscoredAll: true
 });
 
-export default Manager;
+export default Seller;

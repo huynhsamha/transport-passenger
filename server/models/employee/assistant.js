@@ -1,14 +1,14 @@
 import Sequelize from 'sequelize';
 import sequelize from '../../config/sequelize';
 
-const Manager = sequelize.define('Manager', {
+const Assistant = sequelize.define('Assistant', {
   id: {
     type: Sequelize.INTEGER,
     allowNull: false,
     autoIncrement: true,
     primaryKey: true
   },
-  start_date: { type: Sequelize.DATE }
+  type: { type: Sequelize.STRING }
 }, {
   createdAt: 'created_at',
   updatedAt: 'updated_at',
@@ -17,4 +17,4 @@ const Manager = sequelize.define('Manager', {
   underscoredAll: true
 });
 
-export default Manager;
+export default Assistant;

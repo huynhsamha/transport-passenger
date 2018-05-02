@@ -1,24 +1,32 @@
-import db from '../config/oracle';
+import Sequelize from 'sequelize';
+import sequelize from '../config/sequelize';
 
-const { Model, DataTypes } = db;
+const Customer = sequelize.define('Customer', {
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  ssn: {
+    type: Sequelize.INTEGER,
+    unique: true
+  },
+  first_name: { type: Sequelize.STRING },
+  last_name: { type: Sequelize.STRING },
+  tel: {
+    type: Sequelize.STRING,
+    unique: true
+  },
+  address: { type: Sequelize.STRING },
+  feed_back: { type: Sequelize.STRING }
+}, {
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  timestamps: true,
+  underscored: true,
+  underscoredAll: true
+});
 
-class Customer extends Model {
-}
-/** Override properties */
-Customer.tableName = 'CUSTOMER';
-
-Customer.attributes = {
-  id: { type: DataTypes.NUMBER },
-  ssn: { type: DataTypes.NUMBER },
-  first_name: { type: DataTypes.STRING },
-  last_name: { type: DataTypes.STRING },
-  tel: { type: DataTypes.STRING },
-  address: { type: DataTypes.STRING },
-  feed_back: { type: DataTypes.STRING }
-};
-
-Customer.getStmtSelectAll = Model.getStmtSelectAll(Customer);
-Customer.getStmtSelectOneById = Model.getStmtSelectOneById(Customer);
-Customer.getStmtDeleteOneById = Model.getStmtDeleteOneById(Customer);
 
 export default Customer;

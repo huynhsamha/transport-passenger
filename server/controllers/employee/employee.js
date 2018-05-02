@@ -1,4 +1,4 @@
-import db from '../../config/oracle';
+import db from '../../config/sequelize';
 import { Employee } from '../../models';
 import ManagerCtrl from './manager';
 

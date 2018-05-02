@@ -1,27 +1,31 @@
-import db from '../config/oracle';
+import Sequelize from 'sequelize';
+import sequelize from '../config/sequelize';
 
-const { Model, DataTypes } = db;
+const Bus = sequelize.define('Bus', {
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  bus_type_id: { type: Sequelize.INTEGER },
+  registration: {
+    type: Sequelize.STRING,
+    unique: false
+  },
+  price: { type: Sequelize.FLOAT },
+  status: { type: Sequelize.STRING },
+  miles: { type: Sequelize.FLOAT },
+  warranty_month: { type: Sequelize.INTEGER },
+  warranty_miles: { type: Sequelize.FLOAT },
+  description: { type: Sequelize.STRING }
+}, {
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  timestamps: true,
+  underscored: true,
+  underscoredAll: true
+});
 
-class Bus extends Model {
-}
-
-/** Override properties */
-Bus.tableName = 'BUS';
-
-Bus.attributes = {
-  id: { type: DataTypes.NUMBER },
-  bus_type_id: { type: DataTypes.NUMBER },
-  registration: { type: DataTypes.STRING },
-  price: { type: DataTypes.NUMBER },
-  status: { type: DataTypes.STRING },
-  miles: { type: DataTypes.NUMBER },
-  warranty_month: { type: DataTypes.NUMBER },
-  warranty_miles: { type: DataTypes.NUMBER },
-  description: { type: DataTypes.STRING }
-};
-
-Bus.getStmtSelectAll = Model.getStmtSelectAll(Bus);
-Bus.getStmtDeleteOneById = Model.getStmtDeleteOneById(Bus);
-Bus.getStmtSelectOneById = Model.getStmtSelectOneById(Bus);
 
 export default Bus;

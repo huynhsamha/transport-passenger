@@ -1,44 +1,49 @@
-import db from '../../config/oracle';
+import Sequelize from 'sequelize';
+import sequelize from '../../config/sequelize';
+
 import crypto from 'crypto-js';
-import lowerKeys from 'lowercase-keys-object';
 
-const { Model, DataTypes } = db;
-
-class Employee extends Model {
-  constructor(data) {
-    super(data);
-    if (!data) return;
-    data = lowerKeys(data);
-    if (data.username && data.password) {
-      this.password = Employee.hashPassword(data.username, data.password);
-    }
-  }
-}
-
-/** Override properties */
-Employee.tableName = 'EMPLOYEE';
-
-Employee.attributes = {
-  id: { type: DataTypes.NUMBER },
-  ssn: { type: DataTypes.NUMBER },
-  first_name: { type: DataTypes.STRING },
-  last_name: { type: DataTypes.STRING },
-  username: { type: DataTypes.STRING },
-  password: { type: DataTypes.STRING },
-  email: { type: DataTypes.STRING },
-  tel: { type: DataTypes.STRING },
-  bank_account: { type: DataTypes.NUMBER },
-  photo_url: { type: DataTypes.STRING },
-  salary: { type: DataTypes.NUMBER },
-  address: { type: DataTypes.STRING },
-  join_date: { type: DataTypes.DATE },
-  supervisor_id: { type: DataTypes.NUMBER },
-  department_id: { type: DataTypes.NUMBER },
-  role: { type: DataTypes.STRING }
-};
-
-Employee.getStmtSelectAll = Model.getStmtSelectAll(Employee);
-Employee.getStmtDeleteOneById = Model.getStmtDeleteOneById(Employee);
+const Employee = sequelize.define('Employee', {
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  ssn: {
+    type: Sequelize.INTEGER,
+    unique: true
+  },
+  first_name: { type: Sequelize.STRING },
+  last_name: { type: Sequelize.STRING },
+  username: {
+    type: Sequelize.STRING,
+    unique: true
+  },
+  password: { type: Sequelize.STRING },
+  email: {
+    type: Sequelize.STRING,
+    unique: true
+  },
+  tel: { type: Sequelize.STRING },
+  bank_account: { type: Sequelize.INTEGER },
+  photo_url: {
+    type: Sequelize.STRING,
+    unique: true
+  },
+  salary: { type: Sequelize.FLOAT },
+  address: { type: Sequelize.STRING },
+  join_date: { type: Sequelize.DATE },
+  supervisor_id: { type: Sequelize.INTEGER },
+  department_id: { type: Sequelize.INTEGER },
+  role: { type: Sequelize.STRING }
+}, {
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  timestamps: true,
+  underscored: true,
+  underscoredAll: true
+});
 
 Employee.hashPassword = (username, password) =>
   crypto.AES.encrypt(password, username).toString();
@@ -48,5 +53,6 @@ Employee.authenticate = (username, encryptPassword, tryPassword) => {
   var decryptPassword = bytes.toString(crypto.enc.Utf8);
   return tryPassword == decryptPassword;
 };
+
 
 export default Employee;
