@@ -2,7 +2,7 @@
 
 Assignment Database System - Transport Passenger System
 
-NodeJS, Oracle SQL, AWS (EC2 - S3)
+NodeJS, Oracle SQL, ReactJS, AWS (EC2 - S3)
 
 ## Quickstart
 

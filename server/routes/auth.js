@@ -14,7 +14,7 @@ router.use('/', (req, res, next) => {
 
   // only for development with authentication secret
   if (config.env == 'development') {
-    const authSecret = req.body.authSecret || req.query.authSecret;
+    const authSecret = req.body.authSecret || req.query.authSecret || req.headers['x-access-token'];
     if (authSecret == config.authenticationSecret) {
       return next();
     }

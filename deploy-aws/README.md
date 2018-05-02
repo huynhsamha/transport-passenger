@@ -16,7 +16,7 @@
 + Step 1: Choose an Amazon Machine Image (AMI)
 	+ Ubuntu Server 16.04
 
-![alt text](https://github.com/huynhsamha/transport-passenger/blob/master/deploy-aws/img/03-step1.png)
+![alt text](https://github.com/huynhsamha/transport-passenger/blob/master/deploy-aws/img/03-step01.png)
 
 
 + Step 2: Choose an Instance Type
