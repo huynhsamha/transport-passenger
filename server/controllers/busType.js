@@ -48,9 +48,6 @@ const insert = (req, res, next) => {
   const data = req.body;
   BusType.create(data)
     .then(data => res.status(201).send({ data, message: 'Data is inserted' }))
-    // return res.status(400).send({
-    //   message: 'Data requested to insert is not valid or conflict'
-    // });
     .catch((err) => {
       console.log(err);
       res.status(500).send(err);
