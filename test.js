@@ -1,4 +1,4 @@
-// console.log('testing...');
+console.log('testing...');
 
 // const div = (a, b) => new Promise((response, reject) => {
 //   setTimeout(() => {
@@ -39,16 +39,47 @@
 //   });
 
 
-import BusType from './server/models/busType';
+// import BusType from './server/models/busType';
 
-const a = new BusType({
-  id: '123',
-  speed: 100,
-  created_at: new Date(),
-  timestamp: new Date().getTime()
+// const a = new BusType({
+//   id: '123',
+//   speed: 100,
+//   created_at: new Date(),
+//   timestamp: new Date().getTime()
+// });
+
+// console.log(a);
+
+// console.log(a.getStmtInsert());
+// console.log(a.getStmtUpdate());
+
+
+const AWS = require('aws-sdk');
+const fs = require('fs');
+const path = require('path');
+const awsconfig = require('./config/aws');
+
+AWS.config.update({
+  accessKeyId: awsconfig.AccessKeyID,
+  secretAccessKey: awsconfig.SecretAccessKey
 });
 
-console.log(a);
+const s3 = new AWS.S3();
 
-console.log(a.getStmtInsert());
-console.log(a.getStmtUpdate());
+const filePath = path.join(__dirname, './server.js');
+
+s3.upload({
+  Bucket: awsconfig.S3Bucket,
+  Body: fs.createReadStream(filePath),
+  Key: `avatar/${Date.now()}_${path.basename(filePath)}`
+}, (err, data) => {
+  if (err) {
+    return console.log(err);
+  }
+
+  if (!data) {
+    return console.log('data is null');
+  }
+
+  console.log(data);
+});
