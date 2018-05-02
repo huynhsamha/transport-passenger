@@ -11,13 +11,14 @@ import compression from 'compression';
 import session from 'express-session';
 import RateLimit from 'express-rate-limit';
 
-// import routes from './server/routes';
+import routes from './server/routes';
 import sequelize from './server/models';
 import config from './config/config';
 
 /** Connect and config Database */
 // use { force: true } for drop all tables before lauch
-sequelize.sync({ force: true })
+// sequelize.sync({ force: true })
+sequelize.sync()
   .then(() => console.log('Postgres is sync database'))
   .catch(err => console.log(err));
 
@@ -69,7 +70,7 @@ app.use(express.static(path.join(__dirname, './build'), {
 
 app.use('/api/', limiter);
 
-// app.use('/', routes);
+app.use('/', routes);
 
 // redirect other path to ./build
 app.get('*', (req, res, next) => {
