@@ -11,13 +11,8 @@ import Transaction from './transaction';
 import Department from './department';
 import City from './city';
 import District from './district';
-import {
-  Employee,
-  Manager,
-  Driver,
-  Seller,
-  Assistant
-} from './employee';
+import { Employee, Manager, Driver, Seller, Assistant } from './employee';
+import { Location, BusStation, RepairStation } from './location';
 
 
 /** Relationship between Entities */
@@ -101,7 +96,10 @@ export {
   Transaction,
   Department,
   City,
-  District
+  District,
+  Location,
+  BusStation,
+  RepairStation
 };
 
 export default sequelize;
