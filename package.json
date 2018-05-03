@@ -13,7 +13,10 @@
     "eslint": "eslint index.js server.js server scripts test",
     "eslint:fix": "eslint index.js server.js server scripts test --fix",
     "precommit": "npm run eslint:fix && git add index.js server.js server scripts test",
-    "test": "mocha --compilers js:babel-register --require babel-polyfill test/*.spec.js server/**/**.spec.js"
+    "test": "mocha --compilers js:babel-register --require babel-polyfill test/*.spec.js server/**/**.spec.js",
+    "db:drop": "node scripts/db/drop",
+    "db:create": "node scripts/db/create",
+    "db:fake": "node scripts/db/fake"
   },
   "dependencies": {
     "async": "^2.6.0",

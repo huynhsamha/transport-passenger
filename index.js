@@ -13,4 +13,3 @@ require('dotenv').config();
  * Your server here, with babel configure
  */
 require('./server');
-// require('./test');

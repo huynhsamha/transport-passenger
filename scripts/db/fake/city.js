@@ -1,5 +1,5 @@
-import request from 'request';
-import config from '../../config/config';
+import async from 'async';
+import { City } from '../../../server/models';
 
 const fake = require('fakerator')();
 
@@ -16,23 +16,12 @@ const generate = (id) => {
   const area_code = fake.random.number(1, 100);
   const center_district_id = id;
 
-  const city = {
-    authSecret: config.authenticationSecret,
-    id, name, latitude, longitude, website, tel_code, zip_code, area_code, center_district_id
+  const data = {
+    name, latitude, longitude, website, tel_code, zip_code, area_code, center_district_id
   };
 
-  request.post('http://localhost:4200/api/v1/city', {
-    form: city
-  }, (err, res, body) => {
-    if (err) {
-      console.log(err);
-    }
-    console.log(`${id} is OK`);
-  });
+  return City.create(data);
 };
 
-const generateCitys = () => {
-  for (let id = 1; id <= NUM_CITYS; id++) generate(id);
+const run = () => {
 };
-
-generateCitys();
