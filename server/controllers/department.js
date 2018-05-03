@@ -1,54 +1,75 @@
-import db from '../config/sequelize';
-import { Department } from '../models';
+import { Department, Manager } from '../models';
 
 
-const findAll = (offset, limit, cb) => {
-  const sql = Department.getStmtSelectAll(offset, limit);
-  console.log(sql);
-
-  db.execute(sql)
-    .then(res => cb(null, res.rows))
-    .catch(err => cb(err));
+const findAll = (req, res, next) => {
+  let { offset, limit } = req.query;
+  offset = parseInt(offset, 10) || 0;
+  limit = parseInt(limit, 10) || 100;
+  Department.findAll({
+    offset, limit,
+    include: [{ model: Manager, as: 'manager' }]
+  })
+    .then(data => res.status(200).send({ data }))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-const findOneById = (id, cb) => {
-  const sql = `select bs.*, tp.*
-    from Department bs, Department_type tp
-    where (bs.id = :id) and (bs.Department_type_id = tp.id)`;
-
-  db.execute(sql, { id })
-    .then(res => cb(null, res.rows[0]))
-    .catch(err => cb(err));
+const findOneById = (req, res, next) => {
+  const { id } = req.params;
+  Department.findById(id, { include: [{ model: Manager, as: 'manager' }] })
+    .then((data) => {
+      if (!data)
+        return res.status(404).send({ message: 'Data not found' });
+      return res.status(201).send({ data });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-const updateOneById = (id, data, cb) => {
-  const department = new Department({ ...data, id });
-  const sql = department.getStmtUpdate();
-  console.log(department);
-  console.log(sql);
-
-  db.execute(sql, department)
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
+const updateOneById = async (req, res, next) => {
+  const { id } = req.params;
+  const new_data = req.body;
+  try {
+    let data = await Department.findById(id);
+    if (!data) {
+      if (!data)
+        return res.status(404).send({ message: 'Data not found' });
+    }
+    data = await data.update(new_data);
+    return res.status(200).send({ data, message: 'Data is updated' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 };
 
-const insert = (data, cb) => {
-  const department = new Department(data);
-  const sql = department.getStmtInsert();
-  console.log(department);
-  console.log(sql);
-
-  db.execute(sql, department)
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
+const insert = (req, res, next) => {
+  const data = req.body;
+  Department.create(data)
+    .then(data => res.status(201).send({ data, message: 'Data is inserted' }))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-const deleteOneById = (id, cb) => {
-  const sql = Department.getStmtDeleteOneById();
-
-  db.execute(sql, { id })
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
+const deleteOneById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const data = await Department.findById(id);
+    if (!data) {
+      return res.status(404).send({ message: 'Data not found' });
+    }
+    await data.destroy();
+    return res.status(200).send({ message: 'Data is deleted' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 };
 
 

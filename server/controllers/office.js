@@ -1,55 +1,74 @@
-import db from '../config/sequelize';
 import { Office } from '../models';
 
 
-const findAll = (offset, limit, cb) => {
-  const sql = Office.getStmtSelectAll(offset, limit);
-  console.log(sql);
-
-  db.execute(sql)
-    .then(res => cb(null, res.rows))
-    .catch(err => cb(err));
+const findAll = (req, res, next) => {
+  let { offset, limit } = req.query;
+  offset = parseInt(offset, 10) || 0;
+  limit = parseInt(limit, 10) || 100;
+  Office.findAll({ offset, limit })
+    .then(data => res.status(200).send({ data }))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-const findOneById = (id, cb) => {
-  const sql = Office.getStmtDeleteOneById();
-  console.log(sql);
-
-  db.execute(sql, { id })
-    .then(res => cb(null, res.rows[0]))
-    .catch(err => cb(err));
+const findOneById = (req, res, next) => {
+  const { id } = req.params;
+  Office.findById(id)
+    .then((data) => {
+      if (!data)
+        return res.status(404).send({ message: 'Data not found' });
+      return res.status(201).send({ data });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-const updateOneById = (id, data, cb) => {
-  const office = new Office({ ...data, id });
-  const sql = office.getStmtUpdate();
-  console.log(office);
-  console.log(sql);
-
-  db.execute(sql, office)
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
+const updateOneById = async (req, res, next) => {
+  const { id } = req.params;
+  const new_data = req.body;
+  try {
+    let data = await Office.findById(id);
+    if (!data) {
+      if (!data)
+        return res.status(404).send({ message: 'Data not found' });
+    }
+    data = await data.update(new_data);
+    return res.status(200).send({ data, message: 'Data is updated' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 };
 
-const insert = async (data, cb) => {
-  const office = new Office(data);
-  const sql = office.getStmtInsert();
-  console.log(office);
-  console.log(sql);
-
-  db.execute(sql, office)
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
+const insert = (req, res, next) => {
+  const data = req.body;
+  Office.create(data)
+    .then(data => res.status(201).send({ data, message: 'Data is inserted' }))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-const deleteOneById = (id, cb) => {
-  const sql = Office.getStmtDeleteOneById();
-  console.log(sql);
-
-  db.execute(sql, { id })
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
+const deleteOneById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const data = await Office.findById(id);
+    if (!data) {
+      return res.status(404).send({ message: 'Data not found' });
+    }
+    await data.destroy();
+    return res.status(200).send({ message: 'Data is deleted' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 };
+
 
 export default {
   findAll,

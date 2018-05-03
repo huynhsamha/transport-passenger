@@ -53,7 +53,7 @@ Seller.hasMany(Transaction, { foreignKey: 'seller_id' });
 Transaction.belongsTo(Seller, { foreignKey: 'seller_id', constraints: false, as: 'seller' });
 
 TripDaily.hasMany(Trip, { foreignKey: 'trip_daily_id' });
-Trip.belongsTo(TripDaily, { foreignKey: 'trip_daily_id', constraints: false, as: 'trip' });
+Trip.belongsTo(TripDaily, { foreignKey: 'trip_daily_id', constraints: false, as: 'trip_daily' });
 
 Bus.hasMany(Trip, { foreignKey: 'bus_id' });
 Trip.belongsTo(Bus, { foreignKey: 'bus_id', constraints: false, as: 'bus' });
@@ -72,6 +72,18 @@ TripDaily.belongsTo(BusType, { foreignKey: 'bus_type_id', constraints: false, as
 // Station.hasMany(TripDaily, { foreignKey: 'arrive_station_id' });
 // TripDaily.belongsTo(Station, { foreignKey: 'arrive_station_id', constraints: false });
 
+Employee.hasMany(Manager, { foreignKey: 'id' });
+Manager.belongsTo(Employee, { foreignKey: 'id', constraints: false, as: 'information' });
+
+Employee.hasMany(Seller, { foreignKey: 'id' });
+Seller.belongsTo(Employee, { foreignKey: 'id', constraints: false, as: 'information' });
+
+Employee.hasMany(Assistant, { foreignKey: 'id' });
+Assistant.belongsTo(Employee, { foreignKey: 'id', constraints: false, as: 'information' });
+
+Employee.hasMany(Driver, { foreignKey: 'id' });
+Driver.belongsTo(Employee, { foreignKey: 'id', constraints: false, as: 'information' });
+
 
 export {
   BusType,
@@ -83,6 +95,7 @@ export {
   Manager,
   Driver,
   Seller,
+  Assistant,
   Ticket,
   Customer,
   Transaction,

@@ -1,54 +1,75 @@
-import db from '../config/sequelize';
 import { Customer } from '../models';
 
-const findAll = (offset, limit, cb) => {
-  const sql = Customer.getStmtSelectAll(offset, limit);
-  console.log(sql);
 
-  db.execute(sql)
-    .then(res => cb(null, res.rows))
-    .catch(err => cb(err));
+const findAll = (req, res, next) => {
+  let { offset, limit } = req.query;
+  offset = parseInt(offset, 10) || 0;
+  limit = parseInt(limit, 10) || 100;
+  Customer.findAll({ offset, limit })
+    .then(data => res.status(200).send({ data }))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-const findOneById = (id, cb) => {
-  const sql = Customer.getStmtSelectOneById();
-  console.log(sql);
-
-  db.execute(sql, { id })
-    .then(res => cb(null, res.rows[0]))
-    .catch(err => cb(err));
+const findOneById = (req, res, next) => {
+  const { id } = req.params;
+  Customer.findById(id)
+    .then((data) => {
+      if (!data)
+        return res.status(404).send({ message: 'Data not found' });
+      return res.status(201).send({ data });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-const updateOneById = (id, data, cb) => {
-  const customer = new Customer({ ...data, id });
-  const sql = customer.getStmtUpdate();
-  console.log(customer);
-  console.log(sql);
-
-  db.execute(sql, customer)
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
+const updateOneById = async (req, res, next) => {
+  const { id } = req.params;
+  const new_data = req.body;
+  try {
+    let data = await Customer.findById(id);
+    if (!data) {
+      if (!data)
+        return res.status(404).send({ message: 'Data not found' });
+    }
+    data = await data.update(new_data);
+    return res.status(200).send({ data, message: 'Data is updated' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 };
 
-const insert = (data, cb) => {
-  const customer = new Customer(data);
-  const sql = customer.getStmtInsert();
-  console.log(customer);
-  console.log(sql);
-
-  db.execute(sql, customer)
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
+const insert = (req, res, next) => {
+  const data = req.body;
+  Customer.create(data)
+    .then(data => res.status(201).send({ data, message: 'Data is inserted' }))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-const deleteOneById = (id, cb) => {
-  const sql = Customer.getStmtDeleteOneById();
-  console.log(sql);
-
-  db.execute(sql, { id })
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
+const deleteOneById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const data = await Customer.findById(id);
+    if (!data) {
+      return res.status(404).send({ message: 'Data not found' });
+    }
+    await data.destroy();
+    return res.status(200).send({ message: 'Data is deleted' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 };
+
+
 export default {
   findAll,
   findOneById,

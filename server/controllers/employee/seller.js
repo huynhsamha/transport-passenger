@@ -1,13 +1,13 @@
-import { District, City } from '../models';
+import { Seller, Employee } from '../../models';
 
 
 const findAll = (req, res, next) => {
   let { offset, limit } = req.query;
   offset = parseInt(offset, 10) || 0;
   limit = parseInt(limit, 10) || 100;
-  District.findAll({
+  Seller.findAll({
     offset, limit,
-    include: [{ model: City, as: 'city' }]
+    include: [{ model: Employee, as: 'information' }]
   })
     .then(data => res.status(200).send({ data }))
     .catch((err) => {
@@ -18,7 +18,7 @@ const findAll = (req, res, next) => {
 
 const findOneById = (req, res, next) => {
   const { id } = req.params;
-  District.findById(id, { include: [{ model: City, as: 'city' }] })
+  Seller.findById(id, { include: [{ model: Employee, as: 'information' }] })
     .then((data) => {
       if (!data)
         return res.status(404).send({ message: 'Data not found' });
@@ -34,7 +34,7 @@ const updateOneById = async (req, res, next) => {
   const { id } = req.params;
   const new_data = req.body;
   try {
-    let data = await District.findById(id);
+    let data = await Seller.findById(id);
     if (!data) {
       if (!data)
         return res.status(404).send({ message: 'Data not found' });
@@ -49,7 +49,7 @@ const updateOneById = async (req, res, next) => {
 
 const insert = (req, res, next) => {
   const data = req.body;
-  District.create(data)
+  Seller.create(data)
     .then(data => res.status(201).send({ data, message: 'Data is inserted' }))
     .catch((err) => {
       console.log(err);
@@ -60,7 +60,7 @@ const insert = (req, res, next) => {
 const deleteOneById = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const data = await District.findById(id);
+    const data = await Seller.findById(id);
     if (!data) {
       return res.status(404).send({ message: 'Data not found' });
     }
