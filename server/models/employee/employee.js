@@ -45,14 +45,21 @@ const Employee = sequelize.define('Employee', {
   underscoredAll: true
 });
 
-Employee.hashPassword = (username, password) =>
-  crypto.AES.encrypt(password, username).toString();
+Employee.prototype.hashPassword = password =>
+  crypto.AES.encrypt(password, this.username).toString();
 
-Employee.authenticate = (username, encryptPassword, tryPassword) => {
-  var bytes = crypto.AES.decrypt(encryptPassword, username);
+Employee.prototype.authenticate = (password) => {
+  var bytes = crypto.AES.decrypt(this.password, this.username);
   var decryptPassword = bytes.toString(crypto.enc.Utf8);
-  return tryPassword == decryptPassword;
+  return password == decryptPassword;
 };
 
+Employee.beforeCreate((user) => {
+  user.password = user.hashPassword(user.password);
+});
+
+Employee.beforeUpdate((user) => {
+  user.password = user.hashPassword(user.password);
+});
 
 export default Employee;

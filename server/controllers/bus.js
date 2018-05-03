@@ -20,8 +20,9 @@ const findOneById = (req, res, next) => {
   const { id } = req.params;
   Bus.findById(id, { include: [{ model: BusType, as: 'bus_type' }] })
     .then((data) => {
-      if (!data)
+      if (!data) {
         return res.status(404).send({ message: 'Data not found' });
+      }
       return res.status(201).send({ data });
     })
     .catch((err) => {
@@ -36,8 +37,7 @@ const updateOneById = async (req, res, next) => {
   try {
     let data = await Bus.findById(id);
     if (!data) {
-      if (!data)
-        return res.status(404).send({ message: 'Data not found' });
+      return res.status(404).send({ message: 'Data not found' });
     }
     data = await data.update(new_data);
     return res.status(200).send({ data, message: 'Data is updated' });

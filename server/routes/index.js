@@ -1,6 +1,6 @@
 import express from 'express';
 
-// import auth from './auth';
+import auth from './auth';
 
 import busType from './busType';
 import bus from './bus';
@@ -18,7 +18,7 @@ import district from './district';
 const router = express.Router();
 
 
-// router.use('/api', auth);
+router.use('/api', auth);
 
 router.use('/api/v1/busType', busType);
 router.use('/api/v1/bus', bus);

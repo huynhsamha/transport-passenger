@@ -62,10 +62,20 @@ Trip.belongsTo(Assistant, { foreignKey: 'assistant_id', constraints: false, as: 
 BusType.hasMany(TripDaily, { foreignKey: 'bus_type_id' });
 TripDaily.belongsTo(BusType, { foreignKey: 'bus_type_id', constraints: false, as: 'bus_type' });
 
-// Station.hasMany(TripDaily, { foreignKey: 'depart_station_id' });
-// TripDaily.belongsTo(Station, { foreignKey: 'depart_station_id', constraints: false });
-// Station.hasMany(TripDaily, { foreignKey: 'arrive_station_id' });
-// TripDaily.belongsTo(Station, { foreignKey: 'arrive_station_id', constraints: false });
+District.hasMany(Location, { foreignKey: 'district_id' });
+Location.belongsTo(District, { foreignKey: 'district_id', constraints: false, as: 'district' });
+
+Location.hasMany(BusStation, { foreignKey: 'id' });
+BusStation.belongsTo(Location, { foreignKey: 'id', constraints: false, as: 'information' });
+
+Location.hasMany(RepairStation, { foreignKey: 'id' });
+RepairStation.belongsTo(Location, { foreignKey: 'id', constraints: false, as: 'information' });
+
+BusStation.hasMany(TripDaily, { foreignKey: 'depart_station_id' });
+TripDaily.belongsTo(BusStation, { foreignKey: 'depart_station_id', constraints: false, as: 'depart_station' });
+
+BusStation.hasMany(TripDaily, { foreignKey: 'arrive_station_id' });
+TripDaily.belongsTo(BusStation, { foreignKey: 'arrive_station_id', constraints: false, as: 'arrive_station' });
 
 Employee.hasMany(Manager, { foreignKey: 'id' });
 Manager.belongsTo(Employee, { foreignKey: 'id', constraints: false, as: 'information' });

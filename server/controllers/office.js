@@ -33,8 +33,7 @@ const updateOneById = async (req, res, next) => {
   try {
     let data = await Office.findById(id);
     if (!data) {
-      if (!data)
-        return res.status(404).send({ message: 'Data not found' });
+      return res.status(404).send({ message: 'Data not found' });
     }
     data = await data.update(new_data);
     return res.status(200).send({ data, message: 'Data is updated' });
