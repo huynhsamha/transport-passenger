@@ -22,11 +22,11 @@ Bus.belongsTo(BusType, { foreignKey: 'bus_type_id', constraints: false, as: 'bus
 City.hasMany(District, { foreignKey: 'city_id' });
 District.belongsTo(City, { foreignKey: 'city_id', constraints: false, as: 'city' });
 
-City.hasOne(District, { foreignKey: 'center_district_id', as: 'center_district' });
-District.belongsTo(City, { foreignKey: 'center_district_id', constraints: false });
+// City.belongsTo(District, { foreignKey: 'center_district_id', as: 'center_district' });
+// City.belongsTo(District, { foreignKey: 'center_district_id' });
 
-Department.hasOne(Manager, { foreignKey: 'manager_id', as: 'manager' });
-Manager.belongsTo(Department, { foreignKey: 'manager_id', constraints: false });
+// Department.hasOne(Manager, { foreignKey: 'manager_id', as: 'manager' });
+// Manager.belongsTo(Department, { foreignKey: 'manager_id', constraints: false });
 
 Office.hasMany(Department, { foreignKey: 'office_id' });
 Department.belongsTo(Office, { foreignKey: 'office_id', constraints: false, as: 'office' });

@@ -4,30 +4,6 @@ import { BusType, Bus } from '../../../server/models';
 
 const fake = require('fakerator')();
 
-const unirand3 = unique(100, 999);
-const unirand6 = unique(100000, 999999);
-const code3 = {};
-const code6 = {};
-const rand3 = () => {
-  for (;;) {
-    const r = unirand3();
-    if (code3[r] == null) {
-      code3[r] = 1;
-      return r;
-    }
-  }
-};
-const rand6 = () => {
-  for (;;) {
-    const r = unirand6();
-    if (code6[r] == null) {
-      code6[r] = 1;
-      return r;
-    }
-  }
-};
-
-
 const NUM_BUSTYPES = 10;
 const BRAND = ['Huyndai', 'Toyota', 'Thaco', 'Mercedes Benz'];
 const MODEL = ['A1', 'A2', 'A3', 'B1', 'B2', 'B3'];
@@ -40,17 +16,21 @@ const MORE_INFO_BUS = [{
   l: 9500, w: 2420, h: 3350, m_n_l: 8900, m_al: 11900
 }];
 
+const NUM_BUSES = 10;
+const STATUS = ['New', 'Old', 'Intermidate'];
+const DESCRIPTION = ['Enduring', 'High Speed'];
+
 const amountBusType = 20;
 const fakeBusType = () => {
-  let random_number = fake.number.random(0, BRAND.length - 1);
+  let random_number = fake.random.number(0, BRAND.length - 1);
   const brand = BRAND[random_number];
-  random_number = fake.number.random(0, MODEL.length - 1);
+  random_number = fake.random.number(0, MODEL.length - 1);
   const model = MODEL[random_number];
-  random_number = fake.number.random(0, SEATS.length - 1);
+  random_number = fake.random.number(0, SEATS.length - 1);
   const seats = SEATS[random_number];
-  const speed = fake.number.random(100, 130);
-  const capacity_fuel = fake.number.random(43, 400);
-  random_number = fake.number.random(0, MORE_INFO_BUS.length - 1);
+  const speed = fake.random.number(10, 20) * 10;
+  const capacity_fuel = fake.random.number(43, 400);
+  random_number = fake.random.number(0, MORE_INFO_BUS.length - 1);
   const mass_no_load = MORE_INFO_BUS[random_number].m_n_l;
   const mass_all = MORE_INFO_BUS[random_number].m_al;
   const heigth = MORE_INFO_BUS[random_number].h;
@@ -63,44 +43,41 @@ const fakeBusType = () => {
 };
 
 const fakeBus = (bus_type_id) => {
-  const name = fake.address.streetName();
-  let { latitude, longitude } = fake.address.geoLocation();
-  latitude = Number(latitude.toFixed(5));
-  longitude = Number(longitude.toFixed(5));
-  const code = rand3();
-  const website = `${name.split(' ').join('')}.com`;
-  const tel = fake.phone.number();
+  const registration = fake.misc.uuid();
+  const price = fake.random.number(1000000000, 2000000000);
+  let random_number = fake.random.number(0, STATUS.length - 1);
+  const status = STATUS[random_number];
+  const miles = fake.random.number(50, 100);
+  const buy_date = fake.date.past();
+  const warranty_month = fake.random.number(2, 6);
+  const warranty_miles = fake.random.number(10, 20);
+  random_number = fake.random.number(0, DESCRIPTION.length - 1);
+  const description = DESCRIPTION[random_number];
 
   return {
-    name, latitude, longitude, code, website, tel, bus_type_id
+    bus_type_id, registration, price, status, miles, buy_date, warranty_month, warranty_miles, description
   };
 };
 
 
 export default new Promise((resolve, reject) => {
-  const cities = [];
-  for (let i = 0; i < amountBusType; i++) cities.push(fakeBusType());
-  async.eachSeries(cities, (city, cb) => {
-    BusType.create(city).then((city) => {
-      console.log(`BusType ${city.id} created`);
-      const amountDistrict = fake.random.number(2, 10);
-      const districts = [];
-      let center_district_id = -1;
-      for (let i = 0; i < amountDistrict; i++) districts.push(fakeBus(city.id));
-      async.eachSeries(districts, (district, cb2) => {
-        Bus.create(district).then((district) => {
-          console.log(`Bus ${district.id} created`);
-          if (center_district_id == -1) center_district_id = district.id;
+  const busTypes = [];
+  for (let i = 0; i < amountBusType; i++) busTypes.push(fakeBusType());
+  async.eachSeries(busTypes, (busType, cb) => {
+    BusType.create(busType).then((busType) => {
+      console.log(`BusType ${busType.id} created`);
+      const amountBus = fake.random.number(10, 20);
+      const buses = [];
+      for (let i = 0; i < amountBus; i++) buses.push(fakeBus(busType.id));
+      async.eachSeries(buses, (bus, cb2) => {
+        Bus.create(bus).then((bus) => {
+          console.log(`Bus ${bus.id} created`);
           return cb2();
         })
           .catch(err => cb2(err));
       }, (err) => {
         if (err) return cb(err);
-        city.update({ center_district_id })
-          .then((city) => {
-            console.log(`BusType ${city.id} updated`);
-            return cb();
-          }).catch(err => cb(err));
+        return cb();
       });
     })
       .catch(err => cb(err));

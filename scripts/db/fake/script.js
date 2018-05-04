@@ -1,10 +1,12 @@
 import async from 'async';
 import sequelize from '../../../server/models';
 import city_district from './city_district';
+import bustype_bus from './bustype_bus';
 
-function run_script() {
+async function run_script() {
   console.log('Starting fake data...');
-  return city_district;
+  await city_district;
+  return bustype_bus;
 }
 
 sequelize.sync().then(() => {
