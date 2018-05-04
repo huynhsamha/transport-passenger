@@ -36,7 +36,10 @@ const Employee = sequelize.define('Employee', {
   join_date: { type: Sequelize.DATE },
   supervisor_id: { type: Sequelize.INTEGER },
   department_id: { type: Sequelize.INTEGER },
-  role: { type: Sequelize.STRING }
+  role: {
+    type: Sequelize.STRING,
+    comment: 'manager, driver, seller, assistant'
+  }
 }, {
   createdAt: 'created_at',
   updatedAt: 'updated_at',

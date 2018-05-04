@@ -18,10 +18,7 @@ const City = sequelize.define('City', {
   },
   latitude: { type: Sequelize.FLOAT },
   longitude: { type: Sequelize.FLOAT },
-  website: {
-    type: Sequelize.STRING,
-    unique: true
-  },
+  website: { type: Sequelize.STRING },
   tel_code: {
     type: Sequelize.INTEGER,
     unique: true

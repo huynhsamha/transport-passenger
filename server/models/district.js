@@ -17,14 +17,8 @@ const District = sequelize.define('District', {
   },
   latitude: { type: Sequelize.FLOAT },
   longitude: { type: Sequelize.FLOAT },
-  website: {
-    type: Sequelize.STRING,
-    unique: true
-  },
-  tel: {
-    type: Sequelize.STRING,
-    unique: true
-  },
+  website: { type: Sequelize.STRING },
+  tel: { type: Sequelize.STRING },
   city_id: { type: Sequelize.INTEGER }
 }, {
   createdAt: 'created_at',

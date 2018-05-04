@@ -15,7 +15,11 @@ const Location = sequelize.define('Location', {
   tel: { type: Sequelize.STRING },
   open_time: { type: Sequelize.TIME },
   close_time: { type: Sequelize.TIME },
-  district_id: { type: Sequelize.INTEGER }
+  district_id: { type: Sequelize.INTEGER },
+  type: {
+    type: Sequelize.STRING,
+    comment: 'bus, repair'
+  }
 }, {
   createdAt: 'created_at',
   updatedAt: 'updated_at',
