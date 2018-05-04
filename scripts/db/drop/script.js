@@ -6,7 +6,8 @@ sequelize.sync()
   .then(() => {
     console.log('Drop schema public');
     return sequelize.createSchema('public');
-  }).then(() => {
+  })
+  .then(() => {
     console.log('Create schema public');
     process.exit(0);
   })

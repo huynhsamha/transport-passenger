@@ -1,30 +1,26 @@
-import request from 'request';
-import config from '../../../config/config';
+import { Driver } from '../../../server/models';
 
 const fake = require('fakerator')();
 
-const NUM_DRIVERS = 10;
+const AMOUNT = 5;
 
 const generate = (id) => {
   const license_number = fake.misc.uuid();
-
-  const driver = {
-    authSecret: config.authenticationSecret,
-    id, license_number
+  const data = {
+    license_number
   };
 
-  request.post('http://localhost:4200/api/v1/employee/role/driver', {
-    form: driver
-  }, (err, res, body) => {
-    if (err) {
-      console.log(err);
-    }
-    console.log(`${id} is OK`);
-  });
+  return Driver.create(data);
 };
 
-const generateDrivers = () => {
-  for (let id = 101; id <= 200; id++) generate(id);
-};
-
-generateDrivers();
+export default new Promise((resolve, reject) => {
+  let cnt = 0;
+  for (let i = 0; i < AMOUNT; i++) {
+    generate(i).then(() => {
+      if (++cnt == AMOUNT) {
+        return resolve();
+      }
+    })
+      .catch(err => reject(err));
+  }
+});

@@ -9,8 +9,7 @@ const District = sequelize.define('District', {
     primaryKey: true
   },
   name: {
-    type: Sequelize.STRING,
-    unique: true
+    type: Sequelize.STRING
   },
   code: {
     type: Sequelize.STRING,

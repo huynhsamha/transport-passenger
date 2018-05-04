@@ -1,9 +1,8 @@
-import request from 'request';
-import config from '../../../config/config';
+import { Location } from '../../../server/models';
 
 const fake = require('fakerator')();
 
-const NUM_LOCATIONS = 40;
+const AMOUNT = 40;
 
 const generate = (id) => {
   const name = fake.address.city();
@@ -18,23 +17,21 @@ const generate = (id) => {
   const tel = fake.phone.number();
   const district_id = fake.random.number(1, 10);
 
-  const location = {
-    authSecret: config.authenticationSecret,
+  const data = {
     id, name, address, latitude, longitude, open_time, close_time, tel, district_id
   };
 
-  request.post('http://localhost:4200/api/v1/location', {
-    form: location
-  }, (err, res, body) => {
-    if (err) {
-      console.log(err);
-    }
-    console.log(`${id} is OK`);
-  });
+  return Location.create(data);
 };
 
-const generateLocations = () => {
-  for (let id = 1; id <= NUM_LOCATIONS; id++) generate(id);
-};
-
-generateLocations();
+export default new Promise((resolve, reject) => {
+  let cnt = 0;
+  for (let i = 0; i < AMOUNT; i++) {
+    generate(i).then(() => {
+      if (++cnt == AMOUNT) {
+        return resolve();
+      }
+    })
+      .catch(err => reject(err));
+  }
+});

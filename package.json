@@ -16,6 +16,7 @@
     "test": "mocha --compilers js:babel-register --require babel-polyfill test/*.spec.js server/**/**.spec.js",
     "db:drop": "node scripts/db/drop",
     "db:create": "node scripts/db/create",
+    "db:clear": "node scripts/db/clear",
     "db:fake": "node scripts/db/fake"
   },
   "dependencies": {
@@ -49,7 +50,8 @@
     "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",
     "request": "^2.85.0",
-    "sequelize": "^4.37.6"
+    "sequelize": "^4.37.6",
+    "unique-random": "^2.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",

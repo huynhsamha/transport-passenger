@@ -23,6 +23,7 @@ City.hasMany(District, { foreignKey: 'city_id' });
 District.belongsTo(City, { foreignKey: 'city_id', constraints: false, as: 'city' });
 
 City.hasOne(District, { foreignKey: 'center_district_id', as: 'center_district' });
+District.belongsTo(City, { foreignKey: 'center_district_id', constraints: false });
 
 Department.hasOne(Manager, { foreignKey: 'manager_id', as: 'manager' });
 Manager.belongsTo(Department, { foreignKey: 'manager_id', constraints: false });
