@@ -88,10 +88,15 @@ To clear data of tables (only clear data, sequences not reset):
 yarn run db:clear
 ```
 
-To fake data:
+After run `db:create`, you can fake data or import available data by following options:
+
+To fake data (maybe catch error):
 ```
 yarn run db:fake
 ```
+
+To import data:
+Open `pgAdmin 3` and run script file `scripts/import-data.sql`
 
 
 #### Run NodeJS
