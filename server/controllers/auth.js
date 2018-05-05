@@ -9,9 +9,9 @@ import generatePassword from 'generate-password';
 import config from '../../config/config';
 
 import { EmployeeCtrl } from './employee';
-import { Employee } from '../models/employee';
+import { Employee, Department } from '../models';
 
-var transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: config.email.address,
@@ -20,33 +20,61 @@ var transporter = nodemailer.createTransport({
 });
 
 
-async function signIn(username, password, cb) {
-  try {
-    const user = await EmployeeCtrl.findOneByUsername(username);
-    // console.log(user);
-    if (!user) {
-      return cb(null, { userNotFound: 1 });
+function authorization(req, res, next) {
+  if (req.path.includes('auth')) return next();
+
+  // only for development with authentication secret
+  if (config.env == 'development') {
+    const authSecret = req.body.authSecret || req.query.authSecret || req.headers['x-access-token'];
+    if (authSecret == config.authenticationSecret) return next();
+  }
+
+  const token = req.body.token || req.query.token || req.headers['x-access-token'] || req.session.token;
+  if (!token) {
+    return res.status(401).send({ errorMessage: 'No authentication for request' });
+  }
+  jwt.verify(token, config.session.secret, (err, decoded) => {
+    if (err) {
+      console.log(err);
+      return res.status(403).send({ errorMessage: 'Token is not valid' });
     }
-    if (Employee.authenticate(username, user.PASSWORD, password) == false) {
-      return cb(null, { wrongPassword: 1 });
+    return next();
+  });
+}
+
+async function signIn(req, res, next) {
+  const username = req.body.username || '';
+  const password = req.body.password || '';
+  try {
+    const user = await Employee.findOne({ where: { username } });
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+    if (!user.authenticate(password)) {
+      return res.status(401).send({ message: 'Wrong password' });
     }
     const token = jwt.sign(
       { data: user },
       config.session.secret,
       { expiresIn: config.tokenExpire }
     );
-    user.PASSWORD = null;
-    return cb(null, { success: 1, user, token });
+    user.password = null;
+    req.session.user = user;
+    req.session.token = token;
+    return res.status(200).send({ user, token });
+
   } catch (err) {
-    return cb(err);
+    console.log(err);
+    return res.status(500).send({ err });
   }
 }
 
-async function forgotPassword(email, cb) {
+async function forgotPassword(req, res, next) {
+  const email = req.body.email || '';
   try {
-    const user = await EmployeeCtrl.findOneByEmail(email);
+    const user = await Employee.findOne({ where: { email } });
     if (!user) {
-      return cb(null, { userNotFound: 1 });
+      return res.status(404).send({ message: 'User not found' });
     }
     const token = jwt.sign(
       { data: email },
@@ -74,29 +102,44 @@ async function forgotPassword(email, cb) {
     transporter.sendMail(mailOptions, (err, info) => {
       if (err) { console.log(err); }
     });
-    return cb(null, { success: 1 });
+    return res.status(200).send({
+      message: `Please check your email to reset your password.
+      If no have any email in 15 minutes, please check in spam or try agin.`
+    });
+
   } catch (err) {
-    return cb(err);
+    console.log(err);
+    return res.status(500).send({ err });
   }
 }
 
-function resetPassword(tokenResetPassword, newPassword, cb) {
-  jwt.verify(tokenResetPassword, config.session.secret, (err, decoded) => {
+function resetPassword(req, res, next) {
+  const { token, password } = req.body;
+  jwt.verify(token, config.session.secret, (err, decoded) => {
     if (err) {
-      return cb(null, { tokenNotValid: 1 });
+      console.log(err);
+      return res.status(403).send({ errorMessage: 'Token is not valid' });
     }
-    console.log(decoded);
     // chưa test ở chỗ này, chờ front-end.
     const { email } = decoded;
-    EmployeeCtrl.changePasswordByEmail(email, newPassword)
-      .then(res => cb(null, { success: 1 }))
-      .catch(err => cb(err));
+    Employee.update({ password }, { where: { email } })
+      .then(res => res.status(200).send({ message: 'Reset password successfully' }))
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).send(err);
+      });
   });
 }
 
+function signOut(req, res, next) {
+  req.session.destroy();
+  res.redirect('/');
+}
 
 export default {
+  authorization,
   signIn,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  signOut
 };

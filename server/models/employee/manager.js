@@ -1,19 +1,20 @@
-import db from '../../config/oracle';
+import Sequelize from 'sequelize';
+import sequelize from '../../config/sequelize';
 
-const { Model, DataTypes } = db;
-
-class Manager extends Model {
-}
-
-/** Override properties */
-Manager.tableName = 'MANAGER';
-
-Manager.attributes = {
-  id: { type: DataTypes.NUMBER },
-  start_date: { type: DataTypes.DATE }
-};
-
-Manager.getStmtDeleteOneById = Model.getStmtDeleteOneById(Manager);
-
+const Manager = sequelize.define('Manager', {
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  start_date: { type: Sequelize.DATE }
+}, {
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  timestamps: true,
+  underscored: true,
+  underscoredAll: true
+});
 
 export default Manager;

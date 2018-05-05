@@ -1,25 +1,32 @@
-import db from '../config/oracle';
+import Sequelize from 'sequelize';
+import sequelize from '../config/sequelize';
 
-const { Model, DataTypes } = db;
+const District = sequelize.define('District', {
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  name: {
+    type: Sequelize.STRING
+  },
+  code: {
+    type: Sequelize.STRING,
+    unique: true
+  },
+  latitude: { type: Sequelize.FLOAT },
+  longitude: { type: Sequelize.FLOAT },
+  website: { type: Sequelize.STRING },
+  tel: { type: Sequelize.STRING },
+  city_id: { type: Sequelize.INTEGER }
+}, {
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  timestamps: true,
+  underscored: true,
+  underscoredAll: true
+});
 
-class District extends Model {
-}
-
-/** Override properties */
-District.tableName = 'DISTRICT';
-
-District.attributes = {
-  id: { type: DataTypes.NUMBER },
-  name: { type: DataTypes.STRING },
-  latitude: { type: DataTypes.NUMBER },
-  longitude: { type: DataTypes.NUMBER },
-  website: { type: DataTypes.STRING },
-  tel: { type: DataTypes.STRING },
-  city_id: { type: DataTypes.NUMBER }
-};
-
-District.getStmtSelectAll = Model.getStmtSelectAll(District);
-District.getStmtDeleteOneById = Model.getStmtDeleteOneById(District);
-District.getStmtSelectOneById = Model.getStmtSelectOneById(District);
 
 export default District;

@@ -1,29 +1,30 @@
-import db from '../config/oracle';
+import Sequelize from 'sequelize';
+import sequelize from '../config/sequelize';
 
-const { Model, DataTypes } = db;
+const BusType = sequelize.define('BusType', {
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  brand: { type: Sequelize.STRING },
+  model: { type: Sequelize.STRING },
+  seats: { type: Sequelize.INTEGER },
+  speed: { type: Sequelize.FLOAT },
+  capacity_fuel: { type: Sequelize.FLOAT },
+  width: { type: Sequelize.FLOAT },
+  length: { type: Sequelize.FLOAT },
+  height: { type: Sequelize.FLOAT },
+  mass_all: { type: Sequelize.FLOAT },
+  mass_no_load: { type: Sequelize.FLOAT }
+}, {
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  timestamps: true,
+  underscored: true,
+  underscoredAll: true
+});
 
-class BusType extends Model {
-}
-
-/** Override properties */
-BusType.tableName = 'BUS_TYPE';
-
-BusType.attributes = {
-  id: { type: DataTypes.NUMBER },
-  brand: { type: DataTypes.STRING },
-  model: { type: DataTypes.STRING },
-  seats: { type: DataTypes.NUMBER },
-  speed: { type: DataTypes.NUMBER },
-  capacity_fuel: { type: DataTypes.NUMBER },
-  width: { type: DataTypes.NUMBER },
-  length: { type: DataTypes.NUMBER },
-  height: { type: DataTypes.NUMBER },
-  mass_all: { type: DataTypes.NUMBER },
-  mass_no_load: { type: DataTypes.NUMBER }
-};
-
-BusType.getStmtSelectAll = Model.getStmtSelectAll(BusType);
-BusType.getStmtSelectOneById = Model.getStmtSelectOneById(BusType);
-BusType.getStmtDeleteOneById = Model.getStmtDeleteOneById(BusType);
 
 export default BusType;

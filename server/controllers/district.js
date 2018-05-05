@@ -1,55 +1,76 @@
-import db from '../config/oracle';
-import { District } from '../models';
+import { District, City } from '../models';
 
 
-const findAll = (offset, limit, cb) => {
-  const sql = District.getStmtSelectAll(offset, limit);
-  console.log(sql);
-
-  db.execute(sql)
-    .then(res => cb(null, res.rows))
-    .catch(err => cb(err));
+const findAll = (req, res, next) => {
+  let { offset, limit } = req.query;
+  offset = parseInt(offset, 10) || 0;
+  limit = parseInt(limit, 10) || 100;
+  District.findAll({
+    offset, limit,
+    include: [{ model: City, as: 'city' }]
+  })
+    .then(data => res.status(200).send({ data }))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-const findOneById = (id, cb) => {
-  const sql = District.getStmtDeleteOneById();
-  console.log(sql);
-
-  db.execute(sql, { id })
-    .then(res => cb(null, res.rows[0]))
-    .catch(err => cb(err));
+const findOneById = (req, res, next) => {
+  const { id } = req.params;
+  District.findById(id, { include: [{ model: City, as: 'city' }] })
+    .then((data) => {
+      if (!data)
+        return res.status(404).send({ message: 'Data not found' });
+      return res.status(201).send({ data });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-const updateOneById = (id, data, cb) => {
-  const district = new District({ ...data, id });
-  const sql = district.getStmtUpdate();
-  console.log(district);
-  console.log(sql);
-
-  db.execute(sql, district)
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
+const updateOneById = async (req, res, next) => {
+  const { id } = req.params;
+  const new_data = req.body;
+  try {
+    let data = await District.findById(id);
+    if (!data) {
+      return res.status(404).send({ message: 'Data not found' });
+    }
+    data = await data.update(new_data);
+    return res.status(200).send({ data, message: 'Data is updated' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 };
 
-const insert = async (data, cb) => {
-  const district = new District(data);
-  const sql = district.getStmtInsert();
-  console.log(district);
-  console.log(sql);
-
-  db.execute(sql, district)
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
+const insert = (req, res, next) => {
+  const data = req.body;
+  District.create(data)
+    .then(data => res.status(201).send({ data, message: 'Data is inserted' }))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-const deleteOneById = (id, cb) => {
-  const sql = District.getStmtDeleteOneById();
-  console.log(sql);
-
-  db.execute(sql, { id })
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
+const deleteOneById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const data = await District.findById(id);
+    if (!data) {
+      return res.status(404).send({ message: 'Data not found' });
+    }
+    await data.destroy();
+    return res.status(200).send({ message: 'Data is deleted' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 };
+
 
 export default {
   findAll,

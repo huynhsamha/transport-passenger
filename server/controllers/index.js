@@ -9,7 +9,8 @@ import TransactionCtrl from './transaction';
 import DepartmentCtrl from './department';
 import CityCtrl from './city';
 import DistrictCtrl from './district';
-import { EmployeeCtrl, ManagerCtrl, DriverCtrl } from './employee';
+import { EmployeeCtrl, ManagerCtrl, DriverCtrl, SellerCtrl, AssistantCtrl } from './employee';
+import { LocationCtrl, BusStationCtrl, RepairStationCtrl } from './location';
 
 export {
   BusTypeCtrl,
@@ -20,10 +21,15 @@ export {
   EmployeeCtrl,
   ManagerCtrl,
   DriverCtrl,
+  SellerCtrl,
+  AssistantCtrl,
   TicketCtrl,
   CustomerCtrl,
   TransactionCtrl,
   DepartmentCtrl,
   CityCtrl,
-  DistrictCtrl
+  DistrictCtrl,
+  LocationCtrl,
+  BusStationCtrl,
+  RepairStationCtrl
 };

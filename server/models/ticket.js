@@ -1,21 +1,26 @@
-import db from '../config/oracle';
+import Sequelize from 'sequelize';
+import sequelize from '../config/sequelize';
 
-const { Model, DataTypes } = db;
+const Ticket = sequelize.define('Ticket', {
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  code: {
+    type: Sequelize.STRING,
+    unique: true
+  },
+  transaction_id: { type: Sequelize.INTEGER },
+  trip_id: { type: Sequelize.INTEGER }
+}, {
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  timestamps: true,
+  underscored: true,
+  underscoredAll: true
+});
 
-class Ticket extends Model {
-}
-/** Override properties */
-Ticket.tableName = 'TICKET';
-
-Ticket.attributes = {
-  id: { type: DataTypes.NUMBER },
-  code: { type: DataTypes.STRING },
-  transaction_id: { type: DataTypes.NUMBER },
-  trip_id: { type: DataTypes.STRING }
-};
-
-Ticket.getStmtSelectAll = Model.getStmtSelectAll(Ticket);
-Ticket.getStmtSelectOneById = Model.getStmtSelectOneById(Ticket);
-Ticket.getStmtDeleteOneById = Model.getStmtDeleteOneById(Ticket);
 
 export default Ticket;
