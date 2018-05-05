@@ -65,6 +65,9 @@ See file `config/db.js` that use the file to export configure the database.
 
 `npm install` or `yarn`
 
+#### PostgresSQL - pgAdmin 3
+Install `postgres` (database) and `pgAdmin 3` (tool development)
+
 
 ### Start development
 
