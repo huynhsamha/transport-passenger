@@ -1,11 +1,11 @@
-## APIs
+# APIs
 All APIs need token after login to system to use.
 
-### Authentication Secret - avoid login
+## Authentication Secret - avoid login
 To avoid login to use api for development, you can create auth secret in file `.env`, which is added to the request as `body` or `query` to pass the authentication layer.
 
 Example, in file `.env`, add:
-```
+```shell
 AUTHENTICATION_SECRET=F3yqfrVHR3cLDYdqpQLVZus549aXLrWTsDGsddVARSSPCBw5GAa6VGafxAdh4Mac9cP93PbNheL7BxzRPMMH36h5VuB7ks5xbZMDUHczZQc82ra6UMkbEE9zQtDRYvqNHSUn8UVySaSEDQLtz2RYHhQQnA7rjAahZKY4sGh6B5exnL7SD8fbGe8cPhSHYXFbDMZtaSseMQsYUT76BMEGANCxZxy2hCYRB4JVXVrqpjTT48BWRcuX6uqZ8kuKNCZhEF7L6emrTgQLCfWh436WPA3rQKLw39exaAZbwstCuGqd7SmeXgnZkXmnhBu3GhhJdsVdf5bce4yHTrUQhjKCeUb3vFxMMtCEHQGzx6C5bz7ewjtFZnB8ngXcPCGkJcGmaUpAVJUFdfwKwME8Dyz9HQmDeAHNpWUn3XQpa97TKfJZ8Zue2VNqV93SnS8qMmV9cfvye2YVSzJJ65rUPDnHVbvPDp69BEJe4UNeYJ9WRnDy4EFqz4ZFdjF8z6wtQRQc
 ```
 
@@ -25,7 +25,7 @@ Login with `username` and `password` of table `EMPLOYEE`.
 
 After login, server will create a session for you to use following  APIs
 
-### BUS_TYPE
+## BUS_TYPE
 
 | Method | Url | Description |
 | ------ | --- | ----------- |
@@ -48,7 +48,7 @@ After login, server will create a session for you to use following  APIs
 |DELETE|	/api/v1/bus/:id||
 
 
-### TRIP_DAILY
+## TRIP_DAILY
 
 | Method | Url | Description |
 | ------ | --- | ----------- |
@@ -92,7 +92,7 @@ After login, server will create a session for you to use following  APIs
 |PUT|		/api/v1/employee/:id||
 |DELETE|	/api/v1/employee/:id||
 
-### + MANAGER
+### MANAGER
 
 | Method | Url | Description |
 | ------ | --- | ----------- |
@@ -102,7 +102,7 @@ After login, server will create a session for you to use following  APIs
 |PUT|		/api/v1/employee/role/manager/:id||
 |DELETE|	/api/v1/employee/role/manager/:id||
 
-### + DRIVER
+### DRIVER
 
 | Method | Url | Description |
 | ------ | --- | ----------- |
@@ -111,3 +111,11 @@ After login, server will create a session for you to use following  APIs
 |GET|		/api/v1/employee/role/driver/:id||
 |PUT|		/api/v1/employee/role/driver/:id||
 |DELETE|	/api/v1/employee/role/driver/:id||
+
+
+
+## Documents - Contributing
+View [Documents here](https://huynhsamha.github.io/transport-passenger/docs)
+
+## Deploy AWS
+View [instructions here](https://huynhsamha.github.io/transport-passenger/aws/)

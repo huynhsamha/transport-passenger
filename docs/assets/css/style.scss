@@ -1,0 +1,45 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+h1 {font-size: 32px;}
+h2 {font-size: 26px;}
+h3 {font-size: 22px;color: white;}
+
+$width_content: 800px;
+body {padding-bottom: 0px}
+.wrapper, section {max-width: $width_content;}
+
+#header {
+    height: 40px;
+    nav {
+        max-width: $width_content;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+        li.fork {
+            line-height: 40px;
+            a {
+                padding: 6px 15px;
+                background-color: #006846;
+                border-color: white !important;
+                transition-duration: 0.2s;
+                &:hover {
+                    background-color: #000000;
+                }
+            }
+        }
+    }
+}
+
+footer {
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    color: white;
+    background-color: #383838;
+    font-size: 14px !important;
+    a {
+        color: white !important;
+    }
+}
