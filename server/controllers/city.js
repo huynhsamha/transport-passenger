@@ -1,55 +1,76 @@
-import db from '../config/oracle';
-import { City } from '../models';
+import { City, District } from '../models';
 
 
-const findAll = (offset, limit, cb) => {
-  const sql = City.getStmtSelectAll(offset, limit);
-  console.log(sql);
-
-  db.execute(sql)
-    .then(res => cb(null, res.rows))
-    .catch(err => cb(err));
+const findAll = (req, res, next) => {
+  let { offset, limit } = req.query;
+  offset = parseInt(offset, 10) || 0;
+  limit = parseInt(limit, 10) || 100;
+  City.findAll({
+    offset, limit,
+    include: [{ model: District, as: 'center_district' }]
+  })
+    .then(data => res.status(200).send({ data }))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-const findOneById = (id, cb) => {
-  const sql = City.getStmtDeleteOneById();
-  console.log(sql);
-
-  db.execute(sql, { id })
-    .then(res => cb(null, res.rows[0]))
-    .catch(err => cb(err));
+const findOneById = (req, res, next) => {
+  const { id } = req.params;
+  City.findById(id, { include: [{ model: District, as: 'center_district' }] })
+    .then((data) => {
+      if (!data)
+        return res.status(404).send({ message: 'Data not found' });
+      return res.status(201).send({ data });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-const updateOneById = (id, data, cb) => {
-  const city = new City({ ...data, id });
-  const sql = city.getStmtUpdate();
-  console.log(city);
-  console.log(sql);
-
-  db.execute(sql, City)
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
+const updateOneById = async (req, res, next) => {
+  const { id } = req.params;
+  const new_data = req.body;
+  try {
+    let data = await City.findById(id);
+    if (!data) {
+      return res.status(404).send({ message: 'Data not found' });
+    }
+    data = await data.update(new_data);
+    return res.status(200).send({ data, message: 'Data is updated' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 };
 
-const insert = async (data, cb) => {
-  const city = new City(data);
-  const sql = city.getStmtInsert();
-  console.log(city);
-  console.log(sql);
-
-  db.execute(sql, city)
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
+const insert = (req, res, next) => {
+  const data = req.body;
+  City.create(data)
+    .then(data => res.status(201).send({ data, message: 'Data is inserted' }))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-const deleteOneById = (id, cb) => {
-  const sql = City.getStmtDeleteOneById();
-  console.log(sql);
-
-  db.execute(sql, { id })
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
+const deleteOneById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const data = await City.findById(id);
+    if (!data) {
+      return res.status(404).send({ message: 'Data not found' });
+    }
+    await data.destroy();
+    return res.status(200).send({ message: 'Data is deleted' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 };
+
 
 export default {
   findAll,

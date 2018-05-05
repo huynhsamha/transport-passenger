@@ -12,14 +12,14 @@ import session from 'express-session';
 import RateLimit from 'express-rate-limit';
 
 import routes from './server/routes';
-import db from './server/config/oracle';
+import sequelize from './server/models';
 import config from './config/config';
 
-/** Connect and config Database Oracle */
-db.createPool()
-  .then((pool) => {
-    console.log(`OracleDB: pool ${pool.poolAlias} is created`);
-  })
+/** Connect and config Database */
+// use { force: true } for drop all tables before lauch
+// sequelize.sync({ force: true })
+sequelize.sync()
+  .then(() => console.log('Postgres is sync database'))
   .catch(err => console.log(err));
 
 
@@ -40,7 +40,7 @@ const limiter = new RateLimit({
 app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(helmet({ frameguard: { action: 'deny' } }));
 app.use(compression());
@@ -100,15 +100,3 @@ app.set('port', port);
 
 const server = http.createServer(app);
 server.listen(port, () => console.log(`Running on localhost:${port}`));
-
-
-setTimeout(() => {
-  // require('./scripts/employee');
-  // require('./scripts/manager');
-  // require('./scripts/office');
-  // require('./scripts/department');
-  // require('./scripts/city');
-  // require('./scripts/district');
-  // require('./scripts/office');
-
-}, 1000);

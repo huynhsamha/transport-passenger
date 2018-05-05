@@ -1,75 +1,91 @@
-import db from '../config/oracle';
-import { TripDaily } from '../models';
+import { TripDaily, BusType, Station } from '../models';
 
 
-const findAll = (offset, limit, cb) => {
-  const sql = TripDaily.getStmtSelectAll(offset, limit);
-  console.log(sql);
-
-  db.execute(sql)
-    .then(res => cb(null, res.rows))
-    .catch(err => cb(err));
+const findAll = (req, res, next) => {
+  let { offset, limit } = req.query;
+  offset = parseInt(offset, 10) || 0;
+  limit = parseInt(limit, 10) || 100;
+  TripDaily.findAll({
+    offset, limit,
+    include: [
+      { model: BusType, as: 'bus_type' },
+      { model: Station, as: 'depart_station' },
+      { model: Station, as: 'arrive_station' }
+    ]
+  })
+    .then(data => res.status(200).send({ data }))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-const findOneById = (id, cb) => {
-  const sql = TripDaily.getStmtSelectOneById();
-  console.log(sql);
-
-  db.execute(sql, { id })
-    .then(res => cb(null, res.rows[0]))
-    .catch(err => cb(err));
+const findOneById = (req, res, next) => {
+  const { id } = req.params;
+  TripDaily.findById(id, {
+    include: [
+      { model: BusType, as: 'bus_type' },
+      { model: Station, as: 'depart_station' },
+      { model: Station, as: 'arrive_station' }
+    ]
+  })
+    .then((data) => {
+      if (!data)
+        return res.status(404).send({ message: 'Data not found' });
+      return res.status(201).send({ data });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-const updateOneById = (id, data, cb) => {
-  const tripDaily = new TripDaily({ ...data, id });
-  const sql = tripDaily.getStmtUpdate();
-  console.log(tripDaily);
-  console.log(sql);
-
-  db.execute(sql, tripDaily)
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
+const updateOneById = async (req, res, next) => {
+  const { id } = req.params;
+  const new_data = req.body;
+  try {
+    let data = await TripDaily.findById(id);
+    if (!data) {
+      return res.status(404).send({ message: 'Data not found' });
+    }
+    data = await data.update(new_data);
+    return res.status(200).send({ data, message: 'Data is updated' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 };
 
-const insert = (data, cb) => {
-  const tripDaily = new TripDaily(data);
-  const sql = tripDaily.getStmtInsert();
-  console.log(tripDaily);
-  console.log(sql);
-
-  db.execute(sql, tripDaily)
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
+const insert = (req, res, next) => {
+  const data = req.body;
+  TripDaily.create(data)
+    .then(data => res.status(201).send({ data, message: 'Data is inserted' }))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-const deleteOneById = (id, cb) => {
-  const sql = TripDaily.getStmtDeleteOneById();
-  console.log(sql);
-
-  db.execute(sql, { id })
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
+const deleteOneById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const data = await TripDaily.findById(id);
+    if (!data) {
+      return res.status(404).send({ message: 'Data not found' });
+    }
+    await data.destroy();
+    return res.status(200).send({ message: 'Data is deleted' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 };
 
-const findTripsByOne = (tripDailyId, offset, limit, cb) => {
-  const sql =
-    `select * from (
-      select * from trip
-      where trip_daily_id = ${tripDailyId}
-    )
-    where
-      rownum between ${offset} and ${offset + limit - 1}`;
-
-  db.execute(sql)
-    .then(res => cb(null, res.rows))
-    .catch(err => cb(err));
-};
 
 export default {
   findAll,
   findOneById,
   insert,
   updateOneById,
-  deleteOneById,
-  findTripsByOne
+  deleteOneById
 };

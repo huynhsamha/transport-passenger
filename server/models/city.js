@@ -1,27 +1,44 @@
-import db from '../config/oracle';
+import Sequelize from 'sequelize';
+import sequelize from '../config/sequelize';
 
-const { Model, DataTypes } = db;
+const City = sequelize.define('City', {
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  name: {
+    type: Sequelize.STRING,
+    unique: true
+  },
+  code: {
+    type: Sequelize.STRING,
+    unique: true
+  },
+  latitude: { type: Sequelize.FLOAT },
+  longitude: { type: Sequelize.FLOAT },
+  website: { type: Sequelize.STRING },
+  tel_code: {
+    type: Sequelize.INTEGER,
+    unique: true
+  },
+  zip_code: {
+    type: Sequelize.INTEGER,
+    unique: true
+  },
+  area_code: {
+    type: Sequelize.INTEGER,
+    unique: true
+  },
+  center_district_id: { type: Sequelize.INTEGER }
+}, {
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  timestamps: true,
+  underscored: true,
+  underscoredAll: true
+});
 
-class City extends Model {
-}
-
-/** Override properties */
-City.tableName = 'CITY';
-
-City.attributes = {
-  id: { type: DataTypes.NUMBER },
-  name: { type: DataTypes.STRING },
-  latitude: { type: DataTypes.NUMBER },
-  longitude: { type: DataTypes.NUMBER },
-  website: { type: DataTypes.STRING },
-  tel_code: { type: DataTypes.NUMBER },
-  zip_code: { type: DataTypes.NUMBER },
-  area_code: { type: DataTypes.NUMBER },
-  center_district_id: { type: DataTypes.NUMBER }
-};
-
-City.getStmtSelectAll = Model.getStmtSelectAll(City);
-City.getStmtDeleteOneById = Model.getStmtDeleteOneById(City);
-City.getStmtSelectOneById = Model.getStmtSelectOneById(City);
 
 export default City;

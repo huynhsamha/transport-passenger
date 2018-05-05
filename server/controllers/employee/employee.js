@@ -1,95 +1,77 @@
-import db from '../../config/oracle';
-import { Employee } from '../../models';
-import ManagerCtrl from './manager';
+import { Employee, Department } from '../../models';
 
 
-const findAll = (offset, limit, cb) => {
-  const sql = Employee.getStmtSelectAll(offset, limit);
-  console.log(sql);
-
-  db.execute(sql)
-    .then(res => cb(null, res.rows))
-    .catch(err => cb(err));
+const findAll = (req, res, next) => {
+  let { offset, limit } = req.query;
+  offset = parseInt(offset, 10) || 0;
+  limit = parseInt(limit, 10) || 100;
+  Employee.findAll({ offset, limit, attributes: { exclude: ['password'] } })
+    .then(data => res.status(200).send({ data }))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-const findOneById = (id, cb) => {
-  const sql = `select e.*, d.*
-    from employee e, department d
-    where (e.id = :id) and (e.department_id = d.id)`;
-  console.log(sql);
-
-  db.execute(sql, { id })
-    .then(res => cb(null, res.rows[0]))
-    .catch(err => cb(err));
+const findOneById = (req, res, next) => {
+  const { id } = req.params;
+  Employee.findById(id, {
+    attributes: { exclude: ['password'] },
+    include: [
+      { model: Department, as: 'department' },
+      { model: Employee, as: 'supervisor' }
+    ]
+  })
+    .then((data) => {
+      if (!data)
+        return res.status(404).send({ message: 'Data not found' });
+      return res.status(201).send({ data });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-const updateOneById = (id, data, cb) => {
-  const employee = new Employee({ ...data, id });
-  const sql = employee.getStmtUpdate();
-  console.log(employee);
-  console.log(sql);
-
-  db.execute(sql, employee)
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
-};
-
-const insert = async (data, cb) => {
-  const employee = new Employee(data);
-  const sql = employee.getStmtInsert();
-  // console.log(employee);
-  // console.log(sql);
-
+const updateOneById = async (req, res, next) => {
+  const { id } = req.params;
+  const new_data = req.body;
   try {
-    const res = await db.execute(sql, employee);
-    // if (!employee.role) return cb(null, res);
-    // switch (employee.role) {
-    //   case 'manager':
-    //     ManagerCtrl.insert(data, (err, res) => {
-    //       if (err) throw err;
-    //       return cb(null, res);
-    //     });
-    //     break;
-    // }
-    return cb(null, res);
-
+    let data = await Employee.findById(id);
+    if (!data) {
+      return res.status(404).send({ message: 'Data not found' });
+    }
+    data = await data.update(new_data);
+    return res.status(200).send({ data, message: 'Data is updated' });
   } catch (err) {
-    cb(err);
+    console.log(err);
+    res.status(500).send(err);
   }
 };
 
-const deleteOneById = (id, cb) => {
-  const sql = Employee.getStmtDeleteOneById();
-  console.log(sql);
-
-  db.execute(sql, { id })
-    .then(res => cb(null, res))
-    .catch(err => cb(err));
+const insert = (req, res, next) => {
+  const data = req.body;
+  Employee.create(data)
+    .then(data => res.status(201).send({ data, message: 'Data is inserted' }))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 };
 
-
-const findOneByUsername = (username) => {
-  const sql = 'select * from employee where username = :username';
-
-  return db.execute(sql, { username }).then(res => res.rows[0]);
-};
-
-const findOneByEmail = (email) => {
-  const sql = 'select * from employee where email = :email';
-
-  return db.execute(sql, { email }).then(res => res.rows[0]);
-};
-
-const changePasswordByUsername = (username, password) => {
-  const sql = 'update employee set password = :password where username = :username';
-
-  return db.execute(sql, { username, password });
-};
-
-const changePasswordByEmail = (email, password) => {
-  const sql = 'update employee set password = :password where email = :email';
-
-  return db.execute(sql, { email, password });
+const deleteOneById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const data = await Employee.findById(id);
+    if (!data) {
+      return res.status(404).send({ message: 'Data not found' });
+    }
+    await data.destroy();
+    return res.status(200).send({ message: 'Data is deleted' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 };
 
 export default {
@@ -97,9 +79,5 @@ export default {
   findOneById,
   insert,
   updateOneById,
-  deleteOneById,
-  findOneByUsername,
-  findOneByEmail,
-  changePasswordByEmail,
-  changePasswordByUsername
+  deleteOneById
 };

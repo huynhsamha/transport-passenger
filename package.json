@@ -13,10 +13,15 @@
     "eslint": "eslint index.js server.js server scripts test",
     "eslint:fix": "eslint index.js server.js server scripts test --fix",
     "precommit": "npm run eslint:fix && git add index.js server.js server scripts test",
-    "test": "mocha --compilers js:babel-register --require babel-polyfill test/*.spec.js server/**/**.spec.js"
+    "test": "mocha --compilers js:babel-register --require babel-polyfill test/*.spec.js server/**/**.spec.js",
+    "db:drop": "node scripts/db/drop",
+    "db:create": "node scripts/db/create",
+    "db:clear": "node scripts/db/clear",
+    "db:fake": "node scripts/db/fake"
   },
   "dependencies": {
     "async": "^2.6.0",
+    "aws-sdk": "^2.230.1",
     "babel-plugin-dynamic-import-node": "^1.2.0",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -41,12 +46,14 @@
     "helmet": "^3.12.0",
     "jsonwebtoken": "^8.2.1",
     "lodash": "^4.17.5",
-    "lowercase-keys-object": "^1.1.2",
     "morgan": "~1.9.0",
+    "multer": "^1.3.0",
     "nodemailer": "^4.6.4",
-    "oracledb": "^2.1.1",
+    "pg": "^7.4.1",
+    "pg-hstore": "^2.3.2",
     "request": "^2.85.0",
-    "uppercase-keys-object": "^1.1.3"
+    "sequelize": "^4.37.6",
+    "unique-random": "^2.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",

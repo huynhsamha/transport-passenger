@@ -1,5 +1,8 @@
 module.exports = {
-  connectString: process.env.DB_HOST || 'YOUR DATABASE HOST',
-  username: process.env.DB_USERNAME || 'YOUR DATABASE USER',
-  password: process.env.DB_PASSWORD || 'YOUR DATABASE PASSWORD'
+  dialect: 'postgres',
+  host: process.env.DB_HOST || 'localhost',
+  port: process.env.DB_PORT || '5432',
+  database: process.env.DB_NAME || 'database',
+  username: process.env.DB_USERNAME || 'username',
+  password: process.env.DB_PASSWORD || 'password'
 };
