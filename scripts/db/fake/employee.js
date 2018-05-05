@@ -5,11 +5,23 @@ import { Office, District } from '../../../server/models';
 
 const fake = require('fakerator')();
 
+const unirand3 = unique(100, 999);
+const code3 = {};
+const rand3 = () => {
+  for (;;) {
+    const r = unirand3();
+    if (code3[r] == null) {
+      code3[r] = 1;
+      return r;
+    }
+  }
+};
+
 const fakeEmployee = (role, supervisor_id) => {
   const ssn = fake.random.number(1000000000, 9999999999);
   const first_name = fake.names.firstName();
   const last_name = fake.names.lastName();
-  const suffix = fake.random.number(1000, 9999); // increase randomize
+  const suffix = rand3(); // make unique username and email
   const username = fake.internet.userName(first_name, last_name + suffix);
   const email = fake.internet.email(first_name, last_name + suffix);
   const tel = fake.phone.number();

@@ -1,67 +1,87 @@
-# Hướng dẫn deploy trên Amazon AWS
+# Instruction to deploy on Amazon AWS
 
-## Đăng ký tài khoản AWS free 1 năm
+## Register account on AWS for free tier 1 year
 
-## EC2 trên AWS
+## EC2 on AWS
 
-+ Chọn Service -> EC2
-+ Chọn Launch Instance
++ Choose Service -> EC2
+
+![alt text](https://github.com/huynhsamha/transport-passenger/blob/master/deploy-aws/img/01-ec2.png)
+
++ Choose Launch Instance
+
+![alt text](https://github.com/huynhsamha/transport-passenger/blob/master/deploy-aws/img/02-step0.png)
+
+
 + Step 1: Choose an Amazon Machine Image (AMI)
-	+ Chọn Ubuntu Server 16.04
+	+ Ubuntu Server 16.04
+
+![alt text](https://github.com/huynhsamha/transport-passenger/blob/master/deploy-aws/img/03-step01.png)
+
+
 + Step 2: Choose an Instance Type
-	+ Chọn gói t2.micro (free tier)
-	+ Chọn next Configure Instance Details
+	+ Choose t2.micro (free tier)
+	+ Click Next Configure Instance Details
+
+	
 + Step 3: Configure Instance Details
-	+ Subnet: Chọn 1 subnet
+	+ Subnet: choose 1 subnet in options
 	+ Auto-assign Public IP: Enable
-	+ Next: Add Storage
+	+ Click Next: Add Storage
+	
 + Step 4: Add Storage
-	+ Next: Add Tags
+	+ Click Next: Add Tags
+
 + Step 5: Add Tags
-	+ Add tag
-	+ Key: Name - Value: transort-passenger 
+	+ Click Add tag
+	+ Key: Name - Value: transort-passenger (example)
+
+
 + Step 6: Configure Security Group
-	+ Add rule
-	+ Type: http
-	+ Custom: 0.0.0.0/0
-	+ Review and Launch
-+ Lúc launch, chọn generate key-pair file, file *.pem* lưu trữ kĩ, dùng để SSH tới VPS.
+	+ Click Add rule
+	+ Type: choose http
+	+ Custom: add 0.0.0.0/0
+	+ Click Review and Launch
 
-## Sau khi launch instance
-Lưu ý:
-+ Public DNS (IPv4): trỏ tới IPv4 Public
-+ IPv4 Public IP: địa chỉ IPv4 của VPS
-+ user: ubuntu
++ Before launching, choose generate key-pair file *.pem*, private store (used for SSH to VPS on aws).
+
+## After launch instance
++ Public DNS (IPv4): remote to IPv4 Public
++ IPv4 Public IP: IPv4 address of VPS
++ User defaut is: ubuntu (or root) (used for SSH)
 
 
-## SSH tới VPS
-### SSH trên Linux/Mac
+## SSH to VPS
+### On Linux/Mac
 ```bash
 ssh -i /path/to/file/.pem ubuntu@ec2-18-188-252-203.us-east-2.compute.amazonaws.com
 ```
+
+For Window (use PuTTy)
 
 ### Install packages
 ```
 sudo apt-get update
 sudo apt-get upgrade
 
-# đổi timezone tới Ho Chi Minh
+# change timezone to Ho Chi Minh
 sudo dpkg-reconfigure tzdata
 
-# cài git
+# install git
 sudo apt-get install git
 
-# cài Node 8
+# install Node 8 (or lastest)
 curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
-# cài npm
-sudo apt-get install npm			
+# install npm
+sudo apt-get install npm
 ```
 
 ### Install & Config Nginx (Engine-X)
-Tham khảo: [http://voidcanvas.com/setup-and-configure-nginx-in-aws-ec2-linuxubuntu-instance/](http://voidcanvas.com/setup-and-configure-nginx-in-aws-ec2-linuxubuntu-instance/)
-#### nginx?
+Reference: [http://voidcanvas.com/setup-and-configure-nginx-in-aws-ec2-linuxubuntu-instance/](http://voidcanvas.com/setup-and-configure-nginx-in-aws-ec2-linuxubuntu-instance/)
+
+#### Nginx ?
 + Nginx là 1 máy chủ reverse proxy mã nguồn mở cho các giao thức HTTP, HTTPS, ...
 + Nginx không dựa trên luồn (thread) để xử lý yêu cầu. Thay vào đó, nó sử dụng 1 kiến trúc bất đồng bộ hướng sự kiện linh hoạt . Kiến trúc này sử dụng ít, nhưng quan trọng hợn, là lượng bộ nhớ có thể dự đoán khi hoạt động. Đây chính là điểm mấu chốt khiến Nginx là 1 trong số ít những máy chủ được viết để giải quyết vấn đề C10K
 
@@ -76,32 +96,34 @@ sudo service nginx start
 cd /etc/nginx
 ls
 
-# 2 cái cần lưu ý:
+# lưu ý 2 cái này:
 ## sites-available
 ## sites-enabled
-## sites-enabled trỏ tới sites-available, sửa trong sites-available, tham chiếu từ sites-enabled tới sites-available
+## sites-enabled trỏ tới sites-available
+### + sửa trong sites-available
+### + tham chiếu từ sites-enabled tới sites-available
 
 cd sites-available
 
-# trong đây có cái default là file config cho nginx
+# file default is configure to nginx
 
 sudo cp default myapp
-# fork default thành file myapp
+# fork default to file myapp
 
 cd ../sites-enabled
 sudo ln -s /etc/nginx/sites-available/myapp myapp
-# tham khảo file từ enabled tới available
+# reference file from enabled to available
 
 cd ../sites-available
 sudo vim myapp
-# sửa file config
 ```
 
-Tới chỗ này, tham khảo thêm [https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04)
+Reference: [https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04)
 
-+ Chỗ listen default_server
-+ Chỗ server_name tên domain dùng config này, lúc này chọn `*.amazonaws.com` (cái này là domain mặc định của aws)
-+ Chỗ `location /` thêm `proxy` như cái tham khảo, proxy tới port `4200` của `localhost` (cái này dùng cho node chạy ở localhost port 4200).
++ `listen default_server`: remove `default_server`
++ `server_name`: add domain, current type with `*.amazonaws.com` (default domain aws)
++ `location /`: add `proxy`, proxy to port `4200` of `localhost` (for node using on port 4200).
++ Example:
 ```
 ...{
 	...
@@ -128,25 +150,20 @@ sudo service nginx restart
 
 
 
-### Tạo server Node
+### Create server Node
 ```
 cd ~
 mkdir Home
 cd Home
-```
 
-Clone cái source git này về chạy, hoặc tạo cái node đơn giản cũng được, vậy là có cái node ở đây.
-
-```
 git clone ...
 cd myapp
 npm install
 ```
 
 
-
 ### Install pm2
-Thay vì dùng `npm start`, sử dụng `pm2` (tìm hiểu để biết).
+Instead of `npm start`, use `pm2`.
 ```
 # install
 sudo npm install pm2 -g
@@ -159,8 +176,8 @@ pm2 restart all
 ```
 
 
-### Test ở bước này
-Vào địa chỉ IP public sẽ thấy cái welcome to ngin (do trong file nginx config server_name không có cái phần địa chỉ ip)
+### Test
+Vào địa chỉ IP public sẽ thấy cái welcome to nginx (do trong file nginx config server_name không có cái phần địa chỉ ip)
 
 Còn vào public ipv4 domain, sẽ thấy cái app node (do server_name có dùng location ở port 4200 của localhost)
 
@@ -172,19 +189,21 @@ pm2 log
 Nếu không dùng `pm2`, lúc `npm start` ta phải giữ terminal chỗ đó, không tắt được (cái này là 1 lý do dùng pm2)
 
 
-### Tạo domain free trỏ tới instance EC2
+### Free domain remote to instance EC2
 
-#### Domain freenom
+#### Domain Freenom (dot.tk)
 
-Vào `freenom` tạo account, rồi đăng ký tên miền miễn phí, ví dụ `transport-passenger.tk`
+Go `freenom` sign up an account, register new free domain, example `transport-passenger.tk`
 
-Nhìn hình để hiểu:
+![alt text](https://github.com/huynhsamha/transport-passenger/blob/master/deploy-aws/img/10-freenom.png)
+![alt text](https://github.com/huynhsamha/transport-passenger/blob/master/deploy-aws/img/11-freenom.png)
+![alt text](https://github.com/huynhsamha/transport-passenger/blob/master/deploy-aws/img/12-freenom.png)
 
-Các lưu ý:
-+ Nameserver: chọn default
-+ Manage Freenom DNS, tạo các domain (với subdomain), trỏ tới target là địa chỉ ipv4 public bên ec2.
 
-#### Chỉnh lại file config nginx
++ Nameserver: choose default
++ Manage Freenom DNS, create domain (or subdomain), remote to target (ipv4 public on ec2).
+
+#### Fix and restart Nginx
 ```
 ... {
 	...
@@ -199,6 +218,6 @@ sudo service nginx restart
 pm2 restart all
 ```
 
-#### Test lại domain
+#### Test
 + Vào domain đã đăng ký thấy node chạy
 + Vào domain bên aws hoặc ip thì thấy trang welcome nginx

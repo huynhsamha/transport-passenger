@@ -30,3 +30,33 @@ console.log(fake.name.lastName());
 console.log(fake.name.findName());
 console.log(fake.phone.phoneNumberFormat(9));
 console.log(fake.random.uuid());
+
+const AWS = require('aws-sdk');
+const fs = require('fs');
+const path = require('path');
+const awsconfig = require('./config/aws');
+
+AWS.config.update({
+  accessKeyId: awsconfig.AccessKeyID,
+  secretAccessKey: awsconfig.SecretAccessKey
+});
+
+const s3 = new AWS.S3();
+
+const filePath = path.join(__dirname, './server.js');
+
+s3.upload({
+  Bucket: awsconfig.S3Bucket,
+  Body: fs.createReadStream(filePath),
+  Key: `avatar/${Date.now()}_${path.basename(filePath)}`
+}, (err, data) => {
+  if (err) {
+    return console.log(err);
+  }
+
+  if (!data) {
+    return console.log('data is null');
+  }
+
+  console.log(data);
+});
