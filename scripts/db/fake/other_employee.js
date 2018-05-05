@@ -16,7 +16,9 @@ const fakeSeller = (id) => {
   return { id, exp_transaction };
 };
 
-const TYPE = ['Ticket Collector', 'Roustabout', 'Tour Guide'];
+const TYPE = ['Hướng dẫn viên', 'Thu vé', 'Thu ngân',
+  'Quản trị thiết bị', 'Phụ xế', 'Giúp việc tài xế',
+  'Thư kí', 'Tổng tài hệ thống', 'Đàm thoại viên', 'Hỗ trợ pháp luật'];
 const fakeAssistant = (id) => {
   const random_number = fake.random.number(0, TYPE.length - 1);
   const type = TYPE[random_number];

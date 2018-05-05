@@ -9,7 +9,7 @@ const Driver = sequelize.define('Driver', {
     primaryKey: true
   },
   license_number: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     unique: true
   }
 }, {

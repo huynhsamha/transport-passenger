@@ -7,6 +7,7 @@ import office from './office';
 import manager from './manager';
 import other_employee from './other_employee';
 import department from './department';
+import customer from './customer';
 
 async function run_script() {
   console.log('Starting fake data...');
@@ -18,6 +19,7 @@ async function run_script() {
     await manager();
     await other_employee();
     await department();
+    await customer();
 
     return Promise.resolve();
 

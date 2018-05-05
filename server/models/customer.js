@@ -9,15 +9,12 @@ const Customer = sequelize.define('Customer', {
     primaryKey: true
   },
   ssn: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.BIGINT,
     unique: true
   },
   first_name: { type: Sequelize.STRING },
   last_name: { type: Sequelize.STRING },
-  tel: {
-    type: Sequelize.STRING,
-    unique: true
-  },
+  tel: { type: Sequelize.STRING },
   address: { type: Sequelize.STRING },
   feed_back: { type: Sequelize.STRING }
 }, {

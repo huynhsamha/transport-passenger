@@ -2,6 +2,8 @@
 
 Assignment Database System - Transport Passenger System
 
+NodeJS, Sequelize (Postgres SQL), ReactJS, Amazon AWS (EC2, S3)
+
 ## Quickstart
 
 
@@ -14,6 +16,7 @@ Assignment Database System - Transport Passenger System
 + After installation, a sidebar contains project tree will appear on the web
 
 #### Code structure
++ `package.json`: should view `script` to use
 + `index.js`: start running node with `babel` (transform ES6, ES7 to ES5) and `dotenv` (environment variables)
 + `server.js`: start server express
 + `test.js`: only for testing somethings
@@ -24,6 +27,10 @@ Assignment Database System - Transport Passenger System
 + `server/routes`: Routes express
 + `server/documents`: Database diagrams ERD
 + `server/scripts`: Import SQL, database scripts
+	+ `clear`: truncate tables
+	+ `create`: create tables
+	+ `drop`: drop all tables
+	+ `fake`: fake data on your database
 
 
 
@@ -38,12 +45,16 @@ git clone https://github.com/huynhsamha/transport-passenger.git
 
 Create `.env` in root project (the file is ignored in `.gitignore`, because of security for production)
 
+This project use Postgres SQL.
+
 The file as similar for development:
 
 ```base
-DB_HOST=localhost:1521/XE
-DB_USERNAME=tranport_passenger
-DB_PASSWORD=12345
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=transport_passenger
+DB_USERNAME=example_username
+DB_PASSWORD=example_password
 ```
 
 See file `config/db.js` that use the file to export configure the database.
@@ -57,20 +68,36 @@ See file `config/db.js` that use the file to export configure the database.
 
 ### Start development
 
+#### Fake data before start
+
+To drop all table in your schema (default of postres is `public` schema):
+```
+yarn run db:drop
+```
+
+To create tables:
+```
+yarn run db:create
+```
+
+To clear data of tables (only clear data, sequences not reset):
+```
+yarn run db:clear
+```
+
+To fake data:
+```
+yarn run db:fake
+```
+
+
+#### Run NodeJS
 Before start NodeJS, use Oracle SQL Developer or other ways to open localhost and port for database you use for the project.
 
 After above step, run:
 
 `npm start` or `yarn start`
 
-You maybe see:
-
-```bash
-yarn run v1.3.2
-$ node index
-Running on localhost:4200
-OracleDB: pool default is created
-```
 
 
 ### Testing
@@ -105,7 +132,7 @@ SESSION_SECRET=emCNrg59au2fvhgr5RA9TBxvWyBhPRw2RdjZAXR79v5JfDAKMX
 
 # email for project
 EMAIL_ADDRESS=noreply.transport.passenger@gmail.com
-EMAIL_PASSWORD=[password email here]
+EMAIL_PASSWORD=[contact someone who know password]
 ```
 
 
