@@ -4,29 +4,6 @@ import { Location, BusStation, RepairStation, District } from '../../../server/m
 
 const fake = require('fakerator')();
 
-const unirand3 = unique(100, 999);
-const unirand6 = unique(100000, 999999);
-const code3 = {};
-const code6 = {};
-const rand3 = () => {
-  for (;;) {
-    const r = unirand3();
-    if (code3[r] == null) {
-      code3[r] = 1;
-      return r;
-    }
-  }
-};
-const rand6 = () => {
-  for (;;) {
-    const r = unirand6();
-    if (code6[r] == null) {
-      code6[r] = 1;
-      return r;
-    }
-  }
-};
-
 const locTypes = ['bus', 'repair'];
 const fakeLocation = (district_id) => {
   const name = fake.address.city();
@@ -67,14 +44,12 @@ const fakeRepairStation = (id) => {
 };
 
 
-export default new Promise((resolve, reject) => {
-  console.log('Go here man');
+export default () => new Promise((resolve, reject) => {
   District.findAll().then((districts) => {
-    console.log(districts);
     async.eachSeries(districts, (district, cb) => {
       if (district.id % 5 > 0) return cb();
       const locations = [];
-      const amountLocation = fake.random.number(5, 10);
+      const amountLocation = fake.random.number(2, 5);
       for (let i = 0; i < amountLocation; i++) locations.push(fakeLocation(district.id));
       async.eachSeries(locations, (location, cb2) => {
         Location.create(location).then((location) => {

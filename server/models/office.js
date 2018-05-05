@@ -13,7 +13,7 @@ const Office = sequelize.define('Office', {
   address: { type: Sequelize.STRING },
   latitude: { type: Sequelize.FLOAT },
   longitude: { type: Sequelize.FLOAT },
-  is_headquater: { type: Sequelize.INTEGER },
+  is_headquater: { type: Sequelize.BOOLEAN },
   district_id: { type: Sequelize.INTEGER },
   hotline: { type: Sequelize.STRING }
 }, {

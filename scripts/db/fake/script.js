@@ -3,12 +3,20 @@ import sequelize from '../../../server/models';
 import city_district from './city_district';
 import bustype_bus from './bustype_bus';
 import stations from './stations';
+import office from './office';
 
 async function run_script() {
   console.log('Starting fake data...');
-  // await city_district;
-  // await bustype_bus;
-  return stations;
+  try {
+    await city_district();
+    await bustype_bus();
+    await stations();
+    await office();
+    return Promise.resolve();
+
+  } catch (error) {
+    return Promise.reject(error);
+  }
 }
 
 sequelize.sync().then(() => {
