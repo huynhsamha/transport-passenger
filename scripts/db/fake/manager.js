@@ -1,31 +1,29 @@
-import request from 'request';
-import config from '../../../config/config';
+import async from 'async';
+import unique from 'unique-random';
+
+import fakeEmployee from './employee';
+import { Employee, Manager } from '../../../server/models';
 
 const fake = require('fakerator')();
 
-const NUM_MANAGERS = 25;
-
-const generate = (id) => {
+const fakeManager = (id) => {
   const start_date = fake.date.past();
+  return { id, start_date };
+};
 
-  const manager = {
-    authSecret: config.authenticationSecret,
-    id, start_date
-  };
-  // console.log(employee);
-  request.post('http://localhost:4200/api/v1/employee/role/manager', {
-    form: manager
-  }, (err, res, body) => {
-    if (err) {
-      console.log(err);
-    }
-    console.log(`${id} is OK`);
+export default () => new Promise((resolve, reject) => {
+  const amountManager = 50;
+  const employees = [];
+  for (let i = 0; i < amountManager; i++) employees.push(fakeEmployee('manager'));
+  async.eachSeries(employees, (employee, cb) => {
+    Employee.create(employee).then((employee) => {
+      Manager.create(fakeManager(employee.id)).then((manager) => {
+        console.log(`Manager ${manager.id} created`);
+        return cb();
+      }).catch(err => cb(err));
+    }).catch(err => cb(err));
+  }, (err) => {
+    if (err) return reject(err);
+    return resolve();
   });
-};
-
-const generateManagers = () => {
-  for (let id = 1; id <= NUM_MANAGERS; id++) generate(id);
-};
-
-
-generateManagers();
+});

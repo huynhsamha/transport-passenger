@@ -1,37 +1,56 @@
-import request from 'request';
-import config from '../../../config/config';
+import async from 'async';
+import unique from 'unique-random';
+
+import { Office, Department, Manager } from '../../../server/models';
 
 const fake = require('fakerator')();
 
-const NUM_DEPARTMENTS = 25;
 const TYPE = ['Human Resource', 'Business', 'Financial', 'Shipping', 'Equipment'];
-const NAME = ['Nhan Su', 'Kinh Doanh', 'Tai Chinh', 'Van Chuyen', 'Thiet Bi'];
-
-const generate = (id, type, name, manager_id, office_id) => {
-
-  const department = {
-    authSecret: config.authenticationSecret,
-    id, type, name, manager_id, office_id
+const NAME = ['Nhân Sự', 'Kinh Doanh', 'Tài Chính', 'Vận Chuyển', 'Thiếtt Bị'];
+const fakeDepartment = (manager_id, office_id, idx) => {
+  const type = TYPE[idx];
+  const name = NAME[idx];
+  return {
+    type, name, manager_id, office_id
   };
+};
 
-  request.post('http://localhost:4200/api/v1/department', {
-    form: department
-  }, (err, res, body) => {
-    if (err) {
-      console.log(err);
+export default () => new Promise((resolve, reject) => {
+
+  async.waterfall([
+    (cb) => {
+      Manager.findAll().then((managers) => {
+        const mgrids = managers.map(o => o.id);
+        cb(null, mgrids);
+      }).catch(err => cb(err));
+    },
+    (mgrids, cb) => {
+      let idx = 0;
+      Office.findAll().then((offices) => {
+        async.eachSeries(offices, (office, cb2) => {
+          const departments = [];
+          const amountDepartment = TYPE.length;
+          for (let i = 0; i < amountDepartment; i++)
+            departments.push(fakeDepartment(mgrids[idx], office.id, i));
+          idx = (idx + 1) % mgrids.length;
+          async.eachSeries(departments, (department, cb3) => {
+            Department.create(department).then((department) => {
+              console.log(`Department ${department.id} created`);
+              return cb3();
+            }).catch(err => cb3(err));
+          }, ((err) => {
+              if (err) return cb2(err);
+              return cb2();
+            }));
+        }, (err) => {
+          if (err) return cb(err);
+          return cb();
+        });
+      })
+        .catch(err => cb(err));
     }
-    console.log(`${id} is OK`);
+  ], (err) => {
+    if (err) return reject(err);
+    return resolve();
   });
-};
-
-const generateDepartments = () => {
-  let id = 1;
-  for (let i = 1; i <= 5; ++i) {
-    for (let j = 0; j < 5; j++) {
-      generate(id, TYPE[j], NAME[j], id, i);
-      id++;
-    }
-  }
-};
-
-generateDepartments();
+});

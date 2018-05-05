@@ -11,7 +11,7 @@ const Employee = sequelize.define('Employee', {
     primaryKey: true
   },
   ssn: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.BIGINT,
     unique: true
   },
   first_name: { type: Sequelize.STRING },
@@ -26,11 +26,8 @@ const Employee = sequelize.define('Employee', {
     unique: true
   },
   tel: { type: Sequelize.STRING },
-  bank_account: { type: Sequelize.INTEGER },
-  photo_url: {
-    type: Sequelize.STRING,
-    unique: true
-  },
+  bank_account: { type: Sequelize.BIGINT },
+  photo_url: { type: Sequelize.STRING },
   salary: { type: Sequelize.FLOAT },
   address: { type: Sequelize.STRING },
   join_date: { type: Sequelize.DATE },
@@ -48,10 +45,12 @@ const Employee = sequelize.define('Employee', {
   underscoredAll: true
 });
 
-Employee.prototype.hashPassword = password =>
-  crypto.AES.encrypt(password, this.username).toString();
+// dont allow to use arrow function for instance methods
+Employee.prototype.hashPassword = function (password) {
+  return crypto.AES.encrypt(password, this.username).toString();
+};
 
-Employee.prototype.authenticate = (password) => {
+Employee.prototype.authenticate = function (password) {
   var bytes = crypto.AES.decrypt(this.password, this.username);
   var decryptPassword = bytes.toString(crypto.enc.Utf8);
   return password == decryptPassword;

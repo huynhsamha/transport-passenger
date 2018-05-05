@@ -4,6 +4,9 @@ import city_district from './city_district';
 import bustype_bus from './bustype_bus';
 import stations from './stations';
 import office from './office';
+import manager from './manager';
+import other_employee from './other_employee';
+import department from './department';
 
 async function run_script() {
   console.log('Starting fake data...');
@@ -12,6 +15,10 @@ async function run_script() {
     await bustype_bus();
     await stations();
     await office();
+    await manager();
+    await other_employee();
+    await department();
+
     return Promise.resolve();
 
   } catch (error) {

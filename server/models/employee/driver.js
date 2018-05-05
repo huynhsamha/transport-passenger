@@ -8,7 +8,7 @@ const Driver = sequelize.define('Driver', {
     autoIncrement: true,
     primaryKey: true
   },
-  licence_number: {
+  license_number: {
     type: Sequelize.INTEGER,
     unique: true
   }

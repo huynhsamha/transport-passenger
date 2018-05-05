@@ -8,7 +8,7 @@ const Seller = sequelize.define('Seller', {
     autoIncrement: true,
     primaryKey: true
   },
-  tax_number: { type: Sequelize.FLOAT }
+  exp_transaction: { type: Sequelize.INTEGER }
 }, {
   createdAt: 'created_at',
   updatedAt: 'updated_at',

@@ -27,7 +27,7 @@ const rand6 = () => {
   }
 };
 
-const amountCity = 10;
+const amountCity = 20;
 const fakeCity = () => {
   const name = fake.address.city();
   let { latitude, longitude } = fake.address.geoLocation();
@@ -65,7 +65,7 @@ export default () => new Promise((resolve, reject) => {
   async.eachSeries(cities, (city, cb) => {
     City.create(city).then((city) => {
       console.log(`City ${city.id} created`);
-      const amountDistrict = fake.random.number(2, 8);
+      const amountDistrict = fake.random.number(2, 10);
       const districts = [];
       let center_district_id = -1;
       for (let i = 0; i < amountDistrict; i++) districts.push(fakeDistrict(city.id));

@@ -5,8 +5,6 @@ import { Office, District } from '../../../server/models';
 
 const fake = require('fakerator')();
 
-const NUM_OFFICES = 5;
-
 const fakeOffice = (district_id, is_headquater) => {
   const name = fake.company.name();
   const code = fake.random.number(100, 999);
@@ -29,9 +27,9 @@ const fakeOffice = (district_id, is_headquater) => {
 export default () => new Promise((resolve, reject) => {
   District.findAll().then((districts) => {
     async.eachSeries(districts, (district, cb) => {
-      if (district.id % 20 > 0) return cb();
+      if (district.id % 10 > 0) return cb();
       const offices = [];
-      const amountOffice = fake.random.number(2, 3);
+      const amountOffice = fake.random.number(1, 3);
       for (let i = 0; i < amountOffice; i++) offices.push(fakeOffice(district.id, i == 0));
       async.eachSeries(offices, (office, cb2) => {
         Office.create(office).then((office) => {

@@ -69,7 +69,7 @@ export default () => new Promise((resolve, reject) => {
   async.eachSeries(busTypes, (busType, cb) => {
     BusType.create(busType).then((busType) => {
       console.log(`BusType ${busType.id} created`);
-      const amountBus = fake.random.number(10, 20);
+      const amountBus = fake.random.number(5, 20);
       const buses = [];
       for (let i = 0; i < amountBus; i++) buses.push(fakeBus(busType.id));
       async.eachSeries(buses, (bus, cb2) => {
