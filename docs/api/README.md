@@ -1,7 +1,7 @@
 # APIs
 All APIs need token after login to system to use.
 
-## Authentication Secret - avoid login
+## Authentication Secret - avoid login (only development)
 To avoid login to use api for development, you can create auth secret in file `.env`, which is added to the request as `body` or `query` to pass the authentication layer.
 
 Example, in file `.env`, add:
@@ -19,11 +19,11 @@ In request, for `post` or `put`, you add to `body` with `authSecret`, for `get` 
 |POST|		/api/auth/signIn/| req.body: { username, password } <br> res.status: <br> + 500 => { errorMessage } <br> + 404 => { message: 'User not found' } <br> + 401 => { message: 'Wrong password' } <br> + 200 => { user, token } |
 |POST|		/api/auth/forgotPassword/| req.body: { email } <br> res.status: <br> + 500 => { errorMessage } <br> + 404 => { message: 'User not found' } <br> + 200 => { message: 'check email' } |
 |POST|		/api/auth/resetPassword/| req.body: { token, password } <br> res.status: <br> + 500 => { errorMessage } <br> + 403 => { message: 'Token is not valid' } <br> + 200 => {  message: 'successfully' } |
-|GET|		/api/signOut/| redirect to '/' |
+|GET|		/api/signOut/| header['x-access-token'] <br> response: redirect to '/' |
 
 Login with `username` and `password` of table `EMPLOYEE`.
 
-After login, server will create a session for you to use following  APIs
+After login, you should store token in reponse, and use it in `req.body.tokne` or `req.query.token` or `req.header['x-access-token']` to use following APIs
 
 ## BUS_TYPE
 
