@@ -9,7 +9,7 @@ import generatePassword from 'generate-password';
 import config from '../../config/config';
 
 import { EmployeeCtrl } from './employee';
-import { Employee, Department } from '../models';
+import { Employee, Department, AuthToken, ResetPasswordToken } from '../models';
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -33,12 +33,19 @@ function authorization(req, res, next) {
   if (!token) {
     return res.status(401).send({ errorMessage: 'No authentication for request' });
   }
-  jwt.verify(token, config.session.secret, (err, decoded) => {
-    if (err) {
-      console.log(err);
+  AuthToken.findByPrimary(token).then((info) => {
+    if (!info || info.expire < new Date().getTime()) {
+      if (info) {
+        info.destroy().then(() => {}).catch((err) => {
+          console.log(err);
+        });
+      }
       return res.status(403).send({ errorMessage: 'Token is not valid' });
     }
     return next();
+  }).catch((err) => {
+    console.log(err);
+    res.status(500).send(err);
   });
 }
 
@@ -57,7 +64,9 @@ const signIn = async (req, res, next) => {
       config.session.secret,
       { expiresIn: config.tokenExpire }
     );
+    const expire = new Date().getTime() + config.tokenExpire * 1000;
     user.password = null;
+    await AuthToken.create({ token, expire });
     return res.status(200).send({ user, token });
 
   } catch (err) {
@@ -78,6 +87,8 @@ const forgotPassword = async (req, res, next) => {
       config.session.secret,
       { expiresIn: config.tokenResetPassword }
     );
+    const expire = new Date().getTime() + config.tokenResetPassword * 1000;
+    await ResetPasswordToken.create({ token, expire, email });
     const domain = config.domain;
     const url = `${domain}/auth/resetPassword?token=${token}`;
     const mailOptions = {
@@ -85,7 +96,7 @@ const forgotPassword = async (req, res, next) => {
       to: email,
       subject: '[Transport Passenger] Please reset your password',
       html:
-        `<p>Dear ${`${user.FIRST_NAME} ${user.LAST_NAME}`},</p>
+        `<p>Dear ${`${user.first_name} ${user.last_name}`},</p>
         <p>We heard that you lost your Transport Passenger password. Sorry about that!</p>
         <p>But don’t worry! You can use the following link to reset your password:</p>
         <p></p>
@@ -112,24 +123,35 @@ const forgotPassword = async (req, res, next) => {
 
 const resetPassword = async (req, res, next) => {
   const { token, password } = req.body;
-  jwt.verify(token, config.session.secret, (err, decoded) => {
-    if (err) {
-      console.log(err);
+  try {
+    const info = await ResetPasswordToken.findByPrimary(token);
+    if (!info || info.expire < new Date().getTime()) {
+      if (info) {
+        info.destroy().then(() => {}).catch((err) => {
+          console.log(err);
+        });
+      }
       return res.status(403).send({ errorMessage: 'Token is not valid' });
     }
-    // chưa test ở chỗ này, chờ front-end.
-    const { email } = decoded;
-    Employee.update({ password }, { where: { email } })
-      .then(res => res.status(200).send({ message: 'Reset password successfully' }))
-      .catch((err) => {
-        console.log(err);
-        return res.status(500).send(err);
-      });
-  });
+    const { email } = info;
+    await Employee.update({ password }, { where: { email } });
+    await info.destroy();
+    return res.status(200).send({ message: 'Reset password successfully' });
+
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send(err);
+  }
 };
 
 function signOut(req, res, next) {
-  res.redirect('/');
+  const token = req.body.token || req.query.token || req.headers['x-access-token'];
+  AuthToken.findByPrimary(token).then(info => info.destroy())
+    .then(() => res.redirect('/'))
+    .catch((err) => {
+      console.log(err);
+      return res.redirect('/');
+    });
 }
 
 export default {

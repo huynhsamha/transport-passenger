@@ -1,5 +1,7 @@
 import sequelize from '../config/sequelize';
 
+import { AuthToken, ResetPasswordToken } from './auth';
+
 import BusType from './busType';
 import Bus from './bus';
 import TripDaily from './tripDaily';
@@ -94,25 +96,16 @@ Driver.belongsTo(Employee, { foreignKey: 'id', constraints: false, as: 'informat
 
 
 export {
-  BusType,
-  Bus,
-  TripDaily,
-  Trip,
-  Office,
+  AuthToken, ResetPasswordToken,
+  City, District,
+  Location, BusStation, RepairStation,
+  BusType, Bus,
+  TripDaily, Trip,
+  Office, Department,
   Employee,
   Manager,
-  Driver,
-  Seller,
-  Assistant,
-  Ticket,
-  Customer,
-  Transaction,
-  Department,
-  City,
-  District,
-  Location,
-  BusStation,
-  RepairStation
+  Driver, Seller, Assistant,
+  Transaction, Ticket, Customer
 };
 
 export default sequelize;
