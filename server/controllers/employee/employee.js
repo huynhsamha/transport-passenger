@@ -15,12 +15,16 @@ const findAll = (req, res, next) => {
 
 const findOneById = (req, res, next) => {
   const { id } = req.params;
+  const { supervisor, department } = req.query;
   Employee.findById(id, {
     attributes: { exclude: ['password'] },
     include: [
-      { model: Department, as: 'department' },
-      { model: Employee, as: 'supervisor' }
-    ]
+      Boolean(department || false) == true ? { model: Department, as: 'department' } : null,
+      Boolean(supervisor || false) == true ? {
+        model: Employee, as: 'supervisor',
+        attributes: { exclude: ['password', 'salary', 'bank_account'] }
+      } : null
+    ].filter(o => o != null)
   })
     .then((data) => {
       if (!data)

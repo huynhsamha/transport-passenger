@@ -16,11 +16,18 @@ const TripDaily = sequelize.define('TripDaily', {
   depart_station_id: { type: Sequelize.INTEGER },
   arrive_station_id: { type: Sequelize.INTEGER },
   depart_time: { type: Sequelize.TIME },
-  arrive_time: { type: Sequelize.TIME },
-  duration: { type: Sequelize.INTEGER },
+  duration: { type: Sequelize.INTEGER, comment: 'by minutes' },
+  arrive_time: {
+    type: Sequelize.TIME,
+    set() {
+      const depart_time = new Date(this.depart_time);
+      const arrive_time = new Date(depart_time.getTime() + this.duration * 60000);
+      this.setDataValue('arrive_time', arrive_time);
+    }
+  },
   price: { type: Sequelize.FLOAT },
   distance: { type: Sequelize.FLOAT },
-  hotline: { type: Sequelize.INTEGER },
+  hotline: { type: Sequelize.STRING },
   bus_type_id: { type: Sequelize.INTEGER }
 }, {
   createdAt: 'created_at',

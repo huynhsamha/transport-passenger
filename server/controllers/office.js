@@ -2,15 +2,25 @@ import { Office } from '../models';
 
 
 const findAll = (req, res, next) => {
-  let { offset, limit } = req.query;
+  let { offset, limit, is_headquater } = req.query;
   offset = parseInt(offset, 10) || 0;
   limit = parseInt(limit, 10) || 100;
-  Office.findAll({ offset, limit })
-    .then(data => res.status(200).send({ data }))
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send(err);
-    });
+  is_headquater = Boolean(is_headquater || false);
+  if (is_headquater) {
+    Office.findOne({ where: { is_headquater } })
+      .then(data => res.status(200).send({ data }))
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send(err);
+      });
+  } else {
+    Office.findAll({ offset, limit, where: { } })
+      .then(data => res.status(200).send({ data }))
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send(err);
+      });
+  }
 };
 
 const findOneById = (req, res, next) => {

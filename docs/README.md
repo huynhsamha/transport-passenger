@@ -141,10 +141,6 @@ The project uses `husky` for pre-commit code, that lints your code (`eslint`) an
 
 In file `.env`, add
 ```shell
-# environment is test or production
-NODE_ENV=test
-NODE_ENV=production
-
 # example for domain
 DOMAIN=https://domain.com
 

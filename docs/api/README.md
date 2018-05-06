@@ -29,21 +29,21 @@ After login, server will create a session for you to use following  APIs
 
 | Method | Url | Description |
 | ------ | --- | ----------- |
-|GET|		/api/v1/busType/| query: { offset: default 0, limit: default 100 }|
+|GET|		/api/v1/busType/| query: { offset: default 0, limit: default 100 } <br> response: { data: [{},...] }|
 |POST|		/api/v1/busType/||
-|GET|		/api/v1/busType/:id||
+|GET|		/api/v1/busType/:id|response: { data: {} }|
 |PUT|		/api/v1/busType/:id||
 |DELETE|	/api/v1/busType/:id||
-|GET|		/api/v1/busType/:id/buses| Get list of buses which type is bus type `:id`|
+|GET|		/api/v1/busType/:id/buses| response: { data: [{},...]}|
 
 
 ## BUS
 
 | Method | Url | Description |
 | ------ | --- | ----------- |
-|GET|		/api/v1/bus/|query: { offset: default 0, limit: default 100 }|
+|GET|		/api/v1/bus/|query: { offset: default 0, limit: default 100 } <br> response: { data: [{ ..., bus_type: {} }] }|
 |POST|		/api/v1/bus/||
-|GET|		/api/v1/bus/:id||
+|GET|		/api/v1/bus/:id| response: { data: { ..., bus_type: {} } }|
 |PUT|		/api/v1/bus/:id||
 |DELETE|	/api/v1/bus/:id||
 
@@ -75,9 +75,9 @@ After login, server will create a session for you to use following  APIs
 
 | Method | Url | Description |
 | ------ | --- | ----------- |
-|GET|		/api/v1/office/|query: { offset: default 0, limit: default 100 }|
+|GET|		/api/v1/office/|query: { offset: default 0, limit: default 100, is_headequater: true || null } <br> response: if (is_headquater: true) { data: {} } <br> else { data: [{}] }|
 |POST|		/api/v1/office/||
-|GET|		/api/v1/office/:id||
+|GET|		/api/v1/office/:id| response: { data: {} } |
 |PUT|		/api/v1/office/:id||
 |DELETE|	/api/v1/office/:id||
 
@@ -86,9 +86,9 @@ After login, server will create a session for you to use following  APIs
 
 | Method | Url | Description |
 | ------ | --- | ----------- |
-|GET|		/api/v1/employee/|query: { offset: default 0, limit: default 100 }|
+|GET|		/api/v1/employee/|query: { offset: default 0, limit: default 100 } <br> response: { data: [{}] }|
 |POST|		/api/v1/employee/||
-|GET|		/api/v1/employee/:id||
+|GET|		/api/v1/employee/:id| query: { supervisor: true, department: true} <br> response: { data: {..., (supervisor: {}), (department: {}) } }|
 |PUT|		/api/v1/employee/:id||
 |DELETE|	/api/v1/employee/:id||
 

@@ -31,7 +31,8 @@ District.belongsTo(City, { foreignKey: 'city_id', constraints: false, as: 'city'
 Office.hasMany(Department, { foreignKey: 'office_id' });
 Department.belongsTo(Office, { foreignKey: 'office_id', constraints: false, as: 'office' });
 
-Employee.hasOne(Employee, { foreignKey: 'supervisor_id', as: 'supervisor' });
+Employee.hasOne(Employee, { foreignKey: 'supervisor_id' });
+Employee.belongsTo(Employee, { foreignKey: 'supervisor_id', constraints: false, as: 'supervisor' });
 
 Department.hasMany(Employee, { foreignKey: 'department_id' });
 Employee.belongsTo(Department, { foreignKey: 'department_id', constraints: false, as: 'department' });
