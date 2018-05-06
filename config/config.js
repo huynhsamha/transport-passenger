@@ -5,8 +5,7 @@ module.exports = {
   env: process.env.NODE_ENV || 'development',
   domain: process.env.DOMAIN || 'http://localhost:4200',
   session: {
-    secret: process.env.SESSION_SECRET || 'YOUR SESSION SECRET IN FILE .ENV',
-    maxAge: 7 * ONE_DAY * 1000 // in miliseconds
+    secret: process.env.SESSION_SECRET || 'YOUR SESSION SECRET IN FILE .ENV'
   },
   email: {
     address: process.env.EMAIL_ADDRESS || 'YOUR EMAIL IN FILE .ENV',

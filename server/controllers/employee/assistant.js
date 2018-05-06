@@ -1,4 +1,4 @@
-import { Assistant, Employee } from '../../models';
+import { Assistant, Employee, Department } from '../../models';
 
 
 const findAll = (req, res, next) => {
@@ -7,7 +7,10 @@ const findAll = (req, res, next) => {
   limit = parseInt(limit, 10) || 100;
   Assistant.findAll({
     offset, limit,
-    include: [{ model: Employee, as: 'information' }]
+    include: [{
+      model: Employee, as: 'information',
+      attributes: { exclude: ['password'] }
+    }]
   })
     .then(data => res.status(200).send({ data }))
     .catch((err) => {
@@ -18,7 +21,20 @@ const findAll = (req, res, next) => {
 
 const findOneById = (req, res, next) => {
   const { id } = req.params;
-  Assistant.findById(id, { include: [{ model: Employee, as: 'information' }] })
+  const { supervisor, department } = req.query;
+  Assistant.findById(id, {
+    include: [{
+      model: Employee, as: 'information',
+      attributes: { exclude: ['password'] },
+      include: [
+        department == 'true' ? { model: Department, as: 'department' } : null,
+        supervisor == 'true' ? {
+          model: Employee, as: 'supervisor',
+          attributes: { exclude: ['password', 'salary', 'bank_account'] }
+        } : null
+      ].filter(o => o != null)
+    }]
+  })
     .then((data) => {
       if (!data)
         return res.status(404).send({ message: 'Data not found' });

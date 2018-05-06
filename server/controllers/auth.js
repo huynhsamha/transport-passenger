@@ -29,7 +29,7 @@ function authorization(req, res, next) {
     if (authSecret == config.authenticationSecret) return next();
   }
 
-  const token = req.body.token || req.query.token || req.headers['x-access-token'] || req.session.token;
+  const token = req.body.token || req.query.token || req.headers['x-access-token'];
   if (!token) {
     return res.status(401).send({ errorMessage: 'No authentication for request' });
   }
@@ -42,9 +42,8 @@ function authorization(req, res, next) {
   });
 }
 
-async function signIn(req, res, next) {
-  const username = req.body.username || '';
-  const password = req.body.password || '';
+const signIn = async (req, res, next) => {
+  const { username, password } = req.body;
   try {
     const user = await Employee.findOne({ where: { username } });
     if (!user) {
@@ -59,17 +58,15 @@ async function signIn(req, res, next) {
       { expiresIn: config.tokenExpire }
     );
     user.password = null;
-    req.session.user = user;
-    req.session.token = token;
     return res.status(200).send({ user, token });
 
   } catch (err) {
     console.log(err);
     return res.status(500).send({ err });
   }
-}
+};
 
-async function forgotPassword(req, res, next) {
+const forgotPassword = async (req, res, next) => {
   const email = req.body.email || '';
   try {
     const user = await Employee.findOne({ where: { email } });
@@ -111,9 +108,9 @@ async function forgotPassword(req, res, next) {
     console.log(err);
     return res.status(500).send({ err });
   }
-}
+};
 
-function resetPassword(req, res, next) {
+const resetPassword = async (req, res, next) => {
   const { token, password } = req.body;
   jwt.verify(token, config.session.secret, (err, decoded) => {
     if (err) {
@@ -129,10 +126,9 @@ function resetPassword(req, res, next) {
         return res.status(500).send(err);
       });
   });
-}
+};
 
 function signOut(req, res, next) {
-  req.session.destroy();
   res.redirect('/');
 }
 

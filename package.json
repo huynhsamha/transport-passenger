@@ -40,7 +40,6 @@
     "dotenv": "^5.0.0",
     "express": "~4.15.5",
     "express-rate-limit": "^2.11.0",
-    "express-session": "^1.15.6",
     "fakerator": "^0.3.0",
     "generate-password": "^1.4.0",
     "helmet": "^3.12.0",

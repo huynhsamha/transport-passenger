@@ -19,8 +19,8 @@ const findOneById = (req, res, next) => {
   Employee.findById(id, {
     attributes: { exclude: ['password'] },
     include: [
-      Boolean(department || false) == true ? { model: Department, as: 'department' } : null,
-      Boolean(supervisor || false) == true ? {
+      department == 'true' ? { model: Department, as: 'department' } : null,
+      supervisor == 'true' ? {
         model: Employee, as: 'supervisor',
         attributes: { exclude: ['password', 'salary', 'bank_account'] }
       } : null

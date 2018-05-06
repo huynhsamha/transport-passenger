@@ -1,5 +1,6 @@
 import Sequelize from 'sequelize';
 import sequelize from '../config/sequelize';
+import District from './district';
 
 const City = sequelize.define('City', {
   id: {

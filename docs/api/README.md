@@ -34,7 +34,7 @@ After login, server will create a session for you to use following  APIs
 |GET|		/api/v1/busType/:id|response: { data: {} }|
 |PUT|		/api/v1/busType/:id||
 |DELETE|	/api/v1/busType/:id||
-|GET|		/api/v1/busType/:id/buses| response: { data: [{},...]}|
+|GET|		/api/v1/busType/:id/buses| query: { offset, limit } <br> response: { data: [{},...]}|
 
 
 ## BUS
@@ -75,7 +75,7 @@ After login, server will create a session for you to use following  APIs
 
 | Method | Url | Description |
 | ------ | --- | ----------- |
-|GET|		/api/v1/office/|query: { offset: default 0, limit: default 100, is_headequater: true || null } <br> response: if (is_headquater: true) { data: {} } <br> else { data: [{}] }|
+|GET|		/api/v1/office/|query: { offset: default 0, limit: default 100, is_headequater: true } <br> response: if (is_headquater: true) { data: {} } <br> else { data: [{}] }|
 |POST|		/api/v1/office/||
 |GET|		/api/v1/office/:id| response: { data: {} } |
 |PUT|		/api/v1/office/:id||
@@ -96,22 +96,48 @@ After login, server will create a session for you to use following  APIs
 
 | Method | Url | Description |
 | ------ | --- | ----------- |
-|GET|		/api/v1/employee/role/manager/|query: { offset: default 0, limit: default 100 }|
+|GET|		/api/v1/employee/role/manager/|query: { offset: default 0, limit: default 100 } <br> response: { data: [{..., infomation: { employee attributes }}] }|
 |POST|		/api/v1/employee/role/manager/||
-|GET|		/api/v1/employee/role/manager/:id||
+|GET|		/api/v1/employee/role/manager/:id|query: { department: true } <br> response: { data: {..., infomation: { employee attributes, (department: {}) }} }|
 |PUT|		/api/v1/employee/role/manager/:id||
 |DELETE|	/api/v1/employee/role/manager/:id||
+|GET|		/api/v1/employee/role/manager/:id/subordinates|query: { offset: default 0, limit: default 100 } <br> response: { data: [{}] }|
 
-### DRIVER
+
+### DRIVER - ASSISTANT - SELLER
+Change `driver` to `assistant` or `seller` for correct api
 
 | Method | Url | Description |
 | ------ | --- | ----------- |
 |GET|		/api/v1/employee/role/driver/|query: { offset: default 0, limit: default 100 }|
 |POST|		/api/v1/employee/role/driver/||
-|GET|		/api/v1/employee/role/driver/:id||
+|GET|		/api/v1/employee/role/driver/:id|query: { department: true, supervisor: true } <br> response: { data: {..., infomation: { employee attributes, (department: {}), (supervisor: {}) }} }|
 |PUT|		/api/v1/employee/role/driver/:id||
 |DELETE|	/api/v1/employee/role/driver/:id||
 
+
+## CITY
+
+| Method | Url | Description |
+| ------ | --- | ----------- |
+|GET|		/api/v1/city/| query: { offset: default 0, limit: default 100 } <br> response: { data: [..., center_district: {}] }|
+|POST|		/api/v1/city/||
+|GET|		/api/v1/city/:id|response: { data: {..., center_district: {}} }|
+|PUT|		/api/v1/city/:id||
+|DELETE|	/api/v1/city/:id||
+|GET|		/api/v1/city/:id/districts| response: { data: [{},...]}|
+|GET|		/api/v1/city/:id/center_district| response: { data: {} }|
+
+
+## DISTRICT
+
+| Method | Url | Description |
+| ------ | --- | ----------- |
+|GET|		/api/v1/district/|query: { offset: default 0, limit: default 100 } <br> response: { data: [{ ..., city: {} }] }|
+|POST|		/api/v1/district/||
+|GET|		/api/v1/district/:id| response: { data: { ..., city: {} } }|
+|PUT|		/api/v1/district/:id||
+|DELETE|	/api/v1/district/:id||
 
 
 ## Documents - Contributing

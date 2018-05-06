@@ -8,7 +8,6 @@ import cors from 'cors';
 import helmet from 'helmet';
 import csrf from 'csurf';
 import compression from 'compression';
-import session from 'express-session';
 import RateLimit from 'express-rate-limit';
 
 import routes from './server/routes';
@@ -17,7 +16,9 @@ import config from './config/config';
 
 /** Connect and config Database */
 // use { force: true } for drop all tables before lauch
+// use { logging: false } for dont log statement sql
 // sequelize.sync({ force: true })
+// sequelize.sync({ logging: false })
 sequelize.sync()
   .then(() => console.log('Postgres is sync database'))
   .catch(err => console.log(err));
@@ -44,17 +45,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(helmet({ frameguard: { action: 'deny' } }));
 app.use(compression());
-
-app.use(session({
-  secret: config.session.secret,
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    maxAge: config.session.maxAge,
-    secure: true,
-    httpOnly: true
-  }
-}));
 
 app.use(express.static(path.join(__dirname, './build'), {
   setHeaders(res, path) {

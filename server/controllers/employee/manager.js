@@ -1,4 +1,4 @@
-import { Manager, Employee } from '../../models';
+import { Manager, Employee, Department } from '../../models';
 
 
 const findAll = (req, res, next) => {
@@ -7,7 +7,10 @@ const findAll = (req, res, next) => {
   limit = parseInt(limit, 10) || 100;
   Manager.findAll({
     offset, limit,
-    include: [{ model: Employee, as: 'information' }]
+    include: [{
+      model: Employee, as: 'information',
+      attributes: { exclude: ['password'] }
+    }]
   })
     .then(data => res.status(200).send({ data }))
     .catch((err) => {
@@ -18,7 +21,16 @@ const findAll = (req, res, next) => {
 
 const findOneById = (req, res, next) => {
   const { id } = req.params;
-  Manager.findById(id, { include: [{ model: Employee, as: 'information' }] })
+  const { department } = req.query;
+  Manager.findById(id, {
+    include: [{
+      model: Employee, as: 'information',
+      attributes: { exclude: ['password'] },
+      include: [
+        department == 'true' ? { model: Department, as: 'department' } : null
+      ].filter(o => o != null)
+    }]
+  })
     .then((data) => {
       if (!data)
         return res.status(404).send({ message: 'Data not found' });
@@ -71,11 +83,33 @@ const deleteOneById = async (req, res, next) => {
   }
 };
 
+const findSubordinates = async (req, res, next) => {
+  const { id } = req.params;
+  let { offset, limit } = req.query;
+  offset = offset || 0;
+  limit = limit || 100;
+  try {
+    const manager = await Manager.findById(id);
+    if (!manager) {
+      return res.status(404).send({ message: 'Manager not found' });
+    }
+    const data = await manager.getSubordinates({
+      offset, limit,
+      attributes: { exclude: ['password', 'bank_account'] }
+    });
+    return res.status(200).send({ data });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+};
+
 
 export default {
   findAll,
   findOneById,
   insert,
   updateOneById,
-  deleteOneById
+  deleteOneById,
+  findSubordinates
 };

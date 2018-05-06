@@ -78,7 +78,7 @@ const findBusesByOne = async (req, res, next) => {
     if (!busType) {
       return res.status(404).send({ message: 'Bus Type not found' });
     }
-    const data = await busType.getBuses();
+    const data = await busType.getBuses({ offset, limit });
     return res.status(200).send({ data });
   } catch (err) {
     console.log(err);
