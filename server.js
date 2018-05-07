@@ -6,40 +6,45 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import helmet from 'helmet';
+import csrf from 'csurf';
 import compression from 'compression';
-import session from 'express-session';
+import RateLimit from 'express-rate-limit';
 
 import routes from './server/routes';
-import db from './server/config/oracle';
+import sequelize from './server/models';
 import config from './config/config';
 
-/** Connect and config Database Oracle */
-db.createPool()
-  .then((pool) => {
-    console.log(`OracleDB: pool ${pool.poolAlias} is created`);
-  })
+/** Connect and config Database */
+// use { force: true } for drop all tables before lauch
+// use { logging: false } for dont log statement sql
+// sequelize.sync({ force: true })
+// sequelize.sync({ logging: false })
+sequelize.sync()
+  .then(() => console.log('Postgres is sync database'))
   .catch(err => console.log(err));
 
 
 /** Configure App Express */
 const app = express();
 
+// setup route middlewares
+const csrfProtection = csrf({ cookie: true });
+
+const ONE_MINUTE = 60 * 1000;
+const limiter = new RateLimit({
+  windowMs: 5 * ONE_MINUTE, // milliseconds, how long to keep records
+  max: 100, // limit each IP to 100 requests per windowMs
+  delayMs: 0 // disable delaying - full speed until the max limit is reached
+});
+
+// usage for middlewares
 app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(helmet());
+app.use(helmet({ frameguard: { action: 'deny' } }));
 app.use(compression());
-
-app.use(session({
-  secret: config.session.secret,
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    maxAge: config.session.maxAge
-  }
-}));
 
 app.use(express.static(path.join(__dirname, './build'), {
   setHeaders(res, path) {
@@ -52,6 +57,8 @@ app.use(express.static(path.join(__dirname, './build'), {
     });
   }
 }));
+
+app.use('/api/', limiter);
 
 app.use('/', routes);
 
@@ -83,10 +90,3 @@ app.set('port', port);
 
 const server = http.createServer(app);
 server.listen(port, () => console.log(`Running on localhost:${port}`));
-
-
-setTimeout(() => {
-  // require('./scripts/employee');
-  // require('./scripts/manager');
-  require('./scripts/office');
-}, 1000);

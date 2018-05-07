@@ -10,11 +10,18 @@
   },
   "scripts": {
     "start": "node index",
-    "eslint": "eslint index.js server.js server/**/*.js",
-    "eslint:fix": "eslint index.js server.js server/**/*.js --fix"
+    "eslint": "eslint index.js server.js server scripts test",
+    "eslint:fix": "eslint index.js server.js server scripts test --fix",
+    "precommit": "npm run eslint:fix && git add index.js server.js server scripts test",
+    "test": "mocha --compilers js:babel-register --require babel-polyfill test/*.spec.js server/**/**.spec.js",
+    "db:drop": "node scripts/db/drop",
+    "db:create": "node scripts/db/create",
+    "db:clear": "node scripts/db/clear",
+    "db:fake": "node scripts/db/fake"
   },
   "dependencies": {
     "async": "^2.6.0",
+    "aws-sdk": "^2.230.1",
     "babel-plugin-dynamic-import-node": "^1.2.0",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -28,29 +35,35 @@
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.4",
     "crypto-js": "^3.1.9-1",
+    "csurf": "^1.9.0",
     "debug": "~2.6.9",
     "dotenv": "^5.0.0",
     "express": "~4.15.5",
-    "express-session": "^1.15.6",
+    "express-rate-limit": "^2.11.0",
     "fakerator": "^0.3.0",
     "generate-password": "^1.4.0",
     "helmet": "^3.12.0",
     "jsonwebtoken": "^8.2.1",
     "lodash": "^4.17.5",
-    "lowercase-keys-object": "^1.1.2",
     "morgan": "~1.9.0",
+    "multer": "^1.3.0",
     "nodemailer": "^4.6.4",
-    "oracledb": "^2.1.1",
+    "pg": "^7.4.1",
+    "pg-hstore": "^2.3.2",
     "request": "^2.85.0",
-    "uppercase-keys-object": "^1.1.3"
+    "sequelize": "^4.37.6",
+    "unique-random": "^2.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
+    "chai": "^4.1.2",
     "eslint": "^4.18.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.6.1"
+    "eslint-plugin-react": "^7.6.1",
+    "husky": "^0.14.3",
+    "mocha": "^5.1.1"
   },
   "author": {
     "name": "huynhsamha",
@@ -64,7 +77,8 @@
   "contributors": [
     "huynhsamha",
     "nggbaobkit",
-    "lamvanein"
+    "lamvanein",
+    "trungnhanuchiha"
   ],
   "engines": {
     "node": ">=6.10.0",

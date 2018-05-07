@@ -1,19 +1,23 @@
-import db from '../../config/oracle';
+import Sequelize from 'sequelize';
+import sequelize from '../../config/sequelize';
 
-const { Model, DataTypes } = db;
-
-class Driver extends Model {
-}
-
-/** Override properties */
-Driver.tableName = 'DRIVER';
-
-Driver.attributes = {
-  id: { type: DataTypes.NUMBER },
-  licence_number: { type: DataTypes.NUMBER }
-};
-
-Driver.getStmtDeleteOneById = Model.getStmtDeleteOneById(Driver);
-
+const Driver = sequelize.define('Driver', {
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  license_number: {
+    type: Sequelize.STRING,
+    unique: true
+  }
+}, {
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  timestamps: true,
+  underscored: true,
+  underscoredAll: true
+});
 
 export default Driver;

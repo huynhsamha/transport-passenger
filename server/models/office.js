@@ -1,29 +1,28 @@
-import db from '../config/oracle';
-import crypto from 'crypto-js';
-import lowerKeys from 'lowercase-keys-object';
+import Sequelize from 'sequelize';
+import sequelize from '../config/sequelize';
 
-const { Model, DataTypes } = db;
-
-class Office extends Model {
-}
-
-/** Override properties */
-Office.tableName = 'OFFICE';
-
-Office.attributes = {
-  id: { type: DataTypes.NUMBER },
-  name: { type: DataTypes.STRING },
-  address: { type: DataTypes.STRING },
-  latitude: { type: DataTypes.NUMBER },
-  longitude: { type: DataTypes.NUMBER },
-  is_headquater: { type: DataTypes.NUMBER },
-  district_id: { type: DataTypes.NUMBER },
-  hotline: { type: DataTypes.STRING }
-};
-
-Office.getStmtSelectAll = Model.getStmtSelectAll(Office);
-Office.getStmtSelectOneById = Model.getStmtSelectOneById(Office);
-Office.getStmtDeleteOneById = Model.getStmtDeleteOneById(Office);
+const Office = sequelize.define('Office', {
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  name: { type: Sequelize.STRING },
+  code: { type: Sequelize.STRING },
+  address: { type: Sequelize.STRING },
+  latitude: { type: Sequelize.FLOAT },
+  longitude: { type: Sequelize.FLOAT },
+  is_headquater: { type: Sequelize.BOOLEAN },
+  district_id: { type: Sequelize.INTEGER },
+  hotline: { type: Sequelize.STRING }
+}, {
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  timestamps: true,
+  underscored: true,
+  underscoredAll: true
+});
 
 
 export default Office;

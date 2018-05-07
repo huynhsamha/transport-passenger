@@ -3,7 +3,14 @@ import BusCtrl from './bus';
 import TripDailyCtrl from './tripDaily';
 import TripCtrl from './trip';
 import OfficeCtrl from './office';
-import { EmployeeCtrl, ManagerCtrl, DriverCtrl } from './employee';
+import TicketCtrl from './ticket';
+import CustomerCtrl from './customer';
+import TransactionCtrl from './transaction';
+import DepartmentCtrl from './department';
+import CityCtrl from './city';
+import DistrictCtrl from './district';
+import { EmployeeCtrl, ManagerCtrl, DriverCtrl, SellerCtrl, AssistantCtrl } from './employee';
+import { LocationCtrl, BusStationCtrl, RepairStationCtrl } from './location';
 
 export {
   BusTypeCtrl,
@@ -13,5 +20,16 @@ export {
   OfficeCtrl,
   EmployeeCtrl,
   ManagerCtrl,
-  DriverCtrl
+  DriverCtrl,
+  SellerCtrl,
+  AssistantCtrl,
+  TicketCtrl,
+  CustomerCtrl,
+  TransactionCtrl,
+  DepartmentCtrl,
+  CityCtrl,
+  DistrictCtrl,
+  LocationCtrl,
+  BusStationCtrl,
+  RepairStationCtrl
 };

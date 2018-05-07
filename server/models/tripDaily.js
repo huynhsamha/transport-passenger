@@ -1,30 +1,41 @@
-import db from '../config/oracle';
+import Sequelize from 'sequelize';
+import sequelize from '../config/sequelize';
 
-const { Model, DataTypes } = db;
-
-class TripDaily extends Model {
-}
-
-/** Override properties */
-TripDaily.tableName = 'TRIP';
-
-TripDaily.attributes = {
-  id: { type: DataTypes.NUMBER },
-  name: { type: DataTypes.STRING },
-  depart_station_id: { type: DataTypes.NUMBER },
-  arrive_station_id: { type: DataTypes.NUMBER },
-  depart_time: { type: DataTypes.TIMESTAMP },
-  arrive_time: { type: DataTypes.TIMESTAMP },
-  duration: { type: DataTypes.NUMBER },
-  price: { type: DataTypes.NUMBER },
-  distance: { type: DataTypes.NUMBER },
-  hotline: { type: DataTypes.NUMBER },
-  bus_type_id: { type: DataTypes.NUMBER }
-};
-
-TripDaily.getStmtSelectAll = Model.getStmtSelectAll(TripDaily);
-TripDaily.getStmtSelectOneById = Model.getStmtSelectOneById(TripDaily);
-TripDaily.getStmtDeleteOneById = Model.getStmtDeleteOneById(TripDaily);
+const TripDaily = sequelize.define('TripDaily', {
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  name: { type: Sequelize.STRING },
+  code: {
+    type: Sequelize.STRING,
+    unique: true
+  },
+  depart_station_id: { type: Sequelize.INTEGER },
+  arrive_station_id: { type: Sequelize.INTEGER },
+  depart_time: { type: Sequelize.TIME },
+  duration: { type: Sequelize.INTEGER, comment: 'by minutes' },
+  arrive_time: {
+    type: Sequelize.TIME,
+    set() {
+      const depart_time = new Date(this.depart_time);
+      const arrive_time = new Date(depart_time.getTime() + this.duration * 60000);
+      this.setDataValue('arrive_time', arrive_time);
+    }
+  },
+  price: { type: Sequelize.FLOAT },
+  distance: { type: Sequelize.FLOAT },
+  hotline: { type: Sequelize.STRING },
+  bus_type_id: { type: Sequelize.INTEGER }
+}, {
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  timestamps: true,
+  underscored: true,
+  underscoredAll: true
+});
 
 
 export default TripDaily;

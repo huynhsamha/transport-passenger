@@ -1,53 +1,62 @@
-// console.log('testing...');
+console.log('testing...');
 
-// const div = (a, b) => new Promise((response, reject) => {
-//   setTimeout(() => {
-//     if (b == 0) reject(new Error('Not divide zero'));
-//     else response(a / b);
-//   }, 200);
-// });
+/**
+ * Add your testing here
+ */
 
-// const test_callback = async (a, b, cb) => {
-//   try {
-//     const res = await div(a, b);
-//     cb(null, res);
-//   } catch (err) {
-//     cb(err);
-//   }
-// };
+// const fake = require('faker/locale/vi');
+const fake = 1;
 
-// const test_promise = async (a, b) => {
-//   try {
-//     return await div(a, b);
-//   } catch (err) {
-//     console.log('catch error');
-//     return err;
-//   }
-// };
+fake.seed(121);
+console.log(fake.address.city());
+console.log(fake.address.cityPrefix());
+console.log(fake.address.citySuffix());
+console.log(fake.address.latitude());
+console.log(fake.address.longitude());
+console.log(fake.address.zipCode());
 
-// test_callback(15, 0, (err, res) => {
-//   // console.log(err);
-//   // console.log(res);
-// });
+console.log();
+console.log(fake.company.companyName());
 
-// test_promise(15, 0)
-//   .then((res) => {
-//     console.log(res);
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
+console.log(fake.internet.avatar());
+console.log(fake.internet.email());
+console.log(fake.internet.userName());
+console.log(fake.internet.domainName());
+console.log(fake.internet.url());
 
-import BusType from './server/models/busType';
+console.log();
+console.log(fake.name.firstName());
+console.log(fake.name.lastName());
+console.log(fake.name.findName());
+console.log(fake.phone.phoneNumberFormat(9));
+console.log(fake.random.uuid());
 
-const a = new BusType({
-  id: '123',
-  speed: 100,
-  created_at: new Date(),
-  timestamp: new Date().getTime()
+const AWS = require('aws-sdk');
+const fs = require('fs');
+const path = require('path');
+const awsconfig = require('./config/aws');
+
+AWS.config.update({
+  accessKeyId: awsconfig.AccessKeyID,
+  secretAccessKey: awsconfig.SecretAccessKey
 });
 
-console.log(a);
+const s3 = new AWS.S3();
 
-console.log(a.getStmtInsert());
-console.log(a.getStmtUpdate());
+const filePath = path.join(__dirname, './server.js');
+
+s3.upload({
+  Bucket: awsconfig.S3Bucket,
+  Body: fs.createReadStream(filePath),
+  Key: `avatar/${Date.now()}_${path.basename(filePath)}`
+}, (err, data) => {
+  if (err) {
+    return console.log(err);
+  }
+
+  if (!data) {
+    return console.log('data is null');
+  }
+
+  console.log(data);
+});
