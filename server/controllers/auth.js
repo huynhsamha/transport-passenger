@@ -135,7 +135,7 @@ const resetPassword = async (req, res, next) => {
     }
     const { email } = info;
     const user = await Employee.findOne({ where: { email } });
-    await user.update({ password });
+    await user.update({ password: user.hashPassword(password) });
     await info.destroy();
     return res.status(200).send({ message: 'Reset password successfully' });
 

@@ -36,12 +36,12 @@ const fakeBusType = () => {
   random_number = fake.random.number(0, MORE_INFO_BUS.length - 1);
   const mass_no_load = MORE_INFO_BUS[random_number].m_n_l;
   const mass_all = MORE_INFO_BUS[random_number].m_al;
-  const heigth = MORE_INFO_BUS[random_number].h;
+  const height = MORE_INFO_BUS[random_number].h;
   const width = MORE_INFO_BUS[random_number].w;
   const length = MORE_INFO_BUS[random_number].l;
 
   return {
-    brand, model, seats, speed, capacity_fuel, mass_no_load, mass_all, heigth, width, length
+    brand, model, seats, speed, capacity_fuel, mass_no_load, mass_all, height, width, length
   };
 };
 

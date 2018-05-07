@@ -9,6 +9,8 @@ import other_employee from './other_employee';
 import department from './department';
 import customer from './customer';
 import tripDaily from './tripDaily';
+import upd_dept_mgr from './upd_dept_mgr';
+import upd_emp_dept from './upd_emp_dept';
 
 async function run_script() {
   console.log('Starting fake data...');
@@ -21,7 +23,9 @@ async function run_script() {
     // await other_employee();
     // await department();
     // await customer();
-    await tripDaily();
+    // await tripDaily();
+    // await upd_dept_mgr();
+    // await upd_emp_dept();
 
     return Promise.resolve();
 
