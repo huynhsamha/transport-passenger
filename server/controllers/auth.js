@@ -134,7 +134,8 @@ const resetPassword = async (req, res, next) => {
       return res.status(403).send({ errorMessage: 'Token is not valid' });
     }
     const { email } = info;
-    await Employee.update({ password }, { where: { email } });
+    const user = await Employee.findOne({ where: { email } });
+    await user.update({ password });
     await info.destroy();
     return res.status(200).send({ message: 'Reset password successfully' });
 
