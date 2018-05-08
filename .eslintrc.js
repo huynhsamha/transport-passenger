@@ -94,6 +94,7 @@ module.exports = {
       'import/extensions': 0,
       'import/first': 0,
       'import/no-named-as-default': 0,
+      'import/no-extraneous-dependencies': 0,
       // react plugin
       'react/jsx-filename-extension': [1, { "extensions": [".js", ".jsx"] }],
       'react/prefer-stateless-function': 0,
