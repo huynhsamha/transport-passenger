@@ -19,8 +19,8 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-
 function authorization(req, res, next) {
+
   if (req.path.includes('auth')) return next();
 
   // only for development with authentication secret
