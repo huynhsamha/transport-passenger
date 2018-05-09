@@ -10,7 +10,6 @@ import {
   fetchUtils
 } from 'admin-on-rest';
 import { stringify } from 'query-string';
-import axios from 'axios';
 
 const API_URL = '/api/v1';
 
@@ -65,7 +64,6 @@ const convertRESTRequestToHTTP = (type, resource, params) => {
 
     case UPDATE: {
       url = `${API_URL}/${resource}/${params.id}`;
-      console.log(url);
       options.method = 'PUT';
       if (!options.headers) {
         options.headers = new Headers({ Accept: 'application/json' });
