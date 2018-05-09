@@ -30,30 +30,71 @@ const convertRESTRequestToHTTP = (type, resource, params) => {
         limit: JSON.stringify(params.limit)
       };
       url = `${API_URL}/${resource}?${stringify(query)}`;
+      if (!options.headers) {
+        options.headers = new Headers({ Accept: 'application/json' });
+      }
       const token = localStorage.getItem('token');
-      /* options.headers.set['x-access-token']=`${token}`*/
+      options.headers.set('x-access-token', `${token}`);
 
       break;
     }
-    case GET_ONE:
-      url = `${API_URL}/${resource}/${params.id}`;
+
+    case GET_MANY: {
+      const query = {
+        id: JSON.stringify([params.id])
+      };
+      url = `${API_URL}/${resource}?${stringify(query)}`;
+      if (!options.headers) {
+        options.headers = new Headers({ Accept: 'application/json' });
+      }
       const token = localStorage.getItem('token');
-      /* options.headers.set['x-access-token']=`${token}`*/
+      options.headers.set('x-access-token', `${token}`);
+
       break;
-    case UPDATE:
+    }
+
+    case GET_ONE: {
+      url = `${API_URL}/${resource}/${params.id}`;
+      if (!options.headers) {
+        options.headers = new Headers({ Accept: 'application/json' });
+      }
+      const token = localStorage.getItem('token');
+      options.headers.set('x-access-token', `${token}`);
+      break;
+    }
+    case UPDATE: {
       url = `${API_URL}/${resource}/${params.id}`;
       options.method = 'PUT';
+      if (!options.headers) {
+        options.headers = new Headers({ Accept: 'application/json' });
+      }
+      const token = localStorage.getItem('token');
+      options.headers.set('x-access-token', `${token}`);
+      options.headers.set('Content-Type', 'application/x-www-form-urlencoded');
       options.body = JSON.stringify(params.data);
       break;
-    case CREATE:
+    }
+    case CREATE: {
       url = `${API_URL}/${resource}`;
+      if (!options.headers) {
+        options.headers = new Headers({ Accept: 'application/json' });
+      }
+      const token = localStorage.getItem('token');
+      options.headers.set('x-access-token', `${token}`);
       options.method = 'POST';
       options.body = JSON.stringify(params.data);
       break;
-    case DELETE:
+    }
+    case DELETE: {
       url = `${API_URL}/${resource}/${params.id}`;
+      if (!options.headers) {
+        options.headers = new Headers({ Accept: 'application/json' });
+      }
+      const token = localStorage.getItem('token');
+      options.headers.set('x-access-token', `${token}`);
       options.method = 'DELETE';
       break;
+    }
     default:
       throw new Error(`Unsupported fetch action type ${type}`);
   }
