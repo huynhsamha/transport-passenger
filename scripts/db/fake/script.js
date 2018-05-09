@@ -8,6 +8,9 @@ import manager from './manager';
 import other_employee from './other_employee';
 import department from './department';
 import customer from './customer';
+import upd_dept_mgr from './upd_dept_mgr';
+import upd_emp_dept from './upd_emp_dept';
+import fk_tripdaily from './fk_tripdaily';
 import tripDaily from './tripDaily';
 
 async function run_script() {
@@ -21,7 +24,10 @@ async function run_script() {
     // await other_employee();
     // await department();
     // await customer();
-    await tripDaily();
+    // await upd_dept_mgr();
+    // await upd_emp_dept();
+    await fk_tripdaily();
+    // await tripDaily();
 
     return Promise.resolve();
 

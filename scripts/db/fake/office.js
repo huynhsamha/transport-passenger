@@ -12,6 +12,7 @@ const fakeOffice = (district_id, is_headquater) => {
   let { latitude, longitude } = fake.address.geoLocation();
   latitude = Number(latitude.toFixed(5));
   longitude = Number(longitude.toFixed(5));
+  const hotline = fake.phone.number();
 
   return {
     name,
@@ -20,7 +21,8 @@ const fakeOffice = (district_id, is_headquater) => {
     latitude,
     longitude,
     is_headquater,
-    district_id
+    district_id,
+    hotline
   };
 };
 
