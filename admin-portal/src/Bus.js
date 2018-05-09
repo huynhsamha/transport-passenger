@@ -1,6 +1,6 @@
 // in src/users.js
 import React from 'react';
-import { EditButton, Edit, SimpleForm, required, DisabledInput, ReferenceInput, SelectInput, TextInput, LongTextInput, NumberInput, DateInput, List, Datagrid, EmailField, TextField, NumberField, BooleanField, DateField, ReferenceField } from 'admin-on-rest';
+import { EditButton, Edit, SimpleForm, required, DisabledInput, ReferenceInput, SelectInput, TextInput, LongTextInput, NumberInput, DateInput, List, Datagrid, EmailField, TextField, NumberField, BooleanField, DateField, ReferenceField, Create } from 'admin-on-rest';
 
 export const BusList = props => (
   <List title="Bus" {...props}>
@@ -22,9 +22,7 @@ export const BusList = props => (
   </List>
 );
 
-const BusTitle = ({ record }) => {
-  return <span>Post {record ? `"${record.title}"` : ''}</span>;
-};
+const BusTitle = ({ record }) => <span>Post {record ? `"${record.id}"` : ''}</span>;
 
 export const BusEdit = props => (
   <Edit title={<BusTitle />} {...props}>
@@ -45,3 +43,11 @@ export const BusEdit = props => (
   </Edit>
 );
 
+
+export const BusCreate = props => (
+  <Create {...props}>
+    <SimpleForm>
+      <LongTextInput source="description" />
+    </SimpleForm>
+  </Create>
+);

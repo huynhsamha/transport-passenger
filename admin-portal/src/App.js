@@ -11,7 +11,7 @@ import authClient from './authClient';
 import APIClient from './restClient';
 import { auth } from 'admin-on-rest/lib/sideEffect/saga';
 import BusTypeList from './BusType';
-import { BusList, BusEdit } from './Bus';
+import { BusList, BusEdit, BusCreate } from './Bus';
 import OfficeList from './Office';
 import CityList from './City';
 import DistrictList from './District';
@@ -23,7 +23,7 @@ const App = () => (
 
     {/* <Resource name="posts" list={PostList} edit={PostEdit} create={PostCreate} remove={Delete} icon={PostIcon} />
          <Resource name="comments" list={CommentList} />*/ }
-    <Resource options={{ label: 'Bus' }} name="bus" list={BusList} icon={BusIcon} edit={BusEdit} />
+    <Resource options={{ label: 'Bus' }} name="bus" list={BusList} icon={BusIcon} edit={BusEdit} create={BusCreate} />
     <Resource options={{ label: 'Bus Type' }} name="busType" list={BusTypeList} />
     <Resource options={{ label: 'Office' }} name="office" list={OfficeList} icon={OfficeIcon} />
     <Resource options={{ label: 'City' }}name="city" list={CityList} icon={CityIcon} />

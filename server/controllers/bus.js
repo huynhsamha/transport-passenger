@@ -34,6 +34,9 @@ const findOneById = (req, res, next) => {
 const updateOneById = async (req, res, next) => {
   const { id } = req.params;
   const new_data = req.body;
+  delete new_data.id;
+  delete new_data.created_at;
+  delete new_data.updated_at;
   try {
     let data = await Bus.findById(id);
     if (!data) {

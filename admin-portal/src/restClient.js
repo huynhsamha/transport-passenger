@@ -62,20 +62,24 @@ const convertRESTRequestToHTTP = (type, resource, params) => {
       options.headers.set('x-access-token', `${token}`);
       break;
     }
+
     case UPDATE: {
       url = `${API_URL}/${resource}/${params.id}`;
+      console.log(url);
       options.method = 'PUT';
       if (!options.headers) {
         options.headers = new Headers({ Accept: 'application/json' });
       }
       const token = localStorage.getItem('token');
       options.headers.set('x-access-token', `${token}`);
-      options.headers.set('Content-Type', 'application/x-www-form-urlencoded');
+      options.headers.set('Content-Type', 'application/json');
       options.body = JSON.stringify(params.data);
       break;
     }
+
     case CREATE: {
       url = `${API_URL}/${resource}`;
+      console.log(resource);
       if (!options.headers) {
         options.headers = new Headers({ Accept: 'application/json' });
       }
@@ -85,6 +89,7 @@ const convertRESTRequestToHTTP = (type, resource, params) => {
       options.body = JSON.stringify(params.data);
       break;
     }
+
     case DELETE: {
       url = `${API_URL}/${resource}/${params.id}`;
       if (!options.headers) {
@@ -95,6 +100,7 @@ const convertRESTRequestToHTTP = (type, resource, params) => {
       options.method = 'DELETE';
       break;
     }
+
     default:
       throw new Error(`Unsupported fetch action type ${type}`);
   }
@@ -116,10 +122,12 @@ const convertHTTPResponseToREST = (response, type, resource, params) => {
         data: json.data.map(x => x),
         total: json.data.length
       };
+
     case CREATE:
-      return { data: { ...params.data, id: json.id } };
+      return { data: { ...params.data, id: json.data.id } };
+
     default:
-      return { data: json };
+      return { data: json.data };
   }
 };
 
