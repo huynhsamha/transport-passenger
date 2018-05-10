@@ -20,7 +20,7 @@ const Employee = sequelize.define('Employee', {
     type: Sequelize.STRING,
     unique: true
   },
-  password: { type: Sequelize.STRING },
+  password: { type: Sequelize.STRING(1024) },
   email: {
     type: Sequelize.STRING,
     unique: true
@@ -60,8 +60,8 @@ Employee.beforeCreate((user) => {
   user.password = user.hashPassword(user.password);
 });
 
-Employee.beforeUpdate((user) => {
-  user.password = user.hashPassword(user.password);
-});
+// Employee.beforeUpdate((user) => {
+//   user.password = user.hashPassword(user.password);
+// });
 
 export default Employee;
