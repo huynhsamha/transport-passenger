@@ -20,16 +20,13 @@ export default (type, params) => {
       })
       .then(({ token }) => {
         localStorage.setItem('token', token);
-        // console.log(localStorage.getItem('token'));
         return Promise.resolve();
       });
-
   }
 
   // called when the user clicks on the logout button
   if (type === AUTH_LOGOUT) {
     localStorage.removeItem('token');
-    console.log('logout');
     return Promise.resolve();
   }
 
@@ -48,5 +45,5 @@ export default (type, params) => {
     return localStorage.getItem('token') ? Promise.resolve() : Promise.reject();
   }
 
-  return Promise.reject(new Error('Unknow method'));
+  return Promise.reject(new Error('Unknown method'));
 };

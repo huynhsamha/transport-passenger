@@ -13,4 +13,8 @@ UrlField.propTypes = {
   source: PropTypes.string.isRequired
 };
 
+UrlField.defaultProps = {
+  record: {}
+};
+
 export default UrlField;
