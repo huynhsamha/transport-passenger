@@ -1,10 +1,9 @@
-// in src/Dashboard.js
 import React from 'react';
-import { Card, CardHeader, CardText } from 'material-ui/Card';
+import Card, { CardHeader, CardContent } from 'material-ui/Card';
 
 export default () => (
-  <Card style={{ margin: '2em' }}>
+  <Card>
     <CardHeader title="Welcome to the administration" />
-    <CardText>Lorem ipsum sic dolor amet...</CardText>
+    <CardContent>Please do something here now!</CardContent>
   </Card>
 );

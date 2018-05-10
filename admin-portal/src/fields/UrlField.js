@@ -14,7 +14,7 @@ UrlField.propTypes = {
 };
 
 UrlField.defaultProps = {
-  record: {}
+  record: { source: '' }
 };
 
 export default UrlField;
