@@ -1,6 +1,12 @@
-// in src/users.js
 import React from 'react';
-import { List, Datagrid, EmailField, TextField, NumberField, ChipField, ImageField, DateField } from 'admin-on-rest';
+import PropTypes from 'prop-types';
+import {
+  EditButton, Edit, SimpleForm, DisabledInput,
+  TextInput, LongTextInput, NumberInput, List, Datagrid,
+  TextField, NumberField, DateField, Create, ReferenceField,
+  ReferenceInput, SelectInput, Filter, ChipField
+} from 'react-admin';
+import Icon from '@material-ui/icons/AirportShuttle';
 
 export const EmployeeList = props => (
   <List title="Employees" {...props}>

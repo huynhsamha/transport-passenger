@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const UrlField = ({ record = {}, source }) =>
   (
-    <a href={record[source]}>
+    <a href={record[source]} target="_blank">
       {record[source]}
     </a>
   );

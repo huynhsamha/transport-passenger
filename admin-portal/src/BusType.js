@@ -8,28 +8,20 @@ import {
 } from 'react-admin';
 import Icon from '@material-ui/icons/AirportShuttle';
 
-const busTypeBrands = [
-  { name: 'Mercedes Benz' },
-  { name: 'Toyota' },
-  { name: 'Huyndai' },
-  { name: 'Thaco' }
-];
+const busTypeBrand = ['Mercedes Benz', 'Toyota', 'Huyndai', 'Thaco'];
+const busTypeBrandChoices = busTypeBrand.map(name => ({ name }));
 
-const busTypeModels = [
-  { name: 'A2' },
-  { name: 'A3' },
-  { name: 'B2' },
-  { name: 'B3' }
-];
+const busTypeModel = ['A2', 'A3', 'B2', 'B3'];
+const busTypeModelChoices = busTypeModel.map(name => ({ name }));
 
 const BusTypeFilter = props => (
   <Filter {...props}>
     <SelectInput
-      label="Brand" source="brand" choices={busTypeBrands}
+      label="Brand" source="brand" choices={busTypeBrandChoices}
       optionText="name" optionValue="name" allowEmpty
     />
     <SelectInput
-      label="Model" source="model" choices={busTypeModels}
+      label="Model" source="model" choices={busTypeModelChoices}
       optionText="name" optionValue="name" allowEmpty
     />
   </Filter>
@@ -72,11 +64,11 @@ export const BusTypeEdit = (props) => {
       <SimpleForm >
         <DisabledInput label="ID" source="id" />
         <SelectInput
-          label="Brand" source="brand" choices={busTypeBrands}
+          label="Brand" source="brand" choices={busTypeBrandChoices}
           optionText="name" optionValue="name" allowEmpty
         />
         <SelectInput
-          label="Model" source="model" choices={busTypeModels}
+          label="Model" source="model" choices={busTypeModelChoices}
           optionText="name" optionValue="name" allowEmpty
         />
         <NumberInput label="Seats" source="seats" />
@@ -101,11 +93,11 @@ export const BusTypeCreate = (props) => {
     <Create title="Create Bus Type" {...props}>
       <SimpleForm>
         <SelectInput
-          label="Brand" source="brand" choices={busTypeBrands}
+          label="Brand" source="brand" choices={busTypeBrandChoices}
           optionText="name" optionValue="name" allowEmpty
         />
         <SelectInput
-          label="Model" source="model" choices={busTypeModels}
+          label="Model" source="model" choices={busTypeModelChoices}
           optionText="name" optionValue="name" allowEmpty
         />
         <NumberInput label="Seats" source="seats" />
