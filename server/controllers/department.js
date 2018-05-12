@@ -22,7 +22,8 @@ const findAll = (req, res, next) => {
   console.log(offset, limit);
 
   Department.findAndCountAll({
-    offset, limit,
+    where: { ...filter },
+    order, offset, limit,
     include: [{ model: Manager, as: 'manager' }]
   })
     .then(({ rows, count }) => res.status(200).send({ data: rows, total: count }))

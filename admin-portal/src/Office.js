@@ -9,12 +9,6 @@ import {
 } from 'react-admin';
 import Icon from '@material-ui/icons/Domain';
 
-const officeBrand = ['Mercedes Benz', 'Toyota', 'Huyndai', 'Thaco'];
-const officeBrandChoices = officeBrand.map(name => ({ name }));
-
-const officeModel = ['A2', 'A3', 'B2', 'B3'];
-const officeModelChoices = officeModel.map(name => ({ name }));
-
 const OfficeFilter = props => (
   <Filter {...props}>
     <ReferenceInput label="District" source="district_id" reference="district">

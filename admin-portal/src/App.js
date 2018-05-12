@@ -13,7 +13,7 @@ import { BusList, BusEdit, BusCreate, BusIcon } from './Bus';
 import { CityList, CityCreate, CityEdit, CityIcon } from './City';
 import { DistrictList, DistrictCreate, DistrictEdit, DistrictIcon } from './District';
 import { OfficeCreate, OfficeEdit, OfficeIcon, OfficeList } from './Office';
-
+import { DepartmentCreate, DepartmentEdit, DepartmentIcon, DepartmentList } from './Department';
 
 const App = () => (
   <Admin
@@ -24,6 +24,10 @@ const App = () => (
     <Resource
       name="office" options={{ label: 'Office' }} icon={OfficeIcon}
       list={OfficeList} edit={OfficeEdit} create={OfficeCreate}
+    />
+    <Resource
+      name="department" options={{ label: 'Department' }} icon={DepartmentIcon}
+      list={DepartmentList} edit={DepartmentEdit} create={DepartmentCreate}
     />
     <Resource
       name="busType" options={{ label: 'Bus Type' }} icon={BusTypeIcon}
