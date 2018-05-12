@@ -2,18 +2,19 @@ import React from 'react';
 
 import { Admin, Resource } from 'react-admin';
 
-import authProvider from './authProvider';
-import dataProvider from './dataProvider';
+import { authProvider, dataProvider } from './providors';
 
-import Dashboard from './Dashboard';
-import NotFound from './404NotFound';
+import './App.css'; // override default css and index.css
 
-import { BusTypeList, BusTypeCreate, BusTypeEdit, BusTypeIcon } from './BusType';
-import { BusList, BusEdit, BusCreate, BusIcon } from './Bus';
-import { CityList, CityCreate, CityEdit, CityIcon } from './City';
-import { DistrictList, DistrictCreate, DistrictEdit, DistrictIcon } from './District';
-import { OfficeCreate, OfficeEdit, OfficeIcon, OfficeList } from './Office';
-import { DepartmentCreate, DepartmentEdit, DepartmentIcon, DepartmentList } from './Department';
+import { Dashboard, NotFound } from './pages';
+
+import { BusTypeList, BusTypeCreate, BusTypeEdit, BusTypeIcon } from './resources/BusType';
+import { BusList, BusEdit, BusCreate, BusIcon } from './resources/Bus';
+import { CityList, CityCreate, CityEdit, CityIcon } from './resources/City';
+import { DistrictList, DistrictCreate, DistrictEdit, DistrictIcon } from './resources/District';
+import { OfficeCreate, OfficeEdit, OfficeIcon, OfficeList } from './resources/Office';
+import { DepartmentCreate, DepartmentEdit, DepartmentIcon, DepartmentList } from './resources/Department';
+import { EmployeeCreate, EmployeeEdit, EmployeeIcon, EmployeeList } from './resources/Employee';
 
 const App = () => (
   <Admin
@@ -36,6 +37,10 @@ const App = () => (
     <Resource
       name="bus" options={{ label: 'Bus' }} icon={BusIcon}
       list={BusList} edit={BusEdit} create={BusCreate}
+    />
+    <Resource
+      name="employee" options={{ label: 'Employee' }} icon={EmployeeIcon}
+      list={EmployeeList} edit={EmployeeEdit} create={EmployeeCreate}
     />
     <Resource
       name="city" options={{ label: 'City' }} icon={CityIcon}

@@ -6,7 +6,7 @@ import {
   TextField, NumberField, DateField, Create, ReferenceField,
   ReferenceInput, SelectInput, Filter, ChipField
 } from 'react-admin';
-import { UrlField } from './fields';
+import { UrlField } from '../fields';
 import Icon from '@material-ui/icons/LocationCity';
 
 
@@ -24,7 +24,9 @@ export const CityList = (props) => {
         <TextField label="Tel" source="tel_code" />
         <TextField label="Zip" source="zip_code" />
         <TextField label="Area code" source="area_code" />
-        <NumberField label="Center district" source="center_district_id" />
+        <ReferenceField label="Center" source="center_district_id" reference="district">
+          <TextField source="id" />
+        </ReferenceField>
         <DateField label="Created" source="created_at" showTime />
         <DateField label="Last Update" source="updated_at" showTime />
         <EditButton />

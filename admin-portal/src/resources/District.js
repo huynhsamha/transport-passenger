@@ -6,7 +6,7 @@ import {
   TextField, NumberField, DateField, Create, ReferenceField,
   ReferenceInput, SelectInput, Filter, ChipField
 } from 'react-admin';
-import { UrlField } from './fields';
+import { UrlField } from '../fields';
 import Icon from '@material-ui/icons/AccountBalance';
 
 const DistrictFilter = props => (

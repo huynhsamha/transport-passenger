@@ -45,7 +45,7 @@ export const DepartmentList = (props) => {
 };
 
 const DepartmentTitle = ({ record }) =>
-  <span>Department {record ? `${record.id}. ${record.name} (${record.code})` : ''}</span>;
+  <span>Department {record ? `${record.id}. ${record.type}` : ''}</span>;
 
 DepartmentTitle.propTypes = { record: PropTypes.object };
 DepartmentTitle.defaultProps = { record: {} };
