@@ -1,69 +1,124 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   EditButton, Edit, SimpleForm, DisabledInput,
   TextInput, LongTextInput, NumberInput, List, Datagrid,
   TextField, NumberField, DateField, Create, ReferenceField,
-  ReferenceInput, SelectInput, Filter
+  ReferenceInput, SelectInput, Filter, ChipField
 } from 'react-admin';
 import Icon from '@material-ui/icons/AirportShuttle';
 
-export const BusTypeList = props => (
-  <List title="Bus Type" {...props}>
-    <Datagrid>
-      <NumberField label="ID" source="id" />
-      <TextField label="Brand" source="brand" />
-      <TextField label="Model" source="model" />
-      <NumberField label="Seats" source="seats" />
-      <NumberField label="Fuel" source="capacity_fuel" />
-      <NumberField label="Speed" source="speed" />
-      <NumberField label="Length" source="length" />
-      <NumberField label="Height" source="height" />
-      <NumberField label="Mass (all)" source="mass_all" />
-      <NumberField label="Mass (no-load)" source="mass_no_load" />
-      <DateField label="Created" source="created_at" showTime />
-      <DateField label="Last Update" source="updated_at" showTime />
-      <EditButton />
-    </Datagrid>
-  </List>
+const busTypeBrands = [
+  { name: 'Mercedes Benz' },
+  { name: 'Toyota' },
+  { name: 'Huyndai' },
+  { name: 'Thaco' }
+];
+
+const busTypeModels = [
+  { name: 'A2' },
+  { name: 'A3' },
+  { name: 'B2' },
+  { name: 'B3' }
+];
+
+const BusTypeFilter = props => (
+  <Filter {...props}>
+    <SelectInput
+      label="Brand" source="brand" choices={busTypeBrands}
+      optionText="name" optionValue="name" allowEmpty
+    />
+    <SelectInput
+      label="Model" source="model" choices={busTypeModels}
+      optionText="name" optionValue="name" allowEmpty
+    />
+  </Filter>
 );
+
+export const BusTypeList = (props) => {
+  document.title = 'List Bus Type';
+  return (
+    <List title="Bus Type" {...props} filters={<BusTypeFilter />}>
+      <Datagrid>
+        <NumberField label="ID" source="id" />
+        <ChipField label="Brand" source="brand" />
+        <ChipField label="Model" source="model" />
+        <NumberField label="Seats" source="seats" />
+        <NumberField label="Fuel (m^3)" source="capacity_fuel" />
+        <NumberField label="Speed (km/h)" source="speed" />
+        <NumberField label="Length (m)" source="length" />
+        <NumberField label="Height (m)" source="height" />
+        <NumberField label="Width (m0" source="width" />
+        <NumberField label="Mass (all) (kg)" source="mass_all" />
+        <NumberField label="Mass (no-load) (kg)" source="mass_no_load" />
+        <DateField label="Created" source="created_at" showTime />
+        <DateField label="Last Update" source="updated_at" showTime />
+        <EditButton />
+      </Datagrid>
+    </List>
+  );
+};
 
 const BusTypeTitle = ({ record }) =>
-  <span>Bus Type {record ? `${record.id} ${record.brand} (${record.model})` : ''}</span>;
+  <span>Bus Type {record ? `${record.id}. ${record.brand} (${record.model})` : ''}</span>;
 
-export const BusTypeEdit = props => (
-  <Edit title={<BusTypeTitle />} {...props}>
-    <SimpleForm>
-      <DisabledInput label="ID" source="id" />
-      <TextInput label="Brand" source="brand" />
-      <TextInput label="Model" source="model" />
-      <NumberInput label="Seats" source="seats" />
-      <NumberInput label="Fuel" source="capacity_fuel" />
-      <NumberInput label="Speed" source="speed" />
-      <NumberInput label="Length" source="length" />
-      <NumberInput label="Height" source="height" />
-      <NumberInput label="Mass (all)" source="mass_all" />
-      <NumberInput label="Mass (no-load)" source="mass_no_load" />
-      <DisabledInput label="Created" source="created_at" />
-      <DisabledInput label="Last Update" source="updated_at" />
-    </SimpleForm>
-  </Edit>
-);
+BusTypeTitle.propTypes = { record: PropTypes.object };
+BusTypeTitle.defaultProps = { record: {} };
+
+export const BusTypeEdit = (props) => {
+  document.title = 'Edit Bus Type';
+  return (
+    <Edit title={<BusTypeTitle />} {...props}>
+      <SimpleForm >
+        <DisabledInput label="ID" source="id" />
+        <SelectInput
+          label="Brand" source="brand" choices={busTypeBrands}
+          optionText="name" optionValue="name" allowEmpty
+        />
+        <SelectInput
+          label="Model" source="model" choices={busTypeModels}
+          optionText="name" optionValue="name" allowEmpty
+        />
+        <NumberInput label="Seats" source="seats" />
+        <NumberInput label="Fuel (m^3)" source="capacity_fuel" />
+        <NumberInput label="Speed (km/h)" source="speed" />
+        <NumberInput label="Length (m)" source="length" />
+        <NumberInput label="Height (m)" source="height" />
+        <NumberInput label="Width (m)" source="width" />
+        <NumberInput label="Mass (all) (kg)" source="mass_all" />
+        <NumberInput label="Mass (no-load) (kg)" source="mass_no_load" />
+        <DisabledInput label="Created" source="created_at" />
+        <DisabledInput label="Last Update" source="updated_at" />
+      </SimpleForm>
+    </Edit>
+  );
+};
 
 
-export const BusTypeCreate = props => (
-  <Create title="Create Bus Type" {...props}>
-    <SimpleForm>
-      <TextInput label="Brand" source="brand" />
-      <TextInput label="Model" source="model" />
-      <NumberInput label="Seats" source="seats" />
-      <NumberInput label="Fuel" source="capacity_fuel" />
-      <NumberInput label="Speed" source="speed" />
-      <NumberInput label="Length" source="length" />
-      <NumberInput label="Height" source="height" />
-      <NumberInput label="Mass (all)" source="mass_all" />
-      <NumberInput label="Mass (no-load)" source="mass_no_load" />
-    </SimpleForm>
-  </Create>
-);
+export const BusTypeCreate = (props) => {
+  document.title = 'Create Bus Type';
+  return (
+    <Create title="Create Bus Type" {...props}>
+      <SimpleForm>
+        <SelectInput
+          label="Brand" source="brand" choices={busTypeBrands}
+          optionText="name" optionValue="name" allowEmpty
+        />
+        <SelectInput
+          label="Model" source="model" choices={busTypeModels}
+          optionText="name" optionValue="name" allowEmpty
+        />
+        <NumberInput label="Seats" source="seats" />
+        <NumberInput label="Fuel (m^3)" source="capacity_fuel" />
+        <NumberInput label="Speed (km/h)" source="speed" />
+        <NumberInput label="Length (m)" source="length" />
+        <NumberInput label="Height (m)" source="height" />
+        <NumberInput label="Width (m)" source="width" />
+        <NumberInput label="Mass (all) (kg)" source="mass_all" />
+        <NumberInput label="Mass (no-load) (kg)" source="mass_no_load" />
+      </SimpleForm>
+    </Create>
+  );
+};
 
 export const BusTypeIcon = Icon;

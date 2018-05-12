@@ -26,6 +26,7 @@ export default (type, params) => {
 
   // called when the user clicks on the logout button
   if (type === AUTH_LOGOUT) {
+    console.log('Remove Token on AUTH_LOGOUT');
     localStorage.removeItem('token');
     return Promise.resolve();
   }
@@ -34,6 +35,7 @@ export default (type, params) => {
   if (type === AUTH_ERROR) {
     const { status } = params;
     if (status === 401 || status === 403) {
+      console.log('Remove Token on AUTH_ERROR');
       localStorage.removeItem('token');
       return Promise.reject();
     }

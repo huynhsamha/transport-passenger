@@ -43,7 +43,8 @@ const convertDataProviderRequestToHTTP = (type, resource, params) => {
     }
 
     case GET_ONE:
-      return { url: `${API_URL}/${resource}/${params.id}` };
+      url += `/${params.id}`;
+      break;
 
     case GET_MANY: {
       const query = {
@@ -86,6 +87,7 @@ const convertDataProviderRequestToHTTP = (type, resource, params) => {
       throw new Error(`Unsupported fetch action type ${type}`);
   }
 
+  console.log(url);
   return { url, options };
 };
 
@@ -105,7 +107,7 @@ const convertHTTPResponseToDataProvider = (response, type, resource, params) => 
       return {
         data: json.data.map(x => x),
         // total: parseInt(headers.get('content-range').split('/').pop(), 10)
-        total: json.data.length
+        total: json.total
       };
 
     case CREATE:

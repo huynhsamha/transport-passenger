@@ -2,14 +2,31 @@ import { Bus, BusType } from '../models';
 
 
 const findAll = (req, res, next) => {
-  let { offset, limit } = req.query;
-  offset = parseInt(offset, 10) || 0;
-  limit = parseInt(limit, 10) || 100;
-  Bus.findAll({
-    offset, limit,
+  let { range, sort, filter } = req.query;
+  let offset, limit, order;
+
+  if (range) {
+    range = JSON.parse(range);
+    offset = range[0];
+    limit = range[1] - range[0] + 1;
+  }
+  if (sort) {
+    sort = JSON.parse(sort);
+    order = [sort];
+  }
+  if (filter) {
+    filter = JSON.parse(filter);
+  }
+
+  console.log(range, sort, filter);
+  console.log(offset, limit);
+
+  Bus.findAndCountAll({
+    where: { ...filter },
+    order, offset, limit,
     include: [{ model: BusType, as: 'bus_type' }]
   })
-    .then(data => res.status(200).send({ data }))
+    .then(({ rows, count }) => res.status(200).send({ data: rows, total: count }))
     .catch((err) => {
       console.log(err);
       res.status(500).send(err);
@@ -68,7 +85,7 @@ const deleteOneById = async (req, res, next) => {
       return res.status(404).send({ message: 'Data not found' });
     }
     await data.destroy();
-    return res.status(200).send({ message: 'Data is deleted' });
+    return res.status(200).send({ data, message: 'Data is deleted' });
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
