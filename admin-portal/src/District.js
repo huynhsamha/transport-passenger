@@ -7,7 +7,7 @@ import {
   ReferenceInput, SelectInput, Filter, ChipField
 } from 'react-admin';
 import { UrlField } from './fields';
-import Icon from '@material-ui/icons/Domain';
+import Icon from '@material-ui/icons/AccountBalance';
 
 const DistrictFilter = props => (
   <Filter {...props}>

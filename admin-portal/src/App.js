@@ -12,6 +12,7 @@ import { BusTypeList, BusTypeCreate, BusTypeEdit, BusTypeIcon } from './BusType'
 import { BusList, BusEdit, BusCreate, BusIcon } from './Bus';
 import { CityList, CityCreate, CityEdit, CityIcon } from './City';
 import { DistrictList, DistrictCreate, DistrictEdit, DistrictIcon } from './District';
+import { OfficeCreate, OfficeEdit, OfficeIcon, OfficeList } from './Office';
 
 
 const App = () => (
@@ -20,6 +21,10 @@ const App = () => (
     dashboard={Dashboard} authProvider={authProvider} dataProvider={dataProvider}
   >
 
+    <Resource
+      name="office" options={{ label: 'Office' }} icon={OfficeIcon}
+      list={OfficeList} edit={OfficeEdit} create={OfficeCreate}
+    />
     <Resource
       name="busType" options={{ label: 'Bus Type' }} icon={BusTypeIcon}
       list={BusTypeList} edit={BusTypeEdit} create={BusTypeCreate}
