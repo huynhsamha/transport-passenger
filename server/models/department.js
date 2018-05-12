@@ -8,7 +8,10 @@ const Department = sequelize.define('Department', {
     autoIncrement: true,
     primaryKey: true
   },
-  type: { type: Sequelize.STRING },
+  type: {
+    type: Sequelize.STRING,
+    comment: 'Human Resource, Business, Financial, Shipping, Equipment'
+  },
   name: { type: Sequelize.STRING },
   manager_id: { type: Sequelize.INTEGER },
   office_id: { type: Sequelize.INTEGER }
