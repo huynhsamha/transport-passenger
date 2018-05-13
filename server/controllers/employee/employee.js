@@ -97,10 +97,31 @@ const deleteOneById = async (req, res, next) => {
   }
 };
 
+const changePassword = async (req, res, next) => {
+  const { id } = req.params;
+  const { currentPassword, newPassword } = req.body;
+  try {
+    const user = await Employee.findById(id);
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+    if (!user.authenticate(currentPassword)) {
+      return res.status(401).send({ message: 'Current password is wrong' });
+    }
+    await user.update({ password: user.hashPassword(newPassword) });
+    return res.status(200).send({ message: 'Change password successfully' });
+
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send(err);
+  }
+};
+
 export default {
   findAll,
   findOneById,
   insert,
   updateOneById,
-  deleteOneById
+  deleteOneById,
+  changePassword
 };

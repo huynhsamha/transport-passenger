@@ -21,6 +21,7 @@ router.post('/', EmployeeCtrl.insert);
 router.get('/:id', EmployeeCtrl.findOneById);
 router.put('/:id', EmployeeCtrl.updateOneById);
 router.delete('/:id', EmployeeCtrl.deleteOneById);
+router.post('/:id/changePassword', EmployeeCtrl.changePassword);
 
 
 // error here

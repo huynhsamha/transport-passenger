@@ -13,13 +13,13 @@ export default (type, params) => {
 
     return fetch(request)
       .then((response) => {
-        if (response.status == 404) {
+        if (response.status === 404) {
           throw new Error('User not found');
         }
-        if (response.status == 401) {
+        if (response.status === 401) {
           throw new Error('Wrong password');
         }
-        if (response.status == 500) {
+        if (response.status === 500) {
           throw new Error('Internal Server Error');
         }
         return response.json();

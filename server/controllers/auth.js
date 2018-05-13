@@ -36,7 +36,7 @@ function authorization(req, res, next) {
   AuthToken.findByPrimary(token).then((info) => {
     if (!info || info.expire < new Date().getTime()) {
       if (info) {
-        info.destroy().then(() => {}).catch((err) => {
+        info.destroy().then(() => { }).catch((err) => {
           console.log(err);
         });
       }
@@ -127,7 +127,7 @@ const resetPassword = async (req, res, next) => {
     const info = await ResetPasswordToken.findByPrimary(token);
     if (!info || info.expire < new Date().getTime()) {
       if (info) {
-        info.destroy().then(() => {}).catch((err) => {
+        info.destroy().then(() => { }).catch((err) => {
           console.log(err);
         });
       }

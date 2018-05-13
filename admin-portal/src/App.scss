@@ -1,18 +1,84 @@
+@import './styles/_index.scss';
+
 body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
 }
 
+// descrease height of header
 header {
-    background-color: #100e8a !important;
+    background-color: $primary-color !important;
+    @media (min-width: 600px) {
+        & > div {
+            min-height: 52px !important;
+            height: 52px !important;
+            button:first-child {
+                height: 42px !important;
+                width: 42px !important;
+                span {
+                    height: 24px !important;
+                    width: 24px !important;
+                }
+            }
+        }
+    }
+    &>div {
+        h2 {
+					@extend .fontQuicksand;
+        }
+    }
 }
 
+// wrapper sidebar + content
+main {
+		// sidebar
+    &>div:first-child {
+        &>div {
+            margin-top: 4.5em;
+            a {
+								@extend .fontNunito;
+                &[aria-current=true] {
+                    color: #fff; // font-weight: 900;
+                    background-color: $secondary-color;
+                    position: relative;
+                    &::after {
+                        position: absolute;
+                        right: -3px;
+                        top: 50%;
+                        font-size: 4em;
+												content: '\f0d9';
+												transform: translateY(-50%);
+												font-family: 'fontawesome';
+                    }
+                }
+                &[aria-current=false] {
+                    color: #423f3f;
+                }
+            }
+        }
+		}
+		// main content
+		&>div:last-child {
+			margin-top: 3em;
+			& > div {
+				h1 > span {
+					@extend .fontNunito;
+					font-weight: 900;
+					color: $secondary-color;
+				}
+			}
+	}
+}
+
+
+// fix horizontal scrollbar
 .layout {
+    height: 100vh;
     .list-page {
-			table {
-					width: 100%;
-					overflow: auto;
+        table {
+            width: 100%;
+            overflow: auto;
             th,
             tr {
                 span {
@@ -26,6 +92,6 @@ header {
 }
 
 body {
-		overflow-x: hidden;
-		overflow-y: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 }

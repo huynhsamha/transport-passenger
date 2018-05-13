@@ -99,14 +99,13 @@ const convertDataProviderRequestToHTTP = (type, resource, params) => {
 * @returns {Object} Data Provider response
 */
 const convertHTTPResponseToDataProvider = (response, type, resource, params) => {
-  const { headers, json } = response;
+  const { json } = response;
 
   switch (type) {
 
     case GET_LIST:
       return {
         data: json.data.map(x => x),
-        // total: parseInt(headers.get('content-range').split('/').pop(), 10)
         total: json.total
       };
 

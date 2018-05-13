@@ -1,6 +1,13 @@
+.fontQuicksand {
+  font-family: 'Quicksand', sans-serif !important; }
+
+.fontNunito {
+  font-family: 'Nunito', sans-serif !important; }
+
 .Dashboard {
-  box-shadow: 0px 0px 10px 5px #b4b4b4;
-  font-family: 'Nunito', sans-serif; }
+  box-shadow: 0px 0px 15px 5px #c7c7c7;
+  font-family: 'Nunito', sans-serif;
+  padding-bottom: 50px; }
   .Dashboard .banner {
     width: 100%;
     height: 100%;
@@ -19,7 +26,17 @@
       left: 50%;
       transform: translate(-50%, 50%);
       z-index: 1000;
-      border: 5px solid #dd5800; }
+      border: 5px solid #3f78a7; }
   .Dashboard .name {
     margin-top: 100px;
-    text-align: center; }
+    text-align: center;
+    color: #3f78a7; }
+  .Dashboard .box-setting {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 15px;
+    box-shadow: 0 0 5px 5px #cacaca; }
+    .Dashboard .box-setting h2 {
+      color: #3f78a7; }

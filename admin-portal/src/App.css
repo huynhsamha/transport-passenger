@@ -1,19 +1,60 @@
+.fontQuicksand, header > div h2 {
+  font-family: 'Quicksand', sans-serif !important; }
+
+.fontNunito, main > div:first-child > div a, main > div:last-child > div h1 > span {
+  font-family: 'Nunito', sans-serif !important; }
+
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif; }
 
 header {
-  background-color: #100e8a !important; }
+  background-color: #083255 !important; }
+  @media (min-width: 600px) {
+    header > div {
+      min-height: 52px !important;
+      height: 52px !important; }
+      header > div button:first-child {
+        height: 42px !important;
+        width: 42px !important; }
+        header > div button:first-child span {
+          height: 24px !important;
+          width: 24px !important; } }
 
-.layout .list-page table {
-  width: 100%;
-  overflow: auto; }
-  .layout .list-page table th span,
-  .layout .list-page table tr span {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; }
+main > div:first-child > div {
+  margin-top: 4.5em; }
+  main > div:first-child > div a[aria-current=true] {
+    color: #fff;
+    background-color: #3f78a7;
+    position: relative; }
+    main > div:first-child > div a[aria-current=true]::after {
+      position: absolute;
+      right: -3px;
+      top: 50%;
+      font-size: 4em;
+      content: '\f0d9';
+      transform: translateY(-50%);
+      font-family: 'fontawesome'; }
+  main > div:first-child > div a[aria-current=false] {
+    color: #423f3f; }
+
+main > div:last-child {
+  margin-top: 3em; }
+  main > div:last-child > div h1 > span {
+    font-weight: 900;
+    color: #3f78a7; }
+
+.layout {
+  height: 100vh; }
+  .layout .list-page table {
+    width: 100%;
+    overflow: auto; }
+    .layout .list-page table th span,
+    .layout .list-page table tr span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; }
 
 body {
   overflow-x: hidden;
