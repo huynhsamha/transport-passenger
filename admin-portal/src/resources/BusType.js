@@ -40,7 +40,7 @@ export const BusTypeList = (props) => {
         <NumberField label="Speed (km/h)" source="speed" />
         <NumberField label="Length (m)" source="length" />
         <NumberField label="Height (m)" source="height" />
-        <NumberField label="Width (m0" source="width" />
+        <NumberField label="Width (m)" source="width" />
         <NumberField label="Mass (all) (kg)" source="mass_all" />
         <NumberField label="Mass (no-load) (kg)" source="mass_no_load" />
         <DateField label="Created" source="created_at" showTime />

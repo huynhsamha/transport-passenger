@@ -7,6 +7,7 @@ import {
   ReferenceInput, SelectInput, Filter, ChipField, ImageField, EmailField,
   DateInput
 } from 'react-admin';
+import { AvatarField } from '../fields';
 import Icon from '@material-ui/icons/AccountBox';
 
 
@@ -32,6 +33,7 @@ export const EmployeeList = (props) => {
       <Datagrid>
         <NumberField label="ID" source="id" />
         <ChipField label="SSN" source="ssn" />
+        <AvatarField label="Avatar" source="photo_url" dimens={50} />
         <ChipField label="Role" source="role" />
         <TextField label="First Name" source="first_name" />
         <TextField label="Last Name" source="last_name" />
@@ -73,7 +75,7 @@ export const EmployeeEdit = (props) => {
           label="Role" source="role" choices={employeeRoleChoices}
           optionText="name" optionValue="value" allowEmpty
         />
-        <ImageField label="Avatar" source="photo_url" />
+        <AvatarField label="Avatar" source="photo_url" dimens={200} />
         <TextInput label="First Name" source="first_name" />
         <TextInput label="Last Name" source="last_name" />
         <DisabledInput label="Username" source="username" />

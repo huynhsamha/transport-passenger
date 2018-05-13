@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+header {
+    background-color: #100e8a !important;
+}
+
+.layout {
+    .list-page {
+			table {
+					width: 100%;
+					overflow: auto;
+            th,
+            tr {
+                span {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+    }
+}
+
+body {
+		overflow-x: hidden;
+		overflow-y: auto;
+}

@@ -1,28 +1,20 @@
-.App {
-  text-align: center;
-}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif; }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
+header {
+  background-color: #100e8a !important; }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
+.layout .list-page table {
+  width: 100%;
+  overflow: auto; }
+  .layout .list-page table th span,
+  .layout .list-page table tr span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; }
 
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
+body {
+  overflow-x: hidden;
+  overflow-y: auto; }

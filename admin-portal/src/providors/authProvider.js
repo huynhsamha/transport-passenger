@@ -13,13 +13,21 @@ export default (type, params) => {
 
     return fetch(request)
       .then((response) => {
-        if (response.status < 200 || response.status >= 300) {
-          throw new Error(response.statusText);
+        if (response.status == 404) {
+          throw new Error('User not found');
+        }
+        if (response.status == 401) {
+          throw new Error('Wrong password');
+        }
+        if (response.status == 500) {
+          throw new Error('Internal Server Error');
         }
         return response.json();
       })
-      .then(({ token }) => {
+      .then(({ user, token }) => {
+        console.log('Store token on AUTH_LOGIN');
         localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
         return Promise.resolve();
       });
   }
