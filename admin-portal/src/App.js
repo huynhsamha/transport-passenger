@@ -15,6 +15,9 @@ import { DistrictList, DistrictCreate, DistrictEdit, DistrictIcon } from './reso
 import { OfficeCreate, OfficeEdit, OfficeIcon, OfficeList } from './resources/Office';
 import { DepartmentCreate, DepartmentEdit, DepartmentIcon, DepartmentList } from './resources/Department';
 import { EmployeeCreate, EmployeeEdit, EmployeeIcon, EmployeeList } from './resources/Employee';
+import { TripDailyCreate, TripDailyEdit, TripDailyIcon, TripDailyList } from './resources/TripDaily';
+import { TripCreate, TripEdit, TripIcon, TripList } from './resources/Trip';
+
 
 const App = () => (
   <Admin
@@ -37,6 +40,14 @@ const App = () => (
     <Resource
       name="bus" options={{ label: 'Bus' }} icon={BusIcon}
       list={BusList} edit={BusEdit} create={BusCreate}
+    />
+    <Resource
+      name="tripDaily" options={{ label: 'Trip Daily' }} icon={TripDailyIcon}
+      list={TripDailyList} edit={TripDailyEdit} create={TripDailyCreate}
+    />
+    <Resource
+      name="trip" options={{ label: 'Trip' }} icon={TripIcon}
+      list={TripList} edit={TripEdit} create={TripCreate}
     />
     <Resource
       name="employee" options={{ label: 'Employee' }} icon={EmployeeIcon}

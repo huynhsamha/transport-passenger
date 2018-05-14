@@ -1,4 +1,4 @@
-import { TripDaily, BusType, Station } from '../models';
+import { TripDaily, BusType, BusStation } from '../models';
 
 
 const findAll = (req, res, next) => {
@@ -26,8 +26,8 @@ const findAll = (req, res, next) => {
     order, offset, limit,
     include: [
       { model: BusType, as: 'bus_type' },
-      { model: Station, as: 'depart_station' },
-      { model: Station, as: 'arrive_station' }
+      { model: BusStation, as: 'depart_station' },
+      { model: BusStation, as: 'arrive_station' }
     ]
   })
     .then(({ rows, count }) => res.status(200).send({ data: rows, total: count }))
@@ -42,8 +42,8 @@ const findOneById = (req, res, next) => {
   TripDaily.findById(id, {
     include: [
       { model: BusType, as: 'bus_type' },
-      { model: Station, as: 'depart_station' },
-      { model: Station, as: 'arrive_station' }
+      { model: BusStation, as: 'depart_station' },
+      { model: BusStation, as: 'arrive_station' }
     ]
   })
     .then((data) => {
