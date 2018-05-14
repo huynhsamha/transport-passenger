@@ -64,14 +64,14 @@ export default () => new Promise((resolve, reject) => {
   for (let i = 0; i < amountCity; i++) cities.push(fakeCity());
   async.eachSeries(cities, (city, cb) => {
     City.create(city).then((city) => {
-      console.log(`City ${city.id} created`);
+      // console.log(`City ${city.id} created`);
       const amountDistrict = fake.random.number(2, 10);
       const districts = [];
       let center_district_id = -1;
       for (let i = 0; i < amountDistrict; i++) districts.push(fakeDistrict(city.id));
       async.eachSeries(districts, (district, cb2) => {
         District.create(district).then((district) => {
-          console.log(`District ${district.id} created`);
+          // console.log(`District ${district.id} created`);
           if (center_district_id == -1) center_district_id = district.id;
           return cb2();
         })
@@ -79,10 +79,7 @@ export default () => new Promise((resolve, reject) => {
       }, (err) => {
         if (err) return cb(err);
         city.update({ center_district_id })
-          .then((city) => {
-            console.log(`City ${city.id} updated`);
-            return cb();
-          }).catch(err => cb(err));
+          .then(city => cb()).catch(err => cb(err));
       });
     })
       .catch(err => cb(err));

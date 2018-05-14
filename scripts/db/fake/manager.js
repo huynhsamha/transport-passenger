@@ -17,10 +17,7 @@ export default () => new Promise((resolve, reject) => {
   for (let i = 0; i < amountManager; i++) employees.push(fakeEmployee('manager'));
   async.eachSeries(employees, (employee, cb) => {
     Employee.create(employee).then((employee) => {
-      Manager.create(fakeManager(employee.id)).then((manager) => {
-        console.log(`Manager ${manager.id} created`);
-        return cb();
-      }).catch(err => cb(err));
+      Manager.create(fakeManager(employee.id)).then(manager => cb()).catch(err => cb(err));
     }).catch(err => cb(err));
   }, (err) => {
     if (err) return reject(err);

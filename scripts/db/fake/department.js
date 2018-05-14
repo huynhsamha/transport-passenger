@@ -19,14 +19,14 @@ export default () => new Promise((resolve, reject) => {
 
   async.waterfall([
     (cb) => {
-      Manager.findAll().then((managers) => {
+      Manager.findAll({ logging: false }).then((managers) => {
         const mgrids = managers.map(o => o.id);
         cb(null, mgrids);
       }).catch(err => cb(err));
     },
     (mgrids, cb) => {
       let idx = 0;
-      Office.findAll().then((offices) => {
+      Office.findAll({ logging: false }).then((offices) => {
         async.eachSeries(offices, (office, cb2) => {
           const departments = [];
           const amountDepartment = TYPE.length;
@@ -34,10 +34,7 @@ export default () => new Promise((resolve, reject) => {
             departments.push(fakeDepartment(mgrids[idx], office.id, i));
           idx = (idx + 1) % mgrids.length;
           async.eachSeries(departments, (department, cb3) => {
-            Department.create(department).then((department) => {
-              console.log(`Department ${department.id} created`);
-              return cb3();
-            }).catch(err => cb3(err));
+            Department.create(department).then(department => cb3()).catch(err => cb3(err));
           }, ((err) => {
               if (err) return cb2(err);
               return cb2();

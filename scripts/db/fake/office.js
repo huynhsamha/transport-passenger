@@ -27,17 +27,14 @@ const fakeOffice = (district_id, is_headquater) => {
 };
 
 export default () => new Promise((resolve, reject) => {
-  District.findAll().then((districts) => {
+  District.findAll({ logging: false }).then((districts) => {
     async.eachSeries(districts, (district, cb) => {
       if (district.id % 10 > 0) return cb();
       const offices = [];
       const amountOffice = fake.random.number(1, 3);
       for (let i = 0; i < amountOffice; i++) offices.push(fakeOffice(district.id, i == 0));
       async.eachSeries(offices, (office, cb2) => {
-        Office.create(office).then((office) => {
-          console.log(`Office ${office.id} created`);
-          return cb2();
-        }).catch(err => cb2(err));
+        Office.create(office).then(office => cb2()).catch(err => cb2(err));
       }, ((err) => {
           if (err) return cb(err);
           return cb();

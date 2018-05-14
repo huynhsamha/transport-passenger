@@ -17,7 +17,7 @@ const Trip = sequelize.define('Trip', {
   bus_id: { type: Sequelize.INTEGER },
   driver_id: { type: Sequelize.INTEGER },
   assistant_id: { type: Sequelize.INTEGER },
-  is_complete: { type: Sequelize.INTEGER }
+  is_complete: { type: Sequelize.BOOLEAN }
 }, {
   createdAt: 'created_at',
   updatedAt: 'updated_at',

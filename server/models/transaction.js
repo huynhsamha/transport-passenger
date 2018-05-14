@@ -14,10 +14,16 @@ const Transaction = sequelize.define('Transaction', {
   },
   customer_id: { type: Sequelize.INTEGER },
   seller_id: { type: Sequelize.INTEGER },
-  account: { type: Sequelize.STRING },
   total_price: { type: Sequelize.FLOAT },
-  payment_method: { type: Sequelize.STRING },
-  status: { type: Sequelize.STRING }
+  payment_method: {
+    type: Sequelize.STRING,
+    comment: 'Cash, Visa, Master Card, PayPal, Bitcoin'
+  },
+  status: {
+    type: Sequelize.STRING,
+    comment: 'Approving, Processing, Complete'
+  },
+  timestamp: { type: Sequelize.DATE }
 }, {
   createdAt: 'created_at',
   updatedAt: 'updated_at',

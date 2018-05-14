@@ -10,24 +10,28 @@ import department from './department';
 import customer from './customer';
 import upd_dept_mgr from './upd_dept_mgr';
 import upd_emp_dept from './upd_emp_dept';
-import fk_tripdaily from './fk_tripdaily';
-import tripDaily from './tripDaily';
+import tripdaily from './tripdaily';
+import trip from './trip';
+import transaction from './transaction';
+import ticket from './ticket';
 
 async function run_script() {
   console.log('Starting fake data...');
   try {
-    // await city_district();
-    // await bustype_bus();
-    // await stations();
-    // await office();
-    // await manager();
-    // await other_employee();
-    // await department();
-    // await customer();
-    // await upd_dept_mgr();
-    // await upd_emp_dept();
-    await fk_tripdaily();
-    // await tripDaily();
+    await city_district();
+    await bustype_bus();
+    await stations();
+    await office();
+    await manager();
+    await other_employee();
+    await department();
+    await customer();
+    await upd_dept_mgr();
+    await upd_emp_dept();
+    await tripdaily();
+    await trip();
+    await transaction();
+    await ticket();
 
     return Promise.resolve();
 

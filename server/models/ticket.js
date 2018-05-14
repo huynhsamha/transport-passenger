@@ -13,7 +13,8 @@ const Ticket = sequelize.define('Ticket', {
     unique: true
   },
   transaction_id: { type: Sequelize.INTEGER },
-  trip_id: { type: Sequelize.INTEGER }
+  trip_id: { type: Sequelize.INTEGER },
+  price_pay: { type: Sequelize.FLOAT }
 }, {
   createdAt: 'created_at',
   updatedAt: 'updated_at',

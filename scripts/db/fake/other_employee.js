@@ -27,7 +27,7 @@ const fakeAssistant = (id) => {
 
 const roles = ['assistant', 'driver', 'seller'];
 export default () => new Promise((resolve, reject) => {
-  Manager.findAll().then((managers) => {
+  Manager.findAll({ logging: false }).then((managers) => {
     async.eachSeries(managers, (manager, cb) => {
       const employees = [];
       const amountEmployee = fake.random.number(1, 15);
@@ -36,20 +36,11 @@ export default () => new Promise((resolve, reject) => {
       async.eachSeries(employees, (employee, cb2) => {
         Employee.create(employee).then((employee) => {
           if (employee.role == 'assistant') {
-            Assistant.create(fakeAssistant(employee.id)).then((dt) => {
-              console.log(`Assistant ${dt.id} created`);
-              return cb2();
-            }).catch(err => cb2(err));
+            Assistant.create(fakeAssistant(employee.id)).then(dt => cb2()).catch(err => cb2(err));
           } else if (employee.role == 'driver') {
-            Driver.create(fakeDriver(employee.id)).then((dt) => {
-              console.log(`Driver ${dt.id} created`);
-              return cb2();
-            }).catch(err => cb2(err));
+            Driver.create(fakeDriver(employee.id)).then(dt => cb2()).catch(err => cb2(err));
           } else if (employee.role == 'seller') {
-            Seller.create(fakeSeller(employee.id)).then((dt) => {
-              console.log(`Seller ${dt.id} created`);
-              return cb2();
-            }).catch(err => cb2(err));
+            Seller.create(fakeSeller(employee.id)).then(dt => cb2()).catch(err => cb2(err));
           }
         }).catch(err => cb2(err));
       }, ((err) => {

@@ -45,7 +45,7 @@ const fakeRepairStation = (id) => {
 
 
 export default () => new Promise((resolve, reject) => {
-  District.findAll().then((districts) => {
+  District.findAll({ logging: false }).then((districts) => {
     async.eachSeries(districts, (district, cb) => {
       if (district.id % 5 > 0) return cb();
       const locations = [];
@@ -53,7 +53,6 @@ export default () => new Promise((resolve, reject) => {
       for (let i = 0; i < amountLocation; i++) locations.push(fakeLocation(district.id));
       async.eachSeries(locations, (location, cb2) => {
         Location.create(location).then((location) => {
-          console.log(`Location ${location.id} created`);
           if (location.type == 'bus') {
             BusStation.create(fakeBusStation(location.id)).then(() => cb2())
               .catch(err => cb2(err));
