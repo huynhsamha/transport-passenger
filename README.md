@@ -4,6 +4,8 @@ Assignment Database System - Transport Passenger System
 
 NodeJS, Sequelize (Postgres SQL), ReactJS, Amazon AWS (EC2, S3)
 
+Demo: [https://transport-passenger.herokuapp.com/](https://transport-passenger.herokuapp.com/)
+
 
 ## Introduction and Quickstart
 + View [docs/README.md](https://github.com/huynhsamha/transport-passenger/blob/master/docs/README.md)
