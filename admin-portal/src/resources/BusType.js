@@ -6,7 +6,7 @@ import {
   TextField, NumberField, DateField, Create, ReferenceField,
   ReferenceInput, SelectInput, Filter, ChipField
 } from 'react-admin';
-import Icon from '@material-ui/icons/AirportShuttle';
+import Icon from '@material-ui/icons/Subway';
 
 const busTypeBrand = ['Mercedes Benz', 'Toyota', 'Huyndai', 'Thaco'];
 const busTypeBrandChoices = busTypeBrand.map(name => ({ name }));

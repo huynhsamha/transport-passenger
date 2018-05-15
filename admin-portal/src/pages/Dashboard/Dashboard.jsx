@@ -21,6 +21,8 @@ class Dashboard extends Component {
       newPassword: '',
       confirmPassword: ''
     };
+
+    this.defaultAvatar = '/img/avatar.png';
   }
 
   onClickSaveChanges = () => {
@@ -55,7 +57,7 @@ class Dashboard extends Component {
   }
 
   getUser() {
-    this.user = JSON.parse(localStorage.getItem('user'));
+    this.user = JSON.parse(localStorage.getItem('user')) || {};
     this.user.displayName = `${this.user.first_name || ''} ${this.user.last_name || ''}`;
   }
 
@@ -68,7 +70,7 @@ class Dashboard extends Component {
       <div className="Dashboard">
         <div className="banner">
           <img src="/img/bg-dashboard.jpg" alt="Background Dashboard" className="bg" />
-          <img src={this.user.photo_url} alt="Avatar" className="avatar" />
+          <img src={this.user.photo_url || this.defaultAvatar} alt="Avatar" className="avatar" />
         </div>
         <div className="name">
           <h1>{this.user.displayName}</h1>

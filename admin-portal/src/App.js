@@ -17,7 +17,9 @@ import { DepartmentCreate, DepartmentEdit, DepartmentIcon, DepartmentList } from
 import { EmployeeCreate, EmployeeEdit, EmployeeIcon, EmployeeList } from './resources/Employee';
 import { TripDailyCreate, TripDailyEdit, TripDailyIcon, TripDailyList } from './resources/TripDaily';
 import { TripCreate, TripEdit, TripIcon, TripList } from './resources/Trip';
-
+import { CustomerCreate, CustomerEdit, CustomerIcon, CustomerList } from './resources/Customer';
+import { TransactionCreate, TransactionEdit, TransactionIcon, TransactionList } from './resources/Transaction';
+import { TicketCreate, TicketEdit, TicketIcon, TicketList } from './resources/Ticket';
 
 const App = () => (
   <Admin
@@ -26,20 +28,12 @@ const App = () => (
   >
 
     <Resource
-      name="office" options={{ label: 'Office' }} icon={OfficeIcon}
-      list={OfficeList} edit={OfficeEdit} create={OfficeCreate}
+      name="transaction" options={{ label: 'Transaction' }} icon={TransactionIcon}
+      list={TransactionList} edit={TransactionEdit} create={TransactionCreate}
     />
     <Resource
-      name="department" options={{ label: 'Department' }} icon={DepartmentIcon}
-      list={DepartmentList} edit={DepartmentEdit} create={DepartmentCreate}
-    />
-    <Resource
-      name="busType" options={{ label: 'Bus Type' }} icon={BusTypeIcon}
-      list={BusTypeList} edit={BusTypeEdit} create={BusTypeCreate}
-    />
-    <Resource
-      name="bus" options={{ label: 'Bus' }} icon={BusIcon}
-      list={BusList} edit={BusEdit} create={BusCreate}
+      name="ticket" options={{ label: 'Ticket' }} icon={TicketIcon}
+      list={TicketList} edit={TicketEdit} create={TicketCreate}
     />
     <Resource
       name="tripDaily" options={{ label: 'Trip Daily' }} icon={TripDailyIcon}
@@ -52,6 +46,26 @@ const App = () => (
     <Resource
       name="employee" options={{ label: 'Employee' }} icon={EmployeeIcon}
       list={EmployeeList} edit={EmployeeEdit} create={EmployeeCreate}
+    />
+    <Resource
+      name="customer" options={{ label: 'Customer' }} icon={CustomerIcon}
+      list={CustomerList} edit={CustomerEdit} create={CustomerCreate}
+    />
+    <Resource
+      name="busType" options={{ label: 'Bus Type' }} icon={BusTypeIcon}
+      list={BusTypeList} edit={BusTypeEdit} create={BusTypeCreate}
+    />
+    <Resource
+      name="bus" options={{ label: 'Bus' }} icon={BusIcon}
+      list={BusList} edit={BusEdit} create={BusCreate}
+    />
+    <Resource
+      name="office" options={{ label: 'Office' }} icon={OfficeIcon}
+      list={OfficeList} edit={OfficeEdit} create={OfficeCreate}
+    />
+    <Resource
+      name="department" options={{ label: 'Department' }} icon={DepartmentIcon}
+      list={DepartmentList} edit={DepartmentEdit} create={DepartmentCreate}
     />
     <Resource
       name="city" options={{ label: 'City' }} icon={CityIcon}

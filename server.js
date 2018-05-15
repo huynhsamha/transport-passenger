@@ -48,13 +48,13 @@ app.use(compression());
 
 app.use(express.static(path.join(__dirname, './build'), {
   setHeaders(res, path) {
-    const paths = ['build', 'dist', 'assets', 'lib', 'libs', 'static'];
-    paths.forEach((p) => {
-      if (path.indexOf(p) > -1) {
-        const ONE_MONTH = 30 * 24 * 60 * 60;
-        res.setHeader('Cache-Control', `public, max-age=${ONE_MONTH}`);
-      }
-    });
+    // const paths = ['build', 'dist', 'assets', 'lib', 'libs', 'static'];
+    // paths.forEach((p) => {
+    //   if (path.indexOf(p) > -1) {
+    //     const ONE_MONTH = 30 * 24 * 60 * 60;
+    //     res.setHeader('Cache-Control', `public, max-age=${ONE_MONTH}`);
+    //   }
+    // });
   }
 }));
 
