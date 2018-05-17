@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const AvatarField = ({ record = {}, source, dimens }) =>
   (
     <img
-      src={record[source] || source} alt="avatar user" style={{
+      src={record[source] || '/img/avatar.png'} alt="avatar user" style={{
         width: dimens, height: dimens,
         borderRadius: '50%',
         objectPosition: 'center',

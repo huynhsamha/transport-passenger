@@ -4,7 +4,8 @@ import {
   EditButton, Edit, SimpleForm, DisabledInput,
   TextInput, LongTextInput, NumberInput, List, Datagrid,
   TextField, NumberField, DateField, Create, ReferenceField,
-  ReferenceInput, SelectInput, Filter, ChipField
+  ReferenceInput, SelectInput, Filter, ChipField,
+  Show, SimpleShowLayout
 } from 'react-admin';
 import Icon from '@material-ui/icons/Room';
 
@@ -41,9 +42,10 @@ export const TripDailyList = ({ permissions, ...props }) => {
         </ReferenceField>
 
         {['manager'].indexOf(permissions) > -1 && [
-          <EditButton />,
           <DateField label="Created" source="created_at" showTime />,
-          <DateField label="Last Update" source="updated_at" showTime />]}
+          <DateField label="Last Update" source="updated_at" showTime />,
+          <EditButton />
+        ]}
       </Datagrid>
     </List>
   );
@@ -58,29 +60,55 @@ const TripDailyTitle = ({ record }) =>
 TripDailyTitle.propTypes = { record: PropTypes.object };
 TripDailyTitle.defaultProps = { record: {} };
 
-export const TripDailyEdit = (props) => {
-  document.title = 'Edit Trip Daily';
-  return (
-    <Edit title={<TripDailyTitle />} {...props}>
-      <SimpleForm >
-        <DisabledInput label="ID" source="id" />
-        <TextInput label="Name" source="name" />
-        <TextInput label="Code" source="code" />
-        <TextInput label="Depart Time" source="depart_time" />
-        <NumberInput label="Duration (minutes)" source="duration" />
-        <TextInput label="Arrive Time" source="arrive_time" />
-        <NumberInput label="Price (VND)" source="price" />
-        <NumberInput label="Distance (m)" source="distance" />
-        <TextInput label="Hotline" source="hotline" />
-        <ReferenceInput label="Bus Type" source="bus_type_id" reference="busType">
-          <SelectInput optionText="id" optionValue="id" />
-        </ReferenceInput>
-        <DisabledInput label="Created" source="created_at" />
-        <DisabledInput label="Last Update" source="updated_at" />
-      </SimpleForm>
-    </Edit>
-  );
+export const TripDailyEdit = ({ permissions, ...props }) => {
+  const canEdit = ['manager'].indexOf(permissions) > -1;
+  if (canEdit) {
+    document.title = 'Edit Trip Daily';
+    return (
+      <Edit title={<TripDailyTitle />} {...props}>
+        <SimpleForm >
+          <DisabledInput label="ID" source="id" />
+          <TextInput label="Name" source="name" />
+          <TextInput label="Code" source="code" />
+          <TextInput label="Depart Time" source="depart_time" />
+          <NumberInput label="Duration (minutes)" source="duration" />
+          <TextInput label="Arrive Time" source="arrive_time" />
+          <NumberInput label="Price (VND)" source="price" />
+          <NumberInput label="Distance (m)" source="distance" />
+          <TextInput label="Hotline" source="hotline" />
+          <ReferenceInput label="Bus Type" source="bus_type_id" reference="busType">
+            <SelectInput optionText="id" optionValue="id" />
+          </ReferenceInput>
+          <DisabledInput label="Created" source="created_at" />
+          <DisabledInput label="Last Update" source="updated_at" />
+        </SimpleForm>
+      </Edit>
+    );
+  } else {
+    document.title = 'Show Trip Daily';
+    return (
+      <Show title={<TripDailyTitle />} {...props} actions={null}>
+        <SimpleShowLayout >
+          <NumberField label="ID" source="id" />
+          <TextField label="Name" source="name" />
+          <TextField label="Code" source="code" />
+          <TextField label="Depart Time" source="depart_time" />
+          <NumberField label="Duration (minutes)" source="duration" />
+          <TextField label="Arrive Time" source="arrive_time" />
+          <NumberField label="Price (VND)" source="price" />
+          <NumberField label="Distance (m)" source="distance" />
+          <TextField label="Hotline" source="hotline" />
+          <ReferenceField label="Bus Type" source="bus_type_id" reference="busType">
+            <TextField source="id" />
+          </ReferenceField>
+        </SimpleShowLayout>
+      </Show>
+    );
+  }
 };
+
+TripDailyEdit.propTypes = { permissions: PropTypes.string };
+TripDailyEdit.defaultProps = { permissions: '' };
 
 
 export const TripDailyCreate = (props) => {

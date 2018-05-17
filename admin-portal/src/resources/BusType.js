@@ -4,7 +4,8 @@ import {
   EditButton, Edit, SimpleForm, DisabledInput,
   TextInput, LongTextInput, NumberInput, List, Datagrid,
   TextField, NumberField, DateField, Create, ReferenceField,
-  ReferenceInput, SelectInput, Filter, ChipField
+  ReferenceInput, SelectInput, Filter, ChipField,
+  Show, SimpleShowLayout
 } from 'react-admin';
 import Icon from '@material-ui/icons/Subway';
 
@@ -45,9 +46,9 @@ export const BusTypeList = ({ permissions, ...props }) => {
         <NumberField label="Mass (no-load) (kg)" source="mass_no_load" />
 
         {['manager'].indexOf(permissions) > -1 && [
-          <EditButton />,
           <DateField label="Created" source="created_at" showTime />,
-          <DateField label="Last Update" source="updated_at" showTime />
+          <DateField label="Last Update" source="updated_at" showTime />,
+          <EditButton />
         ]}
       </Datagrid>
     </List>
@@ -63,34 +64,59 @@ const BusTypeTitle = ({ record }) =>
 BusTypeTitle.propTypes = { record: PropTypes.object };
 BusTypeTitle.defaultProps = { record: {} };
 
-export const BusTypeEdit = (props) => {
-  document.title = 'Edit Bus Type';
-  return (
-    <Edit title={<BusTypeTitle />} {...props}>
-      <SimpleForm >
-        <DisabledInput label="ID" source="id" />
-        <SelectInput
-          label="Brand" source="brand" choices={busTypeBrandChoices}
-          optionText="name" optionValue="name" allowEmpty
-        />
-        <SelectInput
-          label="Model" source="model" choices={busTypeModelChoices}
-          optionText="name" optionValue="name" allowEmpty
-        />
-        <NumberInput label="Seats" source="seats" />
-        <NumberInput label="Fuel (m^3)" source="capacity_fuel" />
-        <NumberInput label="Speed (km/h)" source="speed" />
-        <NumberInput label="Length (m)" source="length" />
-        <NumberInput label="Height (m)" source="height" />
-        <NumberInput label="Width (m)" source="width" />
-        <NumberInput label="Mass (all) (kg)" source="mass_all" />
-        <NumberInput label="Mass (no-load) (kg)" source="mass_no_load" />
-        <DisabledInput label="Created" source="created_at" />
-        <DisabledInput label="Last Update" source="updated_at" />
-      </SimpleForm>
-    </Edit>
-  );
+export const BusTypeEdit = ({ permissions, ...props }) => {
+  const canEdit = ['manager'].indexOf(permissions) > -1;
+  if (canEdit) {
+    document.title = 'Edit Bus Type';
+    return (
+      <Edit title={<BusTypeTitle />} {...props}>
+        <SimpleForm >
+          <DisabledInput label="ID" source="id" />
+          <SelectInput
+            label="Brand" source="brand" choices={busTypeBrandChoices}
+            optionText="name" optionValue="name" allowEmpty
+          />
+          <SelectInput
+            label="Model" source="model" choices={busTypeModelChoices}
+            optionText="name" optionValue="name" allowEmpty
+          />
+          <NumberInput label="Seats" source="seats" />
+          <NumberInput label="Fuel (m^3)" source="capacity_fuel" />
+          <NumberInput label="Speed (km/h)" source="speed" />
+          <NumberInput label="Length (m)" source="length" />
+          <NumberInput label="Height (m)" source="height" />
+          <NumberInput label="Width (m)" source="width" />
+          <NumberInput label="Mass (all) (kg)" source="mass_all" />
+          <NumberInput label="Mass (no-load) (kg)" source="mass_no_load" />
+          <DisabledInput label="Created" source="created_at" />
+          <DisabledInput label="Last Update" source="updated_at" />
+        </SimpleForm>
+      </Edit>
+    );
+  } else {
+    document.title = 'Show Bus Type';
+    return (
+      <Show title={<BusTypeTitle />} {...props} actions={null}>
+        <SimpleShowLayout >
+          <NumberField label="ID" source="id" />
+          <TextField label="Brand" source="brand" />
+          <TextField label="Model" source="model" />
+          <NumberField label="Seats" source="seats" />
+          <NumberField label="Fuel (m^3)" source="capacity_fuel" />
+          <NumberField label="Speed (km/h)" source="speed" />
+          <NumberField label="Length (m)" source="length" />
+          <NumberField label="Height (m)" source="height" />
+          <NumberField label="Width (m)" source="width" />
+          <NumberField label="Mass (all) (kg)" source="mass_all" />
+          <NumberField label="Mass (no-load) (kg)" source="mass_no_load" />
+        </SimpleShowLayout>
+      </Show>
+    );
+  }
 };
+
+BusTypeEdit.propTypes = { permissions: PropTypes.string };
+BusTypeEdit.defaultProps = { permissions: '' };
 
 
 export const BusTypeCreate = (props) => {

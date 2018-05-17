@@ -83,11 +83,7 @@ main {
                     overflow: hidden;
                     text-overflow: ellipsis;
                     &:last-child {
-												// padding-right: 20px;
 												margin-right: 20px;
-                    }
-                    &:first-child {
-                        // padding-left: 15px;
                     }
                 }
             }

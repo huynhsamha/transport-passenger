@@ -60,7 +60,7 @@ const updateOneById = async (req, res, next) => {
   const { id } = req.params;
   const new_data = req.body;
   try {
-    let data = await Employee.findById(id);
+    let data = await Employee.findById(id, { attributes: { exclude: ['password'] } });
     if (!data) {
       return res.status(404).send({ message: 'Data not found' });
     }

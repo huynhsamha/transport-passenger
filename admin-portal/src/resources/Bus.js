@@ -4,7 +4,8 @@ import {
   EditButton, Edit, SimpleForm, DisabledInput,
   TextInput, LongTextInput, NumberInput, List, Datagrid,
   TextField, NumberField, DateField, Create, ReferenceField,
-  ReferenceInput, SelectInput, Filter, ChipField
+  ReferenceInput, SelectInput, Filter, ChipField,
+  Show, SimpleShowLayout
 } from 'react-admin';
 import Icon from '@material-ui/icons/DirectionsBus';
 
@@ -37,9 +38,11 @@ export const BusList = ({ permissions, ...props }) => {
         <ChipField label="Status" source="status" />
         <TextField label="Description" source="description" />
 
-        {['manager'].indexOf(permissions) > -1 && [<EditButton />,
+        {['manager'].indexOf(permissions) > -1 && [
           <DateField label="Created" source="created_at" showTime />,
-          <DateField label="Last Update" source="updated_at" showTime />]}
+          <DateField label="Last Update" source="updated_at" showTime />,
+          <EditButton />
+        ]}
       </Datagrid>
     </List>
   );
@@ -56,31 +59,57 @@ const BusTitle = ({ record }) =>
 BusTitle.propTypes = { record: PropTypes.object };
 BusTitle.defaultProps = { record: {} };
 
-export const BusEdit = (props) => {
-  document.title = 'Edit Bus';
-  return (
-    <Edit title={<BusTitle />} {...props}>
-      <SimpleForm>
-        <DisabledInput label="ID" source="id" />
-        <ReferenceInput label="Bus Type" source="bus_type_id" reference="busType">
-          <SelectInput optionText="id" />
-        </ReferenceInput>
-        <TextInput label="Registration" source="registration" />
-        <NumberInput label="Price" source="price" />
-        <NumberInput label="Miles" source="miles" />
-        <NumberInput label="Warranty Month" source="warranty_month" />
-        <NumberInput label="Warranty Miles" source="warranty_miles" />
-        <SelectInput
-          label="Status" source="status" choices={busStatusChoices}
-          optionText="name" optionValue="name" allowEmpty
-        />
-        <LongTextInput label="Description" source="description" />
-        <DisabledInput label="Created" source="created_at" />
-        <DisabledInput label="Last Update" source="updated_at" />
-      </SimpleForm>
-    </Edit>
-  );
+export const BusEdit = ({ permissions, ...props }) => {
+  const canEdit = ['manager'].indexOf(permissions) > -1;
+  if (canEdit) {
+    document.title = 'Edit Bus';
+    return (
+      <Edit title={<BusTitle />} {...props}>
+        <SimpleForm>
+          <DisabledInput label="ID" source="id" />
+          <ReferenceInput label="Bus Type" source="bus_type_id" reference="busType">
+            <SelectInput optionText="id" />
+          </ReferenceInput>
+          <TextInput label="Registration" source="registration" />
+          <NumberInput label="Price" source="price" />
+          <NumberInput label="Miles" source="miles" />
+          <NumberInput label="Warranty Month" source="warranty_month" />
+          <NumberInput label="Warranty Miles" source="warranty_miles" />
+          <SelectInput
+            label="Status" source="status" choices={busStatusChoices}
+            optionText="name" optionValue="name" allowEmpty
+          />
+          <LongTextInput label="Description" source="description" />
+          <DisabledInput label="Created" source="created_at" />
+          <DisabledInput label="Last Update" source="updated_at" />
+        </SimpleForm>
+      </Edit>
+    );
+  } else {
+    document.title = 'Show Bus';
+    return (
+      <Show title={<BusTitle />} {...props} actions={null}>
+        <SimpleShowLayout >
+          <NumberField label="ID" source="id" />
+          <ReferenceField label="Bus Type" source="bus_type_id" reference="busType">
+            <TextField source="id" />
+          </ReferenceField>
+          <TextField label="Registration" source="registration" />
+          <NumberField label="Price (VND)" source="price" />
+          <NumberField label="Miles" source="miles" />
+          <NumberField label="Warranty Month" source="warranty_month" />
+          <NumberField label="Warranty Miles" source="warranty_miles" />
+          <TextField label="Status" source="status" />
+          <TextField label="Description" source="description" />
+        </SimpleShowLayout>
+      </Show>
+    );
+  }
 };
+
+BusEdit.propTypes = { permissions: PropTypes.string };
+BusEdit.defaultProps = { permissions: '' };
+
 
 export const BusCreate = (props) => {
   document.title = 'Create Bus';

@@ -18,25 +18,23 @@
       height: 150px; }
     .Dashboard .banner img.avatar {
       position: absolute;
-      width: 150px;
-      height: 150px;
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
       object-position: center;
       bottom: 0px;
       left: 50%;
       transform: translate(-50%, 50%);
-      z-index: 1000;
-      border: 5px solid #3f78a7; }
+      z-index: 1000; }
   .Dashboard .name {
     margin-top: 100px;
     text-align: center;
     color: #3f78a7; }
   .Dashboard .box-setting {
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 5px;
+    margin-top: 20px;
     margin-bottom: 5px;
-    padding: 15px;
-    box-shadow: 0 0 5px 5px #cacaca; }
+    padding: 25px;
+    border: 2px solid #cacaca;
+    border-radius: 15px; }
     .Dashboard .box-setting h2 {
       color: #3f78a7; }

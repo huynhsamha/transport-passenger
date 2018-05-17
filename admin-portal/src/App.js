@@ -26,103 +26,114 @@ import { TicketCreate, TicketEdit, TicketIcon, TicketList } from './resources/Ti
 
 const history = createHistory();
 
-const App = () => (
-  <Admin
-    title="Admin Portal" catchAll={NotFound}
-    dashboard={Dashboard} customRoutes={customRoutes}
-    authProvider={authProvider} dataProvider={dataProvider}
-    history={history}
-  >
-    {permissions => [
+const App = () => {
 
-      ['manager', 'seller'].indexOf(permissions) > -1 ?
+  const user = JSON.parse(localStorage.getItem('user')) || {};
+  const { role } = user;
+  const roleShow = String(role).charAt(0).toUpperCase() + String(role).slice(1);
+
+  return (
+    <Admin
+      title={`${roleShow} Portal`}
+      history={history}
+      authProvider={authProvider}
+      dataProvider={dataProvider}
+      dashboard={Dashboard}
+      customRoutes={customRoutes}
+      catchAll={NotFound}
+    >
+
+      {permissions => [ // 'manager', 'driver', 'assistant', 'seller'
+
+        ['manager', 'seller'].indexOf(permissions) > -1 ?
+          <Resource
+            name="transaction" options={{ label: 'Transaction' }} icon={TransactionIcon}
+            list={TransactionList} edit={TransactionEdit}
+            // edit={['seller'].indexOf(permissions) > -1 ? TransactionEdit : null}
+            create={['seller'].indexOf(permissions) > -1 ? TransactionCreate : null}
+          /> : null,
+
+        ['manager', 'seller'].indexOf(permissions) > -1 ?
+          <Resource
+            name="ticket" options={{ label: 'Ticket' }} icon={TicketIcon}
+            list={TicketList} edit={TicketEdit}
+            // edit={['seller'].indexOf(permissions) > -1 ? TicketEdit : null}
+            create={['seller'].indexOf(permissions) > -1 ? TicketCreate : null}
+          /> : null,
+
         <Resource
-          name="transaction" options={{ label: 'Transaction' }} icon={TransactionIcon}
-          list={TransactionList}
-          edit={['seller'].indexOf(permissions) > -1 ? TransactionEdit : null}
-          create={['seller'].indexOf(permissions) > -1 ? TransactionCreate : null}
-        /> : null,
+          name="tripDaily" options={{ label: 'Trip Daily' }} icon={TripDailyIcon}
+          list={TripDailyList} edit={TripDailyEdit}
+          // edit={['manager'].indexOf(permissions) > -1 ? TripDailyEdit : null}
+          create={['manager'].indexOf(permissions) > -1 ? TripDailyCreate : null}
+        />,
 
-      ['manager', 'seller'].indexOf(permissions) > -1 ?
         <Resource
-          name="ticket" options={{ label: 'Ticket' }} icon={TicketIcon}
-          list={TicketList}
-          edit={['seller'].indexOf(permissions) > -1 ? TicketEdit : null}
-          create={['seller'].indexOf(permissions) > -1 ? TicketCreate : null}
-        /> : null,
+          name="trip" options={{ label: 'Trip' }} icon={TripIcon}
+          list={TripList} edit={TripEdit}
+          // edit={['manager'].indexOf(permissions) > -1 ? TripEdit : null}
+          create={['manager'].indexOf(permissions) > -1 ? TripCreate : null}
+        />,
 
-      <Resource
-        name="tripDaily" options={{ label: 'Trip Daily' }} icon={TripDailyIcon}
-        list={TripDailyList}
-        edit={['manager'].indexOf(permissions) > -1 ? TripDailyEdit : null}
-        create={['manager'].indexOf(permissions) > -1 ? TripDailyCreate : null}
-      />,
-
-      <Resource
-        name="trip" options={{ label: 'Trip' }} icon={TripIcon}
-        list={TripList}
-        edit={['manager'].indexOf(permissions) > -1 ? TripEdit : null}
-        create={['manager'].indexOf(permissions) > -1 ? TripCreate : null}
-      />,
-
-      <Resource
-        name="employee" options={{ label: 'Employee' }} icon={EmployeeIcon}
-        list={EmployeeList}
-        edit={['manager'].indexOf(permissions) > -1 ? EmployeeEdit : null}
-        create={['manager'].indexOf(permissions) > -1 ? EmployeeCreate : null}
-      />,
-
-      ['manager', 'seller'].indexOf(permissions) > -1 ?
         <Resource
-          name="customer" options={{ label: 'Customer' }} icon={CustomerIcon}
-          list={CustomerList}
-          edit={['seller'].indexOf(permissions) > -1 ? CustomerEdit : null}
-          create={['seller'].indexOf(permissions) > -1 ? CustomerCreate : null}
-        /> : null,
+          name="employee" options={{ label: 'Employee' }} icon={EmployeeIcon}
+          list={EmployeeList} edit={EmployeeEdit}
+          // edit={['manager'].indexOf(permissions) > -1 ? EmployeeEdit : null}
+          create={['manager'].indexOf(permissions) > -1 ? EmployeeCreate : null}
+        />,
 
-      <Resource
-        name="busType" options={{ label: 'Bus Type' }} icon={BusTypeIcon}
-        list={BusTypeList}
-        edit={['manager'].indexOf(permissions) > -1 ? BusTypeEdit : null}
-        create={['manager'].indexOf(permissions) > -1 ? BusTypeCreate : null}
-      />,
+        ['manager', 'seller'].indexOf(permissions) > -1 ?
+          <Resource
+            name="customer" options={{ label: 'Customer' }} icon={CustomerIcon}
+            list={CustomerList} edit={CustomerEdit}
+            // edit={['seller'].indexOf(permissions) > -1 ? CustomerEdit : null}
+            create={['seller'].indexOf(permissions) > -1 ? CustomerCreate : null}
+          /> : null,
 
-      <Resource
-        name="bus" options={{ label: 'Bus' }} icon={BusIcon}
-        list={BusList}
-        edit={['manager'].indexOf(permissions) > -1 ? BusEdit : null}
-        create={['manager'].indexOf(permissions) > -1 ? BusCreate : null}
-      />,
+        <Resource
+          name="busType" options={{ label: 'Bus Type' }} icon={BusTypeIcon}
+          list={BusTypeList} edit={BusTypeEdit}
+          // edit={['manager'].indexOf(permissions) > -1 ? BusTypeEdit : null}
+          create={['manager'].indexOf(permissions) > -1 ? BusTypeCreate : null}
+        />,
 
-      <Resource
-        name="office" options={{ label: 'Office' }} icon={OfficeIcon}
-        list={OfficeList}
-        edit={['manager'].indexOf(permissions) > -1 ? OfficeEdit : null}
-        create={['manager'].indexOf(permissions) > -1 ? OfficeCreate : null}
-      />,
+        <Resource
+          name="bus" options={{ label: 'Bus' }} icon={BusIcon}
+          list={BusList} edit={BusEdit}
+          // edit={['manager'].indexOf(permissions) > -1 ? BusEdit : null}
+          create={['manager'].indexOf(permissions) > -1 ? BusCreate : null}
+        />,
 
-      <Resource
-        name="department" options={{ label: 'Department' }} icon={DepartmentIcon}
-        list={DepartmentList}
-        edit={['manager'].indexOf(permissions) > -1 ? DepartmentEdit : null}
-        create={['manager'].indexOf(permissions) > -1 ? DepartmentCreate : null}
-      />,
+        <Resource
+          name="office" options={{ label: 'Office' }} icon={OfficeIcon}
+          list={OfficeList} edit={OfficeEdit}
+          // edit={['manager'].indexOf(permissions) > -1 ? OfficeEdit : null}
+          create={['manager'].indexOf(permissions) > -1 ? OfficeCreate : null}
+        />,
 
-      <Resource
-        name="city" options={{ label: 'City' }} icon={CityIcon}
-        list={CityList}
-        edit={['manager'].indexOf(permissions) > -1 ? CityEdit : null}
-        create={['manager'].indexOf(permissions) > -1 ? CityCreate : null}
-      />,
+        <Resource
+          name="department" options={{ label: 'Department' }} icon={DepartmentIcon}
+          list={DepartmentList} edit={DepartmentEdit}
+          // edit={['manager'].indexOf(permissions) > -1 ? DepartmentEdit : null}
+          create={['manager'].indexOf(permissions) > -1 ? DepartmentCreate : null}
+        />,
 
-      <Resource
-        name="district" options={{ label: 'District' }} icon={DistrictIcon}
-        list={DistrictList}
-        edit={['manager'].indexOf(permissions) > -1 ? DistrictEdit : null}
-        create={['manager'].indexOf(permissions) > -1 ? DistrictCreate : null}
-      />
-    ]}
-  </Admin>
-);
+        <Resource
+          name="city" options={{ label: 'City' }} icon={CityIcon}
+          list={CityList} edit={CityEdit}
+          // edit={['manager'].indexOf(permissions) > -1 ? CityEdit : null}
+          create={['manager'].indexOf(permissions) > -1 ? CityCreate : null}
+        />,
+
+        <Resource
+          name="district" options={{ label: 'District' }} icon={DistrictIcon}
+          list={DistrictList} edit={DistrictEdit}
+          // edit={['manager'].indexOf(permissions) > -1 ? DistrictEdit : null}
+          create={['manager'].indexOf(permissions) > -1 ? DistrictCreate : null}
+        />
+      ]}
+    </Admin>
+  );
+};
 
 export default App;
