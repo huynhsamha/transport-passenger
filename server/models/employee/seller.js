@@ -5,7 +5,6 @@ const Seller = sequelize.define('Seller', {
   id: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true
   },
   exp_transaction: { type: Sequelize.INTEGER }

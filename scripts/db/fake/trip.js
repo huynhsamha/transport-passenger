@@ -25,7 +25,7 @@ export default () => new Promise((resolve, reject) => {
           },
           (buses, cb) => {
             const trips = [];
-            for (let i = -3; i < 20; i++) {
+            for (let i = 3; i < 20; i++) {
               const date = new Date();
               date.setDate(date.getDate() + i);
               trips.push({
@@ -35,7 +35,7 @@ export default () => new Promise((resolve, reject) => {
                 bus_id: buses[fake.random.number(0, buses.length - 1)],
                 depart_date: date,
                 code: `${tripDaily.code}_${date.getFullYear()}${date.getMonth()}${date.getDate()}`,
-                is_complete: i <= 0
+                is_complete: i <= 10
               });
             }
             async.eachSeries(trips, async (trip, cbTrip) => {

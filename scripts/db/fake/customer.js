@@ -48,15 +48,12 @@ const fakeCustomer = () => {
   };
 };
 
-const amountCustomer = 150;
+const amountCustomer = 300;
 export default () => new Promise((resolve, reject) => {
   const customers = [];
   for (let i = 0; i < amountCustomer; i++) customers.push(fakeCustomer());
   async.eachSeries(customers, (customer, cb) => {
-    Customer.create(customer).then((customer) => {
-      console.log(`Customer ${customer.id} created`);
-      return cb();
-    }).catch(err => cb(err));
+    Customer.create(customer).then(customer => cb()).catch(err => cb(err));
   }, (err) => {
     if (err) return reject(err);
     return resolve();

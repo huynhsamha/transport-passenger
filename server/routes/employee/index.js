@@ -9,11 +9,12 @@ import assistant from './assistant';
 import seller from './seller';
 
 
-router.use('/', employee);
-router.use('/role/manager', manager);
-router.use('/role/driver', driver);
-router.use('/role/assistant', assistant);
-router.use('/role/seller', seller);
+router.use('/employee', employee);
+
+router.use('/manager', manager);
+router.use('/driver', driver);
+router.use('/assistant', assistant);
+router.use('/seller', seller);
 
 
 export default router;

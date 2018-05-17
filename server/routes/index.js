@@ -25,7 +25,7 @@ router.use('/api/v1/bus', bus);
 router.use('/api/v1/tripDaily', tripDaily);
 router.use('/api/v1/trip', trip);
 router.use('/api/v1/office', office);
-router.use('/api/v1/employee', employee);
+router.use('/api/v1', employee);
 router.use('/api/v1/ticket', ticket);
 router.use('/api/v1/customer', customer);
 router.use('/api/v1/transaction', transaction);

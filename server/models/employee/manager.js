@@ -5,7 +5,6 @@ const Manager = sequelize.define('Manager', {
   id: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true
   },
   start_date: { type: Sequelize.DATE }

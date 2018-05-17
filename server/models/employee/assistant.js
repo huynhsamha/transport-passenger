@@ -5,7 +5,6 @@ const Assistant = sequelize.define('Assistant', {
   id: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true
   },
   type: { type: Sequelize.STRING }

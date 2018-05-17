@@ -5,7 +5,6 @@ const BusStation = sequelize.define('BusStation', {
   id: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true
   },
   establish_date: { type: Sequelize.DATEONLY },

@@ -23,7 +23,7 @@ const DESCRIPTION = [
   'Đang trong quá trình kiểm tra', 'Hư hỏng vài bộ phận',
   'Đang trong quá trình sửa chữa', 'Đang trong quá trình bảo hảnh'];
 
-const amountBusType = 10;
+const amountBusType = 20;
 const fakeBusType = () => {
   let random_number = fake.random.number(0, BRAND.length - 1);
   const brand = BRAND[random_number];
@@ -50,10 +50,10 @@ const fakeBus = (bus_type_id) => {
   const price = fake.random.number(1000000000, 2000000000);
   let random_number = fake.random.number(0, STATUS.length - 1);
   const status = STATUS[random_number];
-  const miles = fake.random.number(5, 10) * 10.1;
+  const miles = fake.random.number(200, 500) * 10;
   const buy_date = fake.date.past();
   const warranty_month = fake.random.number(2, 6);
-  const warranty_miles = fake.random.number(10, 20) * 1.1;
+  const warranty_miles = fake.random.number(10, 20) * 100;
   random_number = fake.random.number(0, DESCRIPTION.length - 1);
   const description = DESCRIPTION[random_number];
 
@@ -68,8 +68,7 @@ export default () => new Promise((resolve, reject) => {
   for (let i = 0; i < amountBusType; i++) busTypes.push(fakeBusType());
   async.eachSeries(busTypes, (busType, cb) => {
     BusType.create(busType).then((busType) => {
-      // console.log(`BusType ${busType.id} created`);
-      const amountBus = fake.random.number(5, 20);
+      const amountBus = fake.random.number(5, 30);
       const buses = [];
       for (let i = 0; i < amountBus; i++) buses.push(fakeBus(busType.id));
       async.eachSeries(buses, (bus, cb2) => {

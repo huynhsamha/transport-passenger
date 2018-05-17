@@ -10,7 +10,11 @@ import {
 import Icon from '@material-ui/icons/Schedule';
 
 const TripFilter = props => (
-  <Filter {...props} />
+  <Filter {...props}>
+    <BooleanInput
+      label="Complete" source="is_complete"
+    />
+  </Filter>
 );
 
 export const TripList = ({ permissions, ...props }) => {

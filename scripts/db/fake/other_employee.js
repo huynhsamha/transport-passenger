@@ -30,7 +30,7 @@ export default () => new Promise((resolve, reject) => {
   Manager.findAll({ logging: false }).then((managers) => {
     async.eachSeries(managers, (manager, cb) => {
       const employees = [];
-      const amountEmployee = fake.random.number(1, 15);
+      const amountEmployee = fake.random.number(5, 20);
       const role = roles[fake.random.number(0, 2)];
       for (let i = 0; i < amountEmployee; i++) employees.push(fakeEmployee(role, manager.id));
       async.eachSeries(employees, (employee, cb2) => {

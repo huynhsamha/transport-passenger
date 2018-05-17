@@ -5,7 +5,6 @@ const RepairStation = sequelize.define('RepairStation', {
   id: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true
   },
   description: { type: Sequelize.STRING },

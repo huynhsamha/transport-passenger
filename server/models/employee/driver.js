@@ -5,7 +5,6 @@ const Driver = sequelize.define('Driver', {
   id: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true
   },
   license_number: {

@@ -115,7 +115,7 @@ export const EmployeeEdit = ({ permissions, ...props }) => {
         <SimpleShowLayout >
           <NumberField label="ID" source="id" />
           <TextField label="SSN" source="ssn" />
-          <AvatarField label="Avatar" source="photo_url" dimens={50} />
+          <AvatarField label="Avatar" source="photo_url" dimens={200} />
           <TextField label="Role" source="role" />
           <TextField label="First Name" source="first_name" />
           <TextField label="Last Name" source="last_name" />

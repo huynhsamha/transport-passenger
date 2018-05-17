@@ -16,11 +16,11 @@ export default () => new Promise((resolve, reject) => {
     },
     (customers, sellers, cb) => {
       const paymentMethods = ['Cash', 'Visa', 'Master Card', 'PayPal', 'Bitcoin'];
-      const statuses = ['Approving', 'Processing', 'Complete'];
+      const statuses = ['Disapproved', 'Processing', 'Completed'];
       const transactions = [];
       customers.forEach((customer_id) => {
-        let times = fake.random.number(1, 3);
-        if (customer_id < 15) times = fake.random.number(10, 25);
+        let times = fake.random.number(1, 2);
+        if (customer_id < 10) times = fake.random.number(10, 15);
         for (let i = times; i >= 0; i--) {
           const date = new Date();
           date.setDate(date.getDate() - i);

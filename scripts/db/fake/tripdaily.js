@@ -33,8 +33,8 @@ export default () => new Promise((resolve, reject) => {
             const arrive_station_id = bstb[0].id;
             const name = `${a.name} (${da.name}) - ${b.name} (${db.name})`;
             const code = `DE${a.code}${da.code}_AR${b.code}${db.code}`;
-            const price = fake.random.number(1000, 9999) * 10.1;
-            const distance = fake.random.number(10, 20) * 1.1;
+            const price = fake.random.number(300, 999) * 1000;
+            const distance = fake.random.number(10, 20);
             const hotline = fake.phone.number();
             const bus_type_id = bustype_ids[fake.random.number(0, bustype_ids.length - 1)];
             let depart_time = new Date();
