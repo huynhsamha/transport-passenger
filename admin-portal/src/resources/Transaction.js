@@ -25,9 +25,6 @@ const TransactionFilter = props => (
       label="Payment Method" source="payment_method" choices={paymentMethodChoices}
       optionText="name" optionValue="name" allowEmpty
     />
-    {/* <ReferenceArrayInput label="Seller" source="seller_id" reference="employee">
-      <SelectArrayInput optionText="username" optionValue="id" />
-    </ReferenceArrayInput> */}
     <ReferenceInput label="Seller" source="seller_id" reference="employee">
       <SelectInput optionText="username" optionValue="id" />
     </ReferenceInput>
@@ -37,7 +34,7 @@ const TransactionFilter = props => (
   </Filter>
 );
 
-export const TransactionList = (props) => {
+export const TransactionList = ({ permissions, ...props }) => {
   document.title = 'List Transaction';
   return (
     <List title="Transaction" {...props} filters={<TransactionFilter />}>
@@ -54,13 +51,19 @@ export const TransactionList = (props) => {
         </ReferenceField>
         <NumberField label="Price" source="total_price" />
         <DateField label="Time" source="timestamp" showTime />
-        <DateField label="Created" source="created_at" showTime />
-        <DateField label="Last Update" source="updated_at" showTime />
-        <EditButton />
+
+        {['seller'].indexOf(permissions) > -1 && [
+          <EditButton />,
+          <DateField label="Created" source="created_at" showTime />,
+          <DateField label="Last Update" source="updated_at" showTime />]}
       </Datagrid>
     </List>
   );
 };
+
+TransactionList.propTypes = { permissions: PropTypes.string };
+TransactionList.defaultProps = { permissions: '' };
+
 
 const TransactionTitle = ({ record }) =>
   <span>Transaction {record ? `${record.id}. ${record.code}` : ''}</span>;

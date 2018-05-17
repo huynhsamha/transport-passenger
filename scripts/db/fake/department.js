@@ -6,7 +6,7 @@ import { Office, Department, Manager } from '../../../server/models';
 const fake = require('fakerator')();
 
 const TYPE = ['Human Resource', 'Business', 'Financial', 'Shipping', 'Equipment'];
-const NAME = ['Nhân Sự', 'Kinh Doanh', 'Tài Chính', 'Vận Chuyển', 'Thiếtt Bị'];
+const NAME = ['Nhân Sự', 'Kinh Doanh', 'Tài Chính', 'Vận Chuyển', 'Thiết Bị'];
 const fakeDepartment = (manager_id, office_id, idx) => {
   const type = TYPE[idx];
   const name = NAME[idx];

@@ -20,7 +20,7 @@ const BusFilter = props => (
   </Filter>
 );
 
-export const BusList = (props) => {
+export const BusList = ({ permissions, ...props }) => {
   document.title = 'List Bus';
   return (
     <List title="Bus" {...props} filters={<BusFilter />}>
@@ -36,13 +36,19 @@ export const BusList = (props) => {
         <NumberField label="Warranty Miles" source="warranty_miles" />
         <ChipField label="Status" source="status" />
         <TextField label="Description" source="description" />
-        <DateField label="Created" source="created_at" showTime />
-        <DateField label="Last Update" source="updated_at" showTime />
-        <EditButton />
+
+        {['manager'].indexOf(permissions) > -1 && [<EditButton />,
+          <DateField label="Created" source="created_at" showTime />,
+          <DateField label="Last Update" source="updated_at" showTime />]}
       </Datagrid>
     </List>
   );
 };
+
+
+BusList.propTypes = { permissions: PropTypes.string };
+BusList.defaultProps = { permissions: '' };
+
 
 const BusTitle = ({ record }) =>
   <span>Bus {record ? `${record.id}. ${record.registration}` : ''}</span>;

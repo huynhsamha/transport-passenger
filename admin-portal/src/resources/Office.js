@@ -18,7 +18,7 @@ const OfficeFilter = props => (
   </Filter>
 );
 
-export const OfficeList = (props) => {
+export const OfficeList = ({ permissions, ...props }) => {
   document.title = 'List Office';
   return (
     <List title="Office" {...props} filters={<OfficeFilter />}>
@@ -34,13 +34,20 @@ export const OfficeList = (props) => {
           <TextField source="name" />
         </ReferenceField>
         <ChipField label="Hotline" source="hotline" />
-        <DateField label="Created" source="created_at" showTime />
-        <DateField label="Last Update" source="updated_at" showTime />
-        <EditButton />
+
+        {['manager'].indexOf(permissions) > -1 && [
+          <EditButton />,
+          <DateField label="Created" source="created_at" showTime />,
+          <DateField label="Last Update" source="updated_at" showTime />]}
       </Datagrid>
     </List>
   );
 };
+
+
+OfficeList.propTypes = { permissions: PropTypes.string };
+OfficeList.defaultProps = { permissions: '' };
+
 
 const OfficeTitle = ({ record }) =>
   <span>Office {record ? `${record.id}. ${record.name} (${record.code})` : ''}</span>;

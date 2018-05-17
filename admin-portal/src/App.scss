@@ -1,5 +1,4 @@
 @import './styles/_index.scss';
-
 body {
     margin: 0;
     padding: 0;
@@ -25,19 +24,19 @@ header {
     }
     &>div {
         h2 {
-					@extend .fontQuicksand;
+            @extend .fontQuicksand;
         }
     }
 }
 
 // wrapper sidebar + content
 main {
-		// sidebar
+    // sidebar
     &>div:first-child {
         &>div {
             margin-top: 4.5em;
             a {
-								@extend .fontNunito;
+                @extend .fontNunito;
                 &[aria-current=true] {
                     color: #fff; // font-weight: 900;
                     background-color: $secondary-color;
@@ -47,9 +46,9 @@ main {
                         right: -3px;
                         top: 50%;
                         font-size: 4em;
-												content: '\f0d9';
-												transform: translateY(-50%);
-												font-family: 'fontawesome';
+                        content: '\f0d9';
+                        transform: translateY(-50%);
+                        font-family: 'fontawesome';
                     }
                 }
                 &[aria-current=false] {
@@ -57,20 +56,18 @@ main {
                 }
             }
         }
-		}
-		// main content
-		&>div:last-child {
-			margin-top: 3em;
-			& > div {
-				h1 > span {
-					@extend .fontNunito;
-					font-weight: 900;
-					color: $secondary-color;
-				}
-			}
-	}
+    } // main content
+    &>div:last-child {
+        margin-top: 3em;
+        &>div {
+            h1>span {
+                @extend .fontNunito;
+                font-weight: 900;
+                color: $secondary-color;
+            }
+        }
+    }
 }
-
 
 // fix horizontal scrollbar
 .layout {
@@ -85,6 +82,13 @@ main {
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
+                    &:last-child {
+												// padding-right: 20px;
+												margin-right: 20px;
+                    }
+                    &:first-child {
+                        // padding-left: 15px;
+                    }
                 }
             }
         }

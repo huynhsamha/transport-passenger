@@ -13,7 +13,7 @@ const TripFilter = props => (
   <Filter {...props} />
 );
 
-export const TripList = (props) => {
+export const TripList = ({ permissions, ...props }) => {
   document.title = 'List Trip';
   return (
     <List title="Trip" {...props} filters={<TripFilter />}>
@@ -34,13 +34,18 @@ export const TripList = (props) => {
         <ReferenceField label="Assistant" source="assistant_id" reference="employee">
           <TextField source="username" />
         </ReferenceField>
-        <DateField label="Created" source="created_at" showTime />
-        <DateField label="Last Update" source="updated_at" showTime />
-        <EditButton />
+
+        {['manager'].indexOf(permissions) > -1 && [
+          <EditButton />,
+          <DateField label="Created" source="created_at" showTime />,
+          <DateField label="Last Update" source="updated_at" showTime />]}
       </Datagrid>
     </List>
   );
 };
+
+TripList.propTypes = { permissions: PropTypes.string };
+TripList.defaultProps = { permissions: '' };
 
 const TripTitle = ({ record }) =>
   <span>Trip {record ? `${record.id}. ${record.code}` : ''}</span>;

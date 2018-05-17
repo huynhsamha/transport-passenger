@@ -26,7 +26,7 @@ const EmployeeFilter = props => (
   </Filter>
 );
 
-export const EmployeeList = (props) => {
+export const EmployeeList = ({ permissions, ...props }) => {
   document.title = 'List Employee';
   return (
     <List title="Employee" {...props} filters={<EmployeeFilter />}>
@@ -50,13 +50,18 @@ export const EmployeeList = (props) => {
         <ReferenceField source="department_id" reference="department">
           <TextField source="type" />
         </ReferenceField>
-        <DateField label="Created" source="created_at" showTime />
-        <DateField label="Last Update" source="updated_at" showTime />
-        <EditButton />
+
+        {['manager'].indexOf(permissions) > -1 && [
+          <EditButton />,
+          <DateField label="Created" source="created_at" showTime />,
+          <DateField label="Last Update" source="updated_at" showTime />]}
       </Datagrid>
     </List>
   );
 };
+
+EmployeeList.propTypes = { permissions: PropTypes.string };
+EmployeeList.defaultProps = { permissions: '' };
 
 const EmployeeTitle = ({ record }) =>
   <span>Employee {record ? `${record.id}. ${record.first_name} ${record.last_name}` : ''}</span>;

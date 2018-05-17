@@ -22,7 +22,7 @@ const TripDailyFilter = props => (
   </Filter>
 );
 
-export const TripDailyList = (props) => {
+export const TripDailyList = ({ permissions, ...props }) => {
   document.title = 'List Trip Daily';
   return (
     <List title="Trip Daily" {...props} filters={<TripDailyFilter />}>
@@ -39,13 +39,18 @@ export const TripDailyList = (props) => {
         <ReferenceField label="Bus Type" source="bus_type_id" reference="busType">
           <TextField source="id" />
         </ReferenceField>
-        <DateField label="Created" source="created_at" showTime />
-        <DateField label="Last Update" source="updated_at" showTime />
-        <EditButton />
+
+        {['manager'].indexOf(permissions) > -1 && [
+          <EditButton />,
+          <DateField label="Created" source="created_at" showTime />,
+          <DateField label="Last Update" source="updated_at" showTime />]}
       </Datagrid>
     </List>
   );
 };
+
+TripDailyList.propTypes = { permissions: PropTypes.string };
+TripDailyList.defaultProps = { permissions: '' };
 
 const TripDailyTitle = ({ record }) =>
   <span>Trip Daily {record ? `${record.id}. ${record.name}` : ''}</span>;

@@ -10,7 +10,7 @@ import { UrlField } from '../fields';
 import Icon from '@material-ui/icons/LocationCity';
 
 
-export const CityList = (props) => {
+export const CityList = ({ permissions, ...props }) => {
   document.title = 'List City';
   return (
     <List title="City" {...props}>
@@ -27,13 +27,19 @@ export const CityList = (props) => {
         <ReferenceField label="Center" source="center_district_id" reference="district">
           <TextField source="id" />
         </ReferenceField>
-        <DateField label="Created" source="created_at" showTime />
-        <DateField label="Last Update" source="updated_at" showTime />
-        <EditButton />
+
+        {['manager'].indexOf(permissions) > -1 && [<EditButton />,
+          <DateField label="Created" source="created_at" showTime />,
+          <DateField label="Last Update" source="updated_at" showTime />]}
       </Datagrid>
     </List>
   );
 };
+
+
+CityList.propTypes = { permissions: PropTypes.string };
+CityList.defaultProps = { permissions: '' };
+
 
 const CityTitle = ({ record }) =>
   <span>City {record ? `${record.id}. ${record.name} (${record.code})` : ''}</span>;

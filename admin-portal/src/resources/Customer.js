@@ -9,7 +9,7 @@ import {
 } from 'react-admin';
 import Icon from '@material-ui/icons/SupervisorAccount';
 
-export const CustomerList = (props) => {
+export const CustomerList = ({ permissions, ...props }) => {
   document.title = 'List Customer';
   return (
     <List title="Customer" {...props}>
@@ -21,13 +21,20 @@ export const CustomerList = (props) => {
         <TextField label="Tel" source="tel" />
         <TextField label="Address" source="address" />
         <TextField label="Feedback" source="feed_back" />
-        <DateField label="Created" source="created_at" showTime />
-        <DateField label="Last Update" source="updated_at" showTime />
-        <EditButton />
+
+        {['seller'].indexOf(permissions) > -1 && [
+          <EditButton />,
+          <DateField label="Created" source="created_at" showTime />,
+          <DateField label="Last Update" source="updated_at" showTime />]}
       </Datagrid>
     </List>
   );
 };
+
+
+CustomerList.propTypes = { permissions: PropTypes.string };
+CustomerList.defaultProps = { permissions: '' };
+
 
 const CustomerTitle = ({ record }) =>
   <span>Customer {record ? `${record.id}. ${record.first_name} ${record.last_name}` : ''}</span>;

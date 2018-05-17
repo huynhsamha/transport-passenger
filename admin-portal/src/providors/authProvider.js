@@ -1,4 +1,4 @@
-import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK } from 'react-admin';
+import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK, AUTH_GET_PERMISSIONS } from 'react-admin';
 
 export default (type, params) => {
   // called when the user attempts to log in
@@ -53,6 +53,12 @@ export default (type, params) => {
   // called when the user navigates to a new location
   if (type === AUTH_CHECK) {
     return localStorage.getItem('token') ? Promise.resolve() : Promise.reject();
+  }
+
+  if (type === AUTH_GET_PERMISSIONS) {
+    const user = JSON.parse(localStorage.getItem('user')) || {};
+    const { role } = user;
+    return role ? Promise.resolve(role) : Promise.reject();
   }
 
   return Promise.reject(new Error('Unknown method'));

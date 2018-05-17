@@ -10,7 +10,7 @@ import {
 import Icon from '@material-ui/icons/LocalOffer';
 
 
-export const TicketList = (props) => {
+export const TicketList = ({ permissions, ...props }) => {
   document.title = 'List Ticket';
   return (
     <List title="Ticket" {...props}>
@@ -24,13 +24,20 @@ export const TicketList = (props) => {
           <TextField source="code" />
         </ReferenceField>
         <NumberField label="Price" source="price_pay" />
-        <DateField label="Created" source="created_at" showTime />
-        <DateField label="Last Update" source="updated_at" showTime />
-        <EditButton />
+
+        {['seller'].indexOf(permissions) > -1 && [
+          <EditButton />,
+          <DateField label="Created" source="created_at" showTime />,
+          <DateField label="Last Update" source="updated_at" showTime />]}
       </Datagrid>
     </List>
   );
 };
+
+
+TicketList.propTypes = { permissions: PropTypes.string };
+TicketList.defaultProps = { permissions: '' };
+
 
 const TicketTitle = ({ record }) =>
   <span>Ticket {record ? `${record.id}. ${record.code}` : ''}</span>;

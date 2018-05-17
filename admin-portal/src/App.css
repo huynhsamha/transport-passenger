@@ -55,6 +55,9 @@ main > div:last-child {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis; }
+      .layout .list-page table th span:last-child,
+      .layout .list-page table tr span:last-child {
+        margin-right: 20px; }
 
 body {
   overflow-x: hidden;

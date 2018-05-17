@@ -24,7 +24,7 @@ const DepartmentFilter = props => (
   </Filter>
 );
 
-export const DepartmentList = (props) => {
+export const DepartmentList = ({ permissions, ...props }) => {
   document.title = 'List Department';
   return (
     <List title="Department" {...props} filters={<DepartmentFilter />}>
@@ -36,13 +36,19 @@ export const DepartmentList = (props) => {
         <ReferenceField label="Office" source="office_id" reference="office">
           <TextField source="name" />
         </ReferenceField>
-        <DateField label="Created" source="created_at" showTime />
-        <DateField label="Last Update" source="updated_at" showTime />
-        <EditButton />
+
+        {['manager'].indexOf(permissions) > -1 && [<EditButton />,
+          <DateField label="Created" source="created_at" showTime />,
+          <DateField label="Last Update" source="updated_at" showTime />]}
       </Datagrid>
     </List>
   );
 };
+
+
+DepartmentList.propTypes = { permissions: PropTypes.string };
+DepartmentList.defaultProps = { permissions: '' };
+
 
 const DepartmentTitle = ({ record }) =>
   <span>Department {record ? `${record.id}. ${record.type}` : ''}</span>;

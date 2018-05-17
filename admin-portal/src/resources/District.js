@@ -17,7 +17,7 @@ const DistrictFilter = props => (
   </Filter>
 );
 
-export const DistrictList = (props) => {
+export const DistrictList = ({ permissions, ...props }) => {
   document.title = 'List District';
   return (
     <List title="District" {...props} filters={<DistrictFilter />}>
@@ -32,13 +32,20 @@ export const DistrictList = (props) => {
         <NumberField label="Latitude" source="latitude" />
         <UrlField label="Website" source="website" />
         <ChipField label="Tel" source="tel" />
-        <DateField label="Created" source="created_at" showTime />
-        <DateField label="Last Update" source="updated_at" showTime />
-        <EditButton />
+
+        {['manager'].indexOf(permissions) > -1 && [
+          <EditButton />,
+          <DateField label="Created" source="created_at" showTime />,
+          <DateField label="Last Update" source="updated_at" showTime />]}
       </Datagrid>
     </List>
   );
 };
+
+
+DistrictList.propTypes = { permissions: PropTypes.string };
+DistrictList.defaultProps = { permissions: '' };
+
 
 const DistrictTitle = ({ record }) =>
   <span>District {record ? `${record.id}. ${record.name} (${record.code})` : ''}</span>;
