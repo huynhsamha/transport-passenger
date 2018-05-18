@@ -36,6 +36,7 @@ export default (type, params) => {
   if (type === AUTH_LOGOUT) {
     console.log('Remove Token on AUTH_LOGOUT');
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     return Promise.resolve();
   }
 
@@ -45,6 +46,7 @@ export default (type, params) => {
     if (status === 401 || status === 403) {
       console.log('Remove Token on AUTH_ERROR');
       localStorage.removeItem('token');
+      localStorage.removeItem('user');
       return Promise.reject();
     }
     return Promise.resolve();
@@ -52,7 +54,8 @@ export default (type, params) => {
 
   // called when the user navigates to a new location
   if (type === AUTH_CHECK) {
-    return localStorage.getItem('token') ? Promise.resolve() : Promise.reject();
+    return localStorage.getItem('token') && localStorage.getItem('user')
+      ? Promise.resolve() : Promise.reject();
   }
 
   if (type === AUTH_GET_PERMISSIONS) {
