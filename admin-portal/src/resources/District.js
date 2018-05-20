@@ -21,7 +21,10 @@ const DistrictFilter = props => (
 export const DistrictList = ({ permissions, ...props }) => {
   document.title = 'List District';
   return (
-    <List title="District" {...props} filters={<DistrictFilter />}>
+    <List
+      title="District" {...props} filters={<DistrictFilter />}
+      {...(['manager'].indexOf(permissions) == -1 && { bulkActions: null })}
+    >
       <Datagrid>
         <NumberField label="ID" source="id" />
         <TextField label="Name" source="name" />

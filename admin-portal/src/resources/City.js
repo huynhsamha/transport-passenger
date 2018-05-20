@@ -14,7 +14,10 @@ import Icon from '@material-ui/icons/LocationCity';
 export const CityList = ({ permissions, ...props }) => {
   document.title = 'List City';
   return (
-    <List title="City" {...props}>
+    <List
+      title="City" {...props}
+      {...(['manager'].indexOf(permissions) == -1 && { bulkActions: null })}
+    >
       <Datagrid>
         <NumberField label="ID" source="id" />
         <TextField label="Name" source="name" />

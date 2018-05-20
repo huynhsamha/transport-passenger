@@ -14,7 +14,10 @@ import Icon from '@material-ui/icons/LocalOffer';
 export const TicketList = ({ permissions, ...props }) => {
   document.title = 'List Ticket';
   return (
-    <List title="Ticket" {...props}>
+    <List
+      title="Ticket" {...props}
+      {...(['seller'].indexOf(permissions) == -1 && { bulkActions: null })}
+    >
       <Datagrid>
         <NumberField label="ID" source="id" />
         <ChipField label="Code" source="code" />

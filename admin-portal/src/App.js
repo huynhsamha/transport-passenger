@@ -34,7 +34,7 @@ const App = () => {
 
   return (
     <Admin
-      title={`${roleShow} Portal`}
+      title="Transport Passenger"
       history={history}
       authProvider={authProvider}
       dataProvider={dataProvider}

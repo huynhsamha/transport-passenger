@@ -31,7 +31,10 @@ const BusTypeFilter = props => (
 export const BusTypeList = ({ permissions, ...props }) => {
   document.title = 'List Bus Type';
   return (
-    <List title="Bus Type" {...props} filters={<BusTypeFilter />}>
+    <List
+      title="Bus Type" {...props} filters={<BusTypeFilter />}
+      {...(['manager'].indexOf(permissions) == -1 && { bulkActions: null })}
+    >
       <Datagrid>
         <NumberField label="ID" source="id" />
         <ChipField label="Brand" source="brand" />

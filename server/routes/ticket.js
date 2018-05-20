@@ -6,6 +6,7 @@ import { TicketCtrl } from '../controllers';
 
 router.get('/', TicketCtrl.findAll);
 router.post('/', TicketCtrl.insert);
+router.delete('/', TicketCtrl.deleteMany);
 router.get('/:id', TicketCtrl.findOneById);
 router.put('/:id', TicketCtrl.updateOneById);
 router.delete('/:id', TicketCtrl.deleteOneById);

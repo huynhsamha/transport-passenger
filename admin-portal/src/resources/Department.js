@@ -27,7 +27,10 @@ const DepartmentFilter = props => (
 export const DepartmentList = ({ permissions, ...props }) => {
   document.title = 'List Department';
   return (
-    <List title="Department" {...props} filters={<DepartmentFilter />}>
+    <List
+      title="Department" {...props} filters={<DepartmentFilter />}
+      {...(['manager'].indexOf(permissions) == -1 && { bulkActions: null })}
+    >
       <Datagrid>
         <NumberField label="ID" source="id" />
         <ChipField label="Type" source="type" />

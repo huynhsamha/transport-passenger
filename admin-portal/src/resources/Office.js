@@ -21,7 +21,10 @@ const OfficeFilter = props => (
 export const OfficeList = ({ permissions, ...props }) => {
   document.title = 'List Office';
   return (
-    <List title="Office" {...props} filters={<OfficeFilter />}>
+    <List
+      title="Office" {...props} filters={<OfficeFilter />}
+      {...(['manager'].indexOf(permissions) == -1 && { bulkActions: null })}
+    >
       <Datagrid>
         <NumberField label="ID" source="id" />
         <TextField label="Name" source="name" />

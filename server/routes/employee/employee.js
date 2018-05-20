@@ -18,6 +18,7 @@ const upload = multer({ storage });
 
 router.get('/', EmployeeCtrl.findAll);
 router.post('/', EmployeeCtrl.insert);
+router.delete('/', EmployeeCtrl.deleteMany);
 router.get('/:id', EmployeeCtrl.findOneById);
 router.put('/:id', EmployeeCtrl.updateOneById);
 router.delete('/:id', EmployeeCtrl.deleteOneById);

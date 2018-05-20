@@ -59,7 +59,7 @@ Open `pgadmin3` to edit your database.
 Run script or do anything in your database at local
 Heroku
 ```bash
-heroku pg:push mylocaldb DATABASE_URL --app transport-passener
+heroku pg:push mylocaldb DATABASE_URL --app transport-passenger
 ```
 
 `transport-passenger` is your app name

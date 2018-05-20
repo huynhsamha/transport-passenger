@@ -37,8 +37,12 @@ const TransactionFilter = props => (
 
 export const TransactionList = ({ permissions, ...props }) => {
   document.title = 'List Transaction';
+
   return (
-    <List title="Transaction" {...props} filters={<TransactionFilter />}>
+    <List
+      title="Transaction" {...props} filters={<TransactionFilter />}
+      {...(['seller'].indexOf(permissions) == -1 && { bulkActions: null })}
+    >
       <Datagrid>
         <NumberField label="ID" source="id" />
         <ChipField label="Code" source="code" />

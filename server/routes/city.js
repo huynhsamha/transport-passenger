@@ -6,6 +6,7 @@ import { CityCtrl } from '../controllers';
 
 router.get('/', CityCtrl.findAll);
 router.post('/', CityCtrl.insert);
+router.delete('/', CityCtrl.deleteMany);
 router.get('/:id', CityCtrl.findOneById);
 router.put('/:id', CityCtrl.updateOneById);
 router.delete('/:id', CityCtrl.deleteOneById);

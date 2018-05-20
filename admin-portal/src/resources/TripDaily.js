@@ -26,7 +26,10 @@ const TripDailyFilter = props => (
 export const TripDailyList = ({ permissions, ...props }) => {
   document.title = 'List Trip Daily';
   return (
-    <List title="Trip Daily" {...props} filters={<TripDailyFilter />}>
+    <List
+      title="Trip Daily" {...props} filters={<TripDailyFilter />}
+      {...(['manager'].indexOf(permissions) == -1 && { bulkActions: null })}
+    >
       <Datagrid>
         <NumberField label="ID" source="id" />
         <TextField label="Name" source="name" />

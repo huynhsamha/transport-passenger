@@ -33,7 +33,7 @@ function authorization(req, res, next) {
   if (!token) {
     return res.status(401).send({ errorMessage: 'No authentication for request' });
   }
-  AuthToken.findByPrimary(token).then((info) => {
+  AuthToken.findByPrimary(token, { logging: false }).then((info) => {
     if (!info || info.expire < new Date().getTime()) {
       if (info) {
         info.destroy().then(() => { }).catch((err) => {

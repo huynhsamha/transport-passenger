@@ -6,6 +6,7 @@ import {
   CREATE,
   UPDATE,
   DELETE,
+  DELETE_MANY,
   fetchUtils
 } from 'react-admin';
 import { stringify } from 'query-string';
@@ -81,6 +82,14 @@ const convertDataProviderRequestToHTTP = (type, resource, params) => {
       url += `/${params.id}`;
       options.method = 'DELETE';
       options.body = JSON.stringify(params.data);
+      break;
+
+    case DELETE_MANY:
+      const query = {
+        filter: JSON.stringify({ id: params.ids })
+      };
+      url += `?${stringify(query)}`;
+      options.method = 'DELETE';
       break;
 
     default:

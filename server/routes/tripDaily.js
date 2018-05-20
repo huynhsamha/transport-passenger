@@ -6,6 +6,7 @@ import { TripDailyCtrl } from '../controllers';
 
 router.get('/', TripDailyCtrl.findAll);
 router.post('/', TripDailyCtrl.insert);
+router.delete('/', TripDailyCtrl.deleteMany);
 router.get('/:id', TripDailyCtrl.findOneById);
 router.put('/:id', TripDailyCtrl.updateOneById);
 router.delete('/:id', TripDailyCtrl.deleteOneById);

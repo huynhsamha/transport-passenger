@@ -12,7 +12,10 @@ import Icon from '@material-ui/icons/SupervisorAccount';
 export const CustomerList = ({ permissions, ...props }) => {
   document.title = 'List Customer';
   return (
-    <List title="Customer" {...props}>
+    <List
+      title="Customer" {...props}
+      {...(['seller'].indexOf(permissions) == -1 && { bulkActions: null })}
+    >
       <Datagrid>
         <NumberField label="ID" source="id" />
         <ChipField label="SSN" source="ssn" />

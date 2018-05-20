@@ -29,7 +29,10 @@ const EmployeeFilter = props => (
 export const EmployeeList = ({ permissions, ...props }) => {
   document.title = 'List Employee';
   return (
-    <List title="Employee" {...props} filters={<EmployeeFilter />}>
+    <List
+      title="Employee" {...props} filters={<EmployeeFilter />}
+      {...(['manager'].indexOf(permissions) == -1 && { bulkActions: null })}
+    >
       <Datagrid>
         <NumberField label="ID" source="id" />
         <ChipField label="SSN" source="ssn" />

@@ -117,11 +117,24 @@ const changePassword = async (req, res, next) => {
   }
 };
 
+const deleteMany = (req, res, next) => {
+  let { filter } = req.query;
+  if (filter) {
+    filter = JSON.parse(filter);
+  }
+  console.log(filter);
+
+  Employee.destroy({ where: { ...filter } })
+    .then(affectedRows => res.status(200).send({ data: filter.id, affectedRows }))
+    .catch(err => res.status(500).send(err));
+};
+
 export default {
   findAll,
   findOneById,
   insert,
   updateOneById,
   deleteOneById,
-  changePassword
+  changePassword,
+  deleteMany
 };

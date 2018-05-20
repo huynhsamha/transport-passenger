@@ -6,6 +6,7 @@ import { DistrictCtrl } from '../controllers';
 
 router.get('/', DistrictCtrl.findAll);
 router.post('/', DistrictCtrl.insert);
+router.delete('/', DistrictCtrl.deleteMany);
 router.get('/:id', DistrictCtrl.findOneById);
 router.put('/:id', DistrictCtrl.updateOneById);
 router.delete('/:id', DistrictCtrl.deleteOneById);
