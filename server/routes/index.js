@@ -15,6 +15,8 @@ import department from './department';
 import city from './city';
 import district from './district';
 
+import mix from './mix';
+
 const router = express.Router();
 
 
@@ -32,5 +34,7 @@ router.use('/api/v1/transaction', transaction);
 router.use('/api/v1/department', department);
 router.use('/api/v1/city', city);
 router.use('/api/v1/district', district);
+
+router.use('/api/v1/mix', mix);
 
 export default router;

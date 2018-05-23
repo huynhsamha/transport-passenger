@@ -12,6 +12,8 @@ import { AvatarField } from '../../fields';
 
 import './Dashboard.css';
 
+const Highcharts = window.Highcharts;
+
 class Dashboard extends Component {
 
   constructor(props) {
@@ -25,6 +27,10 @@ class Dashboard extends Component {
     };
 
     document.title = 'Dashboard';
+  }
+
+  componentDidMount() {
+    this.renderChart();
   }
 
   onClickChangePassword = () => {
@@ -93,6 +99,65 @@ class Dashboard extends Component {
     return user;
   }
 
+  renderChart() {
+    const token = localStorage.getItem('token');
+
+    fetch('/api/v1/mix/salary_by_role', {
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        'x-access-token': token
+      })
+    })
+      .then(res => res.json())
+      .then((res) => {
+
+        const series = res.data.map(data => ({
+          name: data.role.charAt(0).toUpperCase() + data.role.slice(1),
+          data: [data.sum_salary]
+        }));
+
+        Highcharts.chart('chart_sum_salary_role', {
+          chart: {
+            type: 'column'
+          },
+          title: {
+            text: 'Total employees\' salary by Role'
+          },
+          subtitle: {
+            text: ''
+          },
+          xAxis: {
+            categories: ['Roles of Employee'],
+            crosshair: true
+          },
+          yAxis: {
+            min: 0,
+            title: {
+              text: 'Salary (VND)'
+            }
+          },
+          tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+              '<td style="padding:0"><b>{point.y:.1f} VND</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+          },
+          plotOptions: {
+            column: {
+              pointPadding: 0.2,
+              borderWidth: 0
+            }
+          },
+          series
+        });
+      }).catch((err) => {
+        console.log(err);
+      });
+  }
+
+
   render() {
     const {
       user, currentPassword, newPassword, confirmPassword
@@ -107,6 +172,12 @@ class Dashboard extends Component {
         <div className="name">
           <h1>{user.displayName}</h1>
         </div>
+
+        <div id="chart_sum_salary_role" />
+        {/* <div id="chart" />
+        <div id="chart" />
+        <div id="chart" /> */}
+
         <div className="row">
           <div className="col-lg-1" />
           <div className="col-lg-10">
@@ -218,6 +289,7 @@ class Dashboard extends Component {
       </div>
     );
   }
+
 }
 
 export default Dashboard;
