@@ -140,6 +140,14 @@ Change `driver` to `assistant` or `seller` for correct api
 |DELETE|	/api/v1/district/:id||
 
 
+## TRANSACTION
+Available as above
+
+## TICKET
+Available as above
+
+## And other APIs for analysis data
+
 ## Documents - Contributing
 View [Documents here](https://huynhsamha.github.io/transport-passenger/docs)
 

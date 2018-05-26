@@ -2,7 +2,7 @@
 
 Assignment Database System - Transport Passenger System
 
-NodeJS, Sequelize (Postgres SQL), ReactJS, Amazon AWS (EC2, S3)
+NodeJS, Sequelize (Postgres SQL), ReactJS, Express.JS, Heroku (App, Postgre), AWS (EC2, S3)
 
 ## Quickstart
 
@@ -10,6 +10,7 @@ NodeJS, Sequelize (Postgres SQL), ReactJS, Amazon AWS (EC2, S3)
 ### Quick review source code (Optional)
 
 #### Install extension on Chrome
+
 + Go [chrome://apps/](chrome://apps/)
 + Choose `Web Store`
 + Search `Octotree` and install the extension on Chrome
@@ -21,8 +22,8 @@ NodeJS, Sequelize (Postgres SQL), ReactJS, Amazon AWS (EC2, S3)
 + `server.js`: start server express
 + `test.js`: only for testing somethings
 + `config/db.js`: export environment variables for database
-+ `server/config/oracle`: config package `oracledb`
-+ `server/models`: Models database extend from `server/config/oracle/baseModel.js`
++ `server/config/sequelize`: config package `sequelize`
++ `server/models`: Define models schema of sequelize
 + `server/controllers`: Controllers connect to database
 + `server/routes`: Routes express
 + `server/documents`: Database diagrams ERD
@@ -31,6 +32,7 @@ NodeJS, Sequelize (Postgres SQL), ReactJS, Amazon AWS (EC2, S3)
 	+ `create`: create tables
 	+ `drop`: drop all tables
 	+ `fake`: fake data on your database
++ `admin-portal`: front-end with ReactJS
 
 
 
@@ -160,8 +162,14 @@ AWS_S3_BUCKET=transport-passenger
 ## APIs
 View [APIs here](https://huynhsamha.github.io/transport-passenger/api)
 
+
 ## Documents - Contributing
 View [Documents here](https://huynhsamha.github.io/transport-passenger/docs)
 
+
+## Deploy Heroku
+View [instructions here](https://huynhsamha.github.io/transport-passenger/heroku)
+
+
 ## Deploy AWS
-View [instructions here](https://huynhsamha.github.io/transport-passenger/aws/)
+View [instructions here](https://huynhsamha.github.io/transport-passenger/aws)

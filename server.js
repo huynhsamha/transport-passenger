@@ -48,6 +48,9 @@ app.use(compression());
 
 app.use(express.static(path.join(__dirname, './build'), {
   setHeaders(res, path) {
+    /**
+     * should use for production
+     */
     // const paths = ['build', 'dist', 'assets', 'lib', 'libs', 'static'];
     // paths.forEach((p) => {
     //   if (path.indexOf(p) > -1) {

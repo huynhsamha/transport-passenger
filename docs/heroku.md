@@ -66,3 +66,16 @@ heroku pg:push mylocaldb DATABASE_URL --app transport-passenger
 
 ## View your achievement
 Go to your app to view your achievement
+
+
+
+## APIs
+View [APIs here](https://huynhsamha.github.io/transport-passenger/api)
+
+
+## Documents - Contributing
+View [Documents here](https://huynhsamha.github.io/transport-passenger/docs)
+
+
+## Deploy AWS
+View [instructions here](https://huynhsamha.github.io/transport-passenger/aws)

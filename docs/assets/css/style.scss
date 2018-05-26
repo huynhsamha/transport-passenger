@@ -3,13 +3,37 @@
 
 @import "{{ site.theme }}";
 
-h1 {font-size: 32px;}
-h2 {font-size: 26px;}
-h3 {font-size: 22px;color: white;}
-
 $width_content: 800px;
-body {padding-bottom: 0px}
-.wrapper, section {max-width: $width_content;}
+
+.fontNunito {
+    font-family: 'Nunito', sans-serif !important;
+}
+
+h1 {
+		font-size: 32px;
+		@extend .fontNunito;
+}
+
+h2 {
+		font-size: 26px;
+		@extend .fontNunito;
+}
+
+h3 {
+    font-size: 22px;
+		color: white;
+		@extend .fontNunito;
+}
+
+body {
+		padding-bottom: 0px;
+		@extend .fontNunito;
+}
+
+.wrapper,
+section {
+    max-width: $width_content;
+}
 
 #header {
     height: 40px;

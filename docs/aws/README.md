@@ -229,3 +229,7 @@ View [APIs here](https://huynhsamha.github.io/transport-passenger/api)
 
 ## Documents - Contributing
 View [Documents here](https://huynhsamha.github.io/transport-passenger/docs)
+
+
+## Deploy on Heroku
+View [here](https://huynhsamha.github.io/transport-passenger/heroku)
