@@ -11,9 +11,9 @@ Demo: [https://transport-passenger.herokuapp.com/](https://transport-passenger.h
 Username and Password for demo:
 ```
 manager		: "brenda84"	-	brenda84?
-driver		: "rosa23"		-	rosa23?
-seller		: "alice69"		-	alice69?
-assistant	: "jan58"		-	jan58?
+driver		: "rosa23"	-	rosa23?
+seller		: "alice69"	-	alice69?
+assistant	: "jan58"	-	jan58?
 ```
 
 

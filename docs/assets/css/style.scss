@@ -25,6 +25,10 @@ h3 {
 		@extend .fontNunito;
 }
 
+p {
+	@extend .fontNunito;
+}
+
 body {
 		padding-bottom: 0px;
 		@extend .fontNunito;
@@ -41,15 +45,16 @@ section {
         max-width: $width_content;
         margin-top: 0px !important;
         margin-bottom: 0px !important;
-        li.fork {
+        li {
             line-height: 40px;
             a {
                 padding: 6px 15px;
                 background-color: #006846;
                 border-color: white !important;
-                transition-duration: 0.2s;
+								transition-duration: 0.2s;
+								@extend .fontNunito;
                 &:hover {
-                    background-color: #000000;
+                    background-color: #131212;
                 }
             }
         }
