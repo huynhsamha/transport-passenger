@@ -1,12 +1,16 @@
-# transport-passenger
+# Transport Passenger
 
 Assignment Database System - Transport Passenger System
 
+## Keywords
 NodeJS, Sequelize (Postgres SQL), ReactJS, Heroku (App, Postgre), Amazon AWS (EC2, S3)
 
+## Document
 Document on [https://huynhsamha.github.io/transport-passenger/](https://huynhsamha.github.io/transport-passenger/)
 
-Demo: [https://transport-passenger.herokuapp.com/](https://transport-passenger.herokuapp.com/)
+## Demo
+
+[https://transport-passenger.herokuapp.com/](https://transport-passenger.herokuapp.com/)
 
 Username and Password for demo:
 ```
@@ -39,3 +43,12 @@ assistant	: "jan58"	-	jan58?
 ## Deploy AWS
 + View on [github.com](https://github.com/huynhsamha/transport-passenger/blob/master/docs/aws/README.md)
 + View on [github.io](https://huynhsamha.github.io/transport-passenger/aws/)
+
+
+## Screenshots
+<img src="./screenshots/login_0.png">
+<img src="./screenshots/login_1.png">
+<img src="./screenshots/dashboard.png">
+<img src="./screenshots/table_1.png">
+<img src="./screenshots/users.png">
+<img src="./screenshots/ticket.png">
